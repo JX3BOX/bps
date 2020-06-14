@@ -77,7 +77,6 @@ export default {
     computed: {},
     methods: {
         xfcolor: function(val) {
-            console.log(xfmap[val]["color"]);
             return this.xfmap[val]["color"];
         },
     },
