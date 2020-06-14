@@ -40,10 +40,10 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="解包源码" name="lua">
+        <el-tab-pane label="源码解析" name="lua">
             <span slot="label">
                 <i class="el-icon-cpu"></i>
-                <b>解包源码</b>
+                <b>源码解析</b>
                 <em class="u-secret">大神宝典</em>
             </span>
         </el-tab-pane>

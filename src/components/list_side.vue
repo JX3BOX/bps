@@ -41,7 +41,7 @@
         </div>
 
         <!-- 其他链接 -->
-        <!-- <div class="m-side-links">
+        <div class="m-side-links">
             <h3 class="c-sidebar-right-title">
                 <img
                     class="u-icon"
@@ -55,7 +55,7 @@
                 <a class="u-item" href="https://www.j3pz.com/" target="_blank">配装模拟器</a>
                 <a class="u-item" href="http://minamistudio.online/jx3simulator/index.html" target="_blank">DPS模拟器</a>
             </div>
-        </div> -->
+        </div>
 
         <!-- <Github_REPO REPO="fb" coder="8"></Github_REPO> -->
     </div>

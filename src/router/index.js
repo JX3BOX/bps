@@ -14,9 +14,9 @@ const routes = [
     { name: "index", path: "/", component: Index },
     { name: "skill", path: "/skill", component: Skill },
     { name: "miji", path: "/miji", component: Miji },
-    { name: "Rank", path: "/rank", component: Rank },
-    { name: "Ladder", path: "/ladder", component: Ladder },
-    { name: "Lua", path: "/lua", component: Lua },
+    { name: "rank", path: "/rank", component: Rank },
+    { name: "ladder", path: "/ladder", component: Ladder },
+    { name: "lua", path: "/lua", component: Lua },
     // { name: "single", path: "/view/:id", component: Single },
 ];
 

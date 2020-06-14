@@ -6,7 +6,7 @@
 
             <!-- 发布按钮 -->
             <a :href="publish_link" class="u-publish el-button el-button--primary el-button--small" >
-                + 发布副本攻略
+                + 发布职业攻略
             </a>
 
             <!-- 角标过滤 -->
@@ -75,24 +75,12 @@
                         @click="reorder('podate')"
                         ><i class="el-icon-sort"></i> 最早发布</span
                     >
-                    <span
-                        class="u-mode u-likes"
-                        :class="{ on: order == 'likes' }"
-                        @click="reorder('likes')"
-                        ><i class="el-icon-star-off"></i> 点赞最多</span
-                    >
-                    <span
+                    <!-- <span
                         class="u-mode u-favs"
                         :class="{ on: order == 'favs' }"
                         @click="reorder('favs')"
                         ><i class="el-icon-star-off"></i> 收藏最多</span
-                    >
-                    <span
-                        class="u-mode u-downs"
-                        :class="{ on: order == 'downs' }"
-                        @click="reorder('downs')"
-                        ><i class="el-icon-download"></i> 下载最多</span
-                    >
+                    > -->
                 </span>
             </div>
 
@@ -101,7 +89,7 @@
         <!-- 搜索 -->
         <div class="m-archive-search">
             <el-input
-                placeholder="请输入搜索条件"
+                placeholder="请输入关键词"
                 v-model="search"
                 class="input-with-select"
                 @change="commitSearch"
@@ -111,8 +99,8 @@
                     slot="prepend"
                     placeholder="请选择"
                 >
-                    <el-option label="作者" value="authorname"></el-option>
                     <el-option label="标题" value="title"></el-option>
+                    <el-option label="作者" value="authorname"></el-option>
                 </el-select>
             </el-input>
             <!-- <el-switch
@@ -267,7 +255,7 @@ export default {
             loading: false, //加载状态
 
             search : '',
-            searchType : '',
+            searchType : '标题',
 
             data: [], //数据列表
             page: 1, //当前页数

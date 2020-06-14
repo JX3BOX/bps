@@ -1,9 +1,7 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <span class="u-item" href="/macro/#/">🌈 全新职业栏目测试版上线</span>
-            <!-- <span class="u-item" href="/macro/#/">🌈 <span>即将上线</span> · 私人宏仓库</span> -->
-            <!-- <span class="u-item" href="/macro/#/">✨ <span>即将上线</span> · 云端宏一键同步</span> -->
+            <router-link class="u-item" to="/lua">🌈 独家职业解包上线·王者必备</router-link>
             <!-- <span class="u-item" href="/house/#/rank">⚽️ <span>即将上线</span> · 云端宏排行榜</span> -->
         </div>
 
