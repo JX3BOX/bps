@@ -20,9 +20,9 @@
 
                 <!-- 自定义字段 -->
                 <div class="u-meta u-sub-block">
-                    <em class="u-label">首领</em>
+                    <em class="u-label">心法</em>
                     <span class="u-value">
-                        {{ formatMeta("fb_boss") }}
+                        {{ post_subtype }}
                     </span>
                 </div>
 
@@ -133,6 +133,9 @@ export default {
         },
         author_name : function (){
             return _.get(this.author,'name') || '匿名'
+        },
+        post_subtype : function (){
+            return _.get(this.post,'post_subtype')
         },
         post_date : function (){
             return dateFormat(new Date(_.get(this.post,'post_date')));
