@@ -392,7 +392,7 @@ export default {
             return "";
         },
         publish_link: function(val) {
-            return publishLink("fb");
+            return publishLink("bps");
         },
     },
     methods: {
@@ -474,7 +474,7 @@ export default {
         },
         xficon: function(val) {
             if(!val || val == '其它') val = '通用'
-            let xf_id = xfmap[val]["id"];
+            let xf_id = xfmap[val] && xfmap[val]["id"];
             return __ossMirror + "image/xf/" + xf_id + ".png";
         },
     },
