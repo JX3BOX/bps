@@ -37,8 +37,8 @@
                 <span class="u-options">
                     <span
                         class="u-mode u-all"
-                        :class="{ on: pvmode == 'ALL' || pvmode == '' }"
-                        @click="filterPVmode('ALL')"
+                        :class="{ on: pvmode == '' }"
+                        @click="filterPVmode('')"
                         ><i class="el-icon-collection-tag"></i> 全部</span
                     >
                     <span
@@ -181,10 +181,16 @@
                     /></a> -->
 
                     <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
-                        <img
+                        <!-- <img
                             class="u-icon"
                             svg-inline
                             src="../assets/img/list/post.svg"
+                        /> -->
+                        <img
+                            class="u-icon"
+                            :src="item.post.post_subtype | xficon"
+                            :alt="item.post.post_subtype"
+                            :title="item.post.post_subtype"
                         />
 
                         <!-- 标题文字 -->
@@ -211,8 +217,21 @@
                     </h2>
 
                     <!-- 字段 -->
-                    <div class="u-content u-desc">
-                        字段内容区
+                    <div class="u-content">
+                        <div
+                            class="u-metalist u-zlp"
+                            v-if=" item.post.post_meta"
+                        >
+                            <strong>版本</strong>
+                            <em>{{item.post.post_meta.zlp || '-'}}</em>
+                        </div>
+                        <div
+                            class="u-metalist u-pvmode"
+                            v-if=" item.post.post_meta"
+                        >
+                            <strong>方向</strong>
+                            <em>{{item.post.post_meta.pvmode || '-'}}</em>
+                        </div>
                     </div>
 
                     <!-- 作者 -->
@@ -280,6 +299,7 @@ import _ from "lodash";
 import { getPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import {
     showAvatar,
     authorLink,
@@ -325,7 +345,7 @@ export default {
             pvmode: "",
 
             zlps: ["","结庐在江湖", "凌雪藏锋", "怒海争锋", "其它"],
-            pvmodes: ["PVE", "PVP", "PVX", "ALL"],
+            pvmodes: [ "","PVE", "PVP", "PVX"],
         };
     },
     computed: {
@@ -451,6 +471,11 @@ export default {
         },
         showMark: function(val) {
             return mark_map[val];
+        },
+        xficon: function(val) {
+            if(!val || val == '其它') val = '通用'
+            let xf_id = xfmap[val]["id"];
+            return __ossMirror + "image/xf/" + xf_id + ".png";
         },
     },
     created: function() {

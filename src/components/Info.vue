@@ -1,8 +1,8 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <router-link class="u-item" to="/lua">🌈 独家职业解包上线·王者必备</router-link>
-            <!-- <span class="u-item" href="/house/#/rank">⚽️ <span>即将上线</span> · 云端宏排行榜</span> -->
+            <!-- <router-link class="u-item" to="/lua">🌈 独家职业解包上线·王者必备</router-link> -->
+            <span class="u-item">⚽️ 新版白皮书内测中</span>
         </div>
 
         <div class="m-info-router">
