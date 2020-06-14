@@ -1,5 +1,5 @@
 <template>
-    <div class="v-miji">
+    <div class="v-skill">
         <el-alert
             title="即将推出，敬请期待"
             type="warning"
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: "Miji",
+    name: "Story",
     props: [],
     data: function() {
         return {};

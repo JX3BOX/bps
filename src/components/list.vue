@@ -223,14 +223,14 @@
                             v-if=" item.post.post_meta"
                         >
                             <strong>版本</strong>
-                            <em>{{item.post.post_meta.zlp || '-'}}</em>
+                            <em>{{item.post.post_meta.zlp || '全部'}}</em>
                         </div>
                         <div
                             class="u-metalist u-pvmode"
                             v-if=" item.post.post_meta"
                         >
                             <strong>方向</strong>
-                            <em>{{item.post.post_meta.pvmode || '-'}}</em>
+                            <em>{{item.post.post_meta.pvmode || '全部'}}</em>
                         </div>
                     </div>
 
