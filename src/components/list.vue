@@ -1,34 +1,6 @@
 <template>
     <div class="m-archive-box" :loading="loading">
 
-        <!-- 搜索 -->
-        <div class="m-archive-search">
-            <el-input
-                placeholder="请输入搜索条件"
-                v-model="search"
-                class="input-with-select"
-                @change="commitSearch"
-            >
-                <el-select
-                    v-model="searchType"
-                    slot="prepend"
-                    placeholder="请选择"
-                >
-                    <el-option label="作者" value="authorname"></el-option>
-                    <el-option label="标题" value="title"></el-option>
-                </el-select>
-            </el-input>
-            <!-- <el-switch
-                    class="u-switch u-hasdata"
-                    slot="append"
-                    v-model="hasData"
-                    active-color="#13ce66"
-                    inactive-text="只看有蓝图"
-                    @change="commitSearch"
-                >
-                </el-switch> -->
-        </div>
-
         <!-- 排序 -->
         <div class="m-archive-order">
 
@@ -126,18 +98,46 @@
 
         </div>
 
+        <!-- 搜索 -->
+        <div class="m-archive-search">
+            <el-input
+                placeholder="请输入搜索条件"
+                v-model="search"
+                class="input-with-select"
+                @change="commitSearch"
+            >
+                <el-select
+                    v-model="searchType"
+                    slot="prepend"
+                    placeholder="请选择"
+                >
+                    <el-option label="作者" value="authorname"></el-option>
+                    <el-option label="标题" value="title"></el-option>
+                </el-select>
+            </el-input>
+            <!-- <el-switch
+                    class="u-switch u-hasdata"
+                    slot="append"
+                    v-model="hasData"
+                    active-color="#13ce66"
+                    inactive-text="只看有蓝图"
+                    @change="commitSearch"
+                >
+                </el-switch> -->
+        </div>
+
         <!-- 列表 -->
         <div class="m-archive-list" v-if="data.length">
             <ul class="u-list">
                 <li class="u-item" v-for="(item, i) in data" :key="i">
 
                     <!-- Banner -->
-                    <a
+                    <!-- <a
                         class="u-banner"
                         :href="item.post.ID | postLink"
                         :target="target"
                         ><img :src="showBanner(item.post.post_banner)"
-                    /></a>
+                    /></a> -->
 
                     <h2 class="u-post" :class="{ isSticky: item.post.sticky }">
                         <img
