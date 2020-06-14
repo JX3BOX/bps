@@ -1,5 +1,5 @@
 {
-  "name": "repo",
+  "name": "bps",
   "private": true,
   "scripts": {
     "dev": "env DEV_SERVER=true vue-cli-service serve",
@@ -13,6 +13,7 @@
     "@jx3box/jx3box-comment-ui": "^1.2.2",
     "@jx3box/jx3box-common": "^4.5.1",
     "@jx3box/jx3box-common-ui": "^1.6.8",
+    "@jx3box/jx3box-data": "^0.1.6",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",
@@ -23,13 +24,14 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "csslab": "^4.0.3",
+    "@babel/compat-data": "^7.10.1",
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-plugin-router": "^4.0.0",
     "@vue/cli-plugin-vuex": "^4.0.0",
     "@vue/cli-service": "^4.1.2",
     "babel-eslint": "^10.0.3",
+    "csslab": "^4.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "glob": "^7.1.6",

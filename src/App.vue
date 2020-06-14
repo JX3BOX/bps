@@ -1,15 +1,18 @@
 <template>
-    <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
+    <div
+        id="app"
+        :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }"
+    >
         <Header></Header>
         <Breadcrumb
-            name="频道名称"
-            slug="slug"
-            root="/slug"
+            name="职业攻略"
+            slug="bps"
+            root="/bps"
             :publishEnable="true"
             :adminEnable="true"
             :feedbackEnable="true"
         >
-            <img slot="logo" svg-inline src="./assets/img/logo.svg" />
+            <img slot="logo" svg-inline src="./assets/img/bps.svg" />
             <Info />
         </Breadcrumb>
         <LeftSidebar>
@@ -55,7 +58,7 @@ export default {
         this.$store.state.mode = this.$store.state.pid ? "single" : "list";
 
         // 根据情况选择subtype取值
-        // this.$store.state.subtype = getRewrite("subtype");
+        this.$store.state.subtype = getRewrite("subtype");
         // this.$store.state.subtype = this.$route.params.subtype;
     },
     components: {
@@ -63,7 +66,7 @@ export default {
         Nav,
         Extend,
         tabs,
-        single
+        single,
     },
 };
 </script>
