@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用奇穴" type="info" show-icon>
+                    <el-alert title="无通用奇穴，请通过侧边栏切换心法" type="info" show-icon>
                     </el-alert>
                 </div>
             </el-tab-pane>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用阵法" type="info" show-icon>
+                    <el-alert title="无通用阵法，请通过侧边栏切换心法" type="info" show-icon>
                     </el-alert>
                 </div>
             </el-tab-pane>
