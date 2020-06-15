@@ -10,29 +10,57 @@
                 + 发布职业攻略
             </a>
 
+            <!-- 下拉过滤 -->
+            <span class="u-menu">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <span class="u-menu-label"
+                            ><i class="el-icon-s-operation"></i
+                            >{{ zlp ? zlp : "资料片" }}</span
+                        ><i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item
+                            v-for="item in zlps"
+                            :key="item"
+                            @click.native="changeZLP(item)"
+                            >{{ item ? item : "全部" }}</el-dropdown-item
+                        >
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </span>
+            <span class="u-menu">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <span class="u-menu-label"
+                            ><i class="el-icon-medal-1"></i
+                            >{{ currentMark ? currentMark : "难度" }}</span
+                        ><i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item @click.native="filterMark('')">{{
+                            "全部"
+                        }}</el-dropdown-item>
+                        <el-dropdown-item
+                            v-for="(item, key) in marks"
+                            :key="key"
+                            @click.native="filterMark(key)"
+                            >{{ item }}</el-dropdown-item
+                        >
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </span>
+
             <!-- meta过滤 -->
-            <div class="u-filter">
-                <!-- <span class="u-label-always">
-                    <i class="el-icon-s-operation"></i>
-                    筛选
-                </span> -->
-                <span class="u-menu">
-                    <el-dropdown>
-                        <span class="el-dropdown-link">
-                            <span class="u-menu-label"><i class="el-icon-s-operation"></i>{{ zlp ? zlp : "全部资料片" }}</span
-                            ><i
-                                class="el-icon-arrow-down el-icon--right"
-                            ></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item
-                                v-for="item in zlps"
-                                :key="item"
-                                @click.native="changeZLP(item)"
-                                >{{ item ? item : '全部' }}</el-dropdown-item
-                            >
-                        </el-dropdown-menu>
-                    </el-dropdown>
+            <div class="u-filter" :class="{ on: pvmode_visible }">
+                <span class="u-label" @click="showPVmode">
+                    <span class="u-current-order"
+                        ><i class="el-icon-collection-tag"></i> {{ pvmode || "全部" }}</span
+                    >
+                    <span class="u-toggle">
+                        <i class="el-icon-arrow-down"></i>
+                        <i class="el-icon-arrow-up"></i>
+                    </span>
                 </span>
                 <span class="u-options">
                     <span
@@ -62,55 +90,11 @@
                 </span>
             </div>
 
-            <!-- 角标过滤 -->
-            <!-- <div class="u-filter" :class="{ on: filter_visible }">
-                <span class="u-label" @click="showFilter">
-                    <span class="u-current-filter">筛选 : {{ currentMark || "全部" }}</span>
-                    <span class="u-toggle">
-                        <i class="el-icon-arrow-down"></i>
-                        <i class="el-icon-arrow-up"></i>
-                    </span>
-                </span>
-                <span class="u-options">
-                    <span
-                        class="u-mode u-all"
-                        :class="{ on: mark == '' }"
-                        @click="filterMark('')"
-                        ><i class="el-icon-s-operation"></i> 全部</span
-                    >
-                    <span
-                        class="u-mode u-newbie"
-                        :class="{ on: mark == 'newbie' }"
-                        @click="filterMark('newbie')"
-                        ><i class="el-icon-user"></i> 新手易用</span
-                    >
-                    <span
-                        class="u-mode u-advanced"
-                        :class="{ on: mark == 'advanced' }"
-                        @click="filterMark('advanced')"
-                        ><i class="el-icon-data-line"></i> 进阶推荐</span
-                    >
-                    <span
-                        class="u-mode u-recommended"
-                        :class="{ on: mark == 'recommended' }"
-                        @click="filterMark('recommended')"
-                        ><i class="el-icon-star-off"></i> 编辑精选</span
-                    >
-                    <span
-                        class="u-mode u-geek"
-                        :class="{ on: mark == 'geek' }"
-                        plain
-                        @click="filterMark('geek')"
-                        ><i class="el-icon-medal-1"></i> 骨灰必备</span
-                    >
-                </span>
-            </div> -->
-
             <!-- 排序模式 -->
             <div class="u-modes" :class="{ on: order_visible }">
                 <span class="u-label" @click="showOrder">
                     <span class="u-current-order"
-                        >排序 : {{ currentOrder || "最后更新" }}</span
+                        ><i class="el-icon-sort"></i> {{ currentOrder || "最后更新" }}</span
                     >
                     <span class="u-toggle">
                         <i class="el-icon-arrow-down"></i>
@@ -220,17 +204,17 @@
                     <div class="u-content">
                         <div
                             class="u-metalist u-zlp"
-                            v-if=" item.post.post_meta"
+                            v-if="item.post.post_meta"
                         >
                             <strong>版本</strong>
-                            <em>{{item.post.post_meta.zlp || '全部'}}</em>
+                            <em>{{ item.post.post_meta.zlp || "全部" }}</em>
                         </div>
                         <div
                             class="u-metalist u-pvmode"
-                            v-if=" item.post.post_meta"
+                            v-if="item.post.post_meta"
                         >
                             <strong>方向</strong>
-                            <em>{{item.post.post_meta.pvmode || '全部'}}</em>
+                            <em>{{ item.post.post_meta.pvmode || "全部" }}</em>
                         </div>
                     </div>
 
@@ -340,12 +324,14 @@ export default {
 
             filter_visible: false,
             order_visible: false,
+            pvmode_visible : false,
 
             zlp: "",
             pvmode: "",
 
-            zlps: ["","结庐在江湖", "凌雪藏锋", "怒海争锋", "其它"],
-            pvmodes: [ "","PVE", "PVP", "PVX"],
+            zlps: ["", "结庐在江湖", "凌雪藏锋", "怒海争锋", "其它"],
+            pvmodes: ["", "PVE", "PVP", "PVX"],
+            marks: mark_map,
         };
     },
     computed: {
@@ -366,11 +352,11 @@ export default {
             if (this.mark) {
                 params.mark = this.mark;
             }
-            if(this.zlp){
+            if (this.zlp) {
                 params.meta_1 = this.zlp;
             }
-            if(this.pvmode){
-                params.meta_2 = this.pvmode
+            if (this.pvmode) {
+                params.meta_2 = this.pvmode;
             }
             return params;
         },
@@ -430,8 +416,8 @@ export default {
             this.filter_visible = false;
             this.loadPosts();
         },
-        filterPVmode : function (val){
-            this.pvmode = val
+        filterPVmode: function(val) {
+            this.pvmode = val;
             this.loadPosts();
         },
         reorder: function(val) {
@@ -439,9 +425,9 @@ export default {
             this.order_visible = false;
             this.loadPosts();
         },
-        changeZLP : function (val){
-            this.zlp = val
-            this.loadPosts()
+        changeZLP: function(val) {
+            this.zlp = val;
+            this.loadPosts();
         },
         showFilter: function() {
             this.filter_visible = !this.filter_visible;
@@ -452,6 +438,9 @@ export default {
         showBanner: function(val) {
             return val ? showMinibanner(val) : this.defaultBanner;
         },
+        showPVmode : function (){
+            this.pvmode_visible = !this.pvmode_visible;
+        }
     },
     filters: {
         dateFormat: function(val) {
@@ -473,7 +462,7 @@ export default {
             return mark_map[val];
         },
         xficon: function(val) {
-            if(!val || val == '其它') val = '通用'
+            if (!val || val == "其它") val = "通用";
             let xf_id = xfmap[val] && xfmap[val]["id"];
             return __ossMirror + "image/xf/" + xf_id + ".png";
         },
