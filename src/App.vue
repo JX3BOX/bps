@@ -5,7 +5,7 @@
     >
         <Header></Header>
         <Breadcrumb
-            name="职业攻略"
+            name="职业专栏"
             slug="bps"
             root="/bps"
             :publishEnable="true"
