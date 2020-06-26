@@ -283,7 +283,7 @@
 import _ from "lodash";
 import { getPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box";
+import { __ossMirror,__imgPath } from "@jx3box/jx3box-common/js/jx3box";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import {
     showAvatar,
@@ -465,7 +465,7 @@ export default {
         xficon: function(val) {
             if (!val || val == "其它") val = "通用";
             let xf_id = xfmap[val] && xfmap[val]["id"];
-            return __ossMirror + "image/xf/" + xf_id + ".png";
+            return __imgPath + "image/xf/" + xf_id + ".png";
         },
     },
     created: function() {
