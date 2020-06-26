@@ -19,7 +19,7 @@
         <el-tab-pane label="技能/Buff数据库" name="raw">
             <span slot="label">
                 <i class="el-icon-reading"></i>
-                <b>技能Buff数据库</b>
+                <b>原始数据</b>
                 <em class="u-ready">即将推出</em>
             </span>
         </el-tab-pane>
