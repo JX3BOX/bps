@@ -8,19 +8,11 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="职业数据" name="skill">
-            <span slot="label">
-                <i class="el-icon-key"></i>
-                <b>技能系数</b>
-                <em class="u-new">最新同步</em>
-            </span>
-        </el-tab-pane>
-
         <el-tab-pane label="技能/Buff数据库" name="raw">
             <span slot="label">
                 <i class="el-icon-reading"></i>
                 <b>原始数据</b>
-                <em class="u-ready">即将推出</em>
+                <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
 
@@ -28,7 +20,15 @@
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>源码分析</b>
-                <em class="u-ready">即将推出</em>
+                <em class="u-hot">重磅独家</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="职业数据" name="skill">
+            <span slot="label">
+                <i class="el-icon-key"></i>
+                <b>技能系数</b>
+                <!-- <em class="u-new">最新同步</em> -->
             </span>
         </el-tab-pane>
 
@@ -48,12 +48,12 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="背景故事" name="story">
+        <!-- <el-tab-pane label="背景故事" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
                 <b>背景故事</b>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
     </el-tabs>
 </template>

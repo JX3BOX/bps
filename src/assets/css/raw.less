@@ -1,0 +1,141 @@
+.m-resource-list{
+    .mt(10px);
+    padding:0;
+    margin:0;
+
+    .u-item{
+        .db;
+        border: 1px solid @border-hr;
+        background: #fafbfc;
+        margin-bottom: 10px;
+        padding: 10px 10px 10px 70px;
+        min-height:60px;
+        .r(3px);
+        &:hover{
+            border-color:#34d058;
+            // border-color:#ddd;
+        }
+        .pr;
+    }
+    .u-pic{
+        .db;
+        .pa;.lt(10px);
+        .size(48px);
+        .r(6px);
+        box-shadow: 0 0 1px inset rgba(0,0,0,.2);
+    }
+    .u-id{
+        .fz(10px);
+        color:#555;
+        .pa;.rt(10px);
+    }
+    .u-primary{
+        .pr;
+    }
+    .u-raw{
+        .pa;.rb(0);
+    }
+    .u-name{
+        .fz(14px,2);
+        .bold;
+        .db;
+        em{
+            .fz(12px);
+            color:#999;
+            font-weight:normal;
+            font-style: normal;
+        }
+    }
+    .u-content{
+        .fz(13px,1.8);
+        .mb(5px);
+        .db;
+    }
+    .u-remark{
+        .fz(12px,1.8);
+        color:#aaa;
+        .db;
+
+        em{
+            background-color:#eee;
+            padding:0 5px;
+            margin:0 3px;
+            .r(3px);
+        }
+    }
+    .u-desc{
+        .fz(12px,1.8);
+        .db;
+        white-space: pre-wrap;
+        margin:4px 0;
+
+        em{
+            background-color:#f3f3f3;
+            padding:2px 5px;
+            margin-right:5px;
+            color:#999;
+            .r(3px);
+            .fz(12px);
+            font-style: normal;
+        }
+
+        sub{
+            font-size:100%;
+            .ps;
+        }
+    }
+    .u-props{
+        .mt(10px);
+        border-top:1px dashed #ddd;
+        padding:10px 0;
+        .clearfix;
+        .u-desc{
+            .w(50%);
+            .fl;
+        }
+        .none;
+        &.on{
+            .db;
+        }
+    }
+}
+@media screen and (max-width:@phone){
+    .m-resource-list .u-props .u-desc{
+        .w(100%);
+        float:none;
+    }
+}
+@media screen and (max-width:@phone){
+    .m-resource-list{
+        .u-raw{
+            .ps;
+            .mt(5px);
+        }
+    }
+}
+
+
+.m-raw-tips{
+    .fz(13px);
+    .mb(10px);
+}
+
+// 为空
+.m-archive-null {
+    margin-top: 10px;
+}
+
+// 加载更多
+.m-archive-more {
+    .mb(10px);
+    .w(100%);
+    .none;
+}
+.m-archive-more.show {
+    .db;
+}
+
+// 分页
+.m-archive-pages {
+    overflow-x: auto;
+}

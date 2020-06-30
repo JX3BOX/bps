@@ -313,13 +313,13 @@ export default {
             loading: false, //加载状态
 
             search: "",
-            searchType: "标题",
+            searchType: "title",
 
             data: [], //数据列表
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 10, //每页条目
+            per: 15, //每页条目
             order: "", //排序模式
             mark: "", //筛选模式
 

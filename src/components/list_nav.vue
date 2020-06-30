@@ -11,13 +11,14 @@
             </li>
         </ul>
 
-        <!-- <h5 class="u-title">在线应用</h5>
+        <h5 class="u-title">在线应用</h5>
         <div class="m-nav-group">
-            <a href="https://www.jx3box.com/app/jx3-query/" target="_blank">
-                <img svg-inline src="../assets/img/logo.svg" />
+            <a href="/app/database" target="_blank">
+                <img svg-inline src="../assets/img/list/database.svg" />
                 <span>剑三数据库</span>
+                <i class="u-mark isnew">全新上线</i>
             </a>
-        </div> -->
+        </div>
     </div>
 </template>
 
