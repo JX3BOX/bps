@@ -8,6 +8,28 @@
             >应用
         </div>
 
+        <!-- 搜索 -->
+        <div class="m-raw-search m-archive-search">
+            <el-input
+                placeholder="搜索关键词"
+                v-model="search"
+                class="input-with-select"
+                @change="loadSkills"
+            >
+                <template slot="prepend">技能名</template>
+                <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+            <!-- <el-switch
+                    class="u-switch u-hasdata"
+                    slot="append"
+                    v-model="strict"
+                    active-color="#13ce66"
+                    inactive-text="精确匹配"
+                    @change="loadSkills"
+                >
+                </el-switch> -->
+        </div>
+
         <ul class="m-resource-list" v-if="data.length">
             <li v-for="(o, i) in data" class="u-item" :key="i">
                 <span class="u-id">ID:{{ o.SkillID }}</span>
@@ -170,6 +192,7 @@ export default {
             per: 15, //每页条目
 
             loading: false,
+            search:''
         };
     },
     computed: {
@@ -187,10 +210,16 @@ export default {
     methods: {
         loadSkills: function(i = 1, append = false) {
             this.loading = true;
-            getSchoolSkills(this.school, {
+
+            let params = {
                 page: i,
                 per: this.per,
-            })
+            }
+            if(this.search){
+                params.name = this.search
+            }
+
+            getSchoolSkills(this.school, params)
                 .then((res) => {
 
                     let data = res.data
