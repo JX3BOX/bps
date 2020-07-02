@@ -2,7 +2,7 @@
     <div class="v-lua" v-loading="loading">
         <div class="m-lua-index m-lua-box">
             <div class="u-title">
-                <i class="el-icon-collection-tag"></i> 文件夹
+                <i class="el-icon-collection-tag"></i> <span class="u-title-list" @click="showList">文件夹</span>
             </div>
             <div
                 class="u-type"
