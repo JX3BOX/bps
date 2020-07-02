@@ -1,8 +1,9 @@
 <template>
-    <div class="v-lua" v-loading="loading">
+    <div class="v-lua" v-loading="loading" v-if="isMember">
         <div class="m-lua-index m-lua-box">
             <div class="u-title">
-                <i class="el-icon-collection-tag"></i> <span class="u-title-list" @click="showList">文件夹</span>
+                <i class="el-icon-collection-tag"></i>
+                <span class="u-title-list" @click="showList">文件夹</span>
             </div>
             <div
                 class="u-type"
@@ -18,8 +19,11 @@
         </div>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
-                <i class="el-icon-collection-tag"></i> <span class="u-title-list" @click="showList">文件列表</span>
-                <span class="u-title-file"><i class="el-icon-arrow-right"></i> {{ file }}</span>
+                <i class="el-icon-collection-tag"></i>
+                <span class="u-title-list" @click="showList">文件列表</span>
+                <span class="u-title-file"
+                    ><i class="el-icon-arrow-right"></i> {{ file }}</span
+                >
                 <div class="u-back" @click="showList">
                     <i class="el-icon-caret-left"></i> 返 回
                 </div>
@@ -67,6 +71,10 @@
             </div>
         </div>
     </div>
+    <div class="v-null" v-else>
+        <el-alert :title="isGuest ? '需要登录才能查看' : '仅邮箱验证用户可见'" type="warning" show-icon>
+        </el-alert>
+    </div>
 </template>
 
 <script>
@@ -74,8 +82,9 @@ import { getMap, getLua } from "../service/lua";
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import schoolmap from "../assets/data/lua.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import '../plugins/prism.js';
+import "../plugins/prism.js";
 import "../plugins/prism.css";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Lua",
     props: [],
@@ -87,6 +96,8 @@ export default {
             current: "",
             data: "",
             file: "",
+            isMember: false,
+            isGuest: true,
         };
     },
     computed: {
@@ -119,15 +130,14 @@ export default {
             this.file = path;
             this.loadLua(path);
         },
-        showList : function (){
-            this.file = ''
-            this.data = ''
+        showList: function() {
+            this.file = "";
+            this.data = "";
         },
         loadMap: function() {
             this.loading = true;
             getMap()
                 .then((data) => {
-                    // console.log(data);
                     this.map = data;
                 })
                 .finally(() => {
@@ -138,12 +148,10 @@ export default {
             this.loading = true;
             getLua(path)
                 .then((data) => {
-                    // console.log(data);
                     this.data = data;
                 })
                 .then(() => {
-                    // Prism.highlightElement('#lua')
-                    let root = this.$refs.lua
+                    let root = this.$refs.lua;
                     root && Prism.highlightAllUnder(root);
                 })
                 .finally(() => {
@@ -152,7 +160,12 @@ export default {
         },
         changeType(type) {
             this.current = type;
-            this.data = ''
+            this.data = "";
+        },
+        checkPermission: function() {
+            let group = User.getInfo().group;
+            if (group > 1) this.isGuest = false;
+            return group > 7;
         },
     },
     filters: {
@@ -161,8 +174,10 @@ export default {
         },
     },
     mounted: function() {
-        this.current = this.school_name;
-        this.loadMap();
+        if (this.checkPermission()) {
+            this.current = this.school_name;
+            this.loadMap();
+        }
     },
     components: {},
 };
