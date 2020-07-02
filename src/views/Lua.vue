@@ -174,7 +174,8 @@ export default {
         },
     },
     mounted: function() {
-        if (this.checkPermission()) {
+        this.isMember = this.checkPermission()
+        if (this.isMember) {
             this.current = this.school_name;
             this.loadMap();
         }
