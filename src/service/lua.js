@@ -1,7 +1,7 @@
 import axios from "axios";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
 const API = __ossMirror + "static/kungfu/";
-const version = '20200702'
+const version = '200702'
 
 function getMap() {
     return axios
