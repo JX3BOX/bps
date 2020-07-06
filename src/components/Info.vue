@@ -1,16 +1,17 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <router-link class="u-item" to="/lua">🌈 独家职业解包上线·王者必备</router-link>
+            <router-link class="u-item" to="/story">🌈 职业背景故事页上线</router-link>
         </div>
 
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
             <router-link to="/raw"><i class="el-icon-reading"></i></router-link>
-            <router-link to="/lua"><i class="el-icon-cpu"></i></router-link>
+            <!-- <router-link to="/lua"><i class="el-icon-cpu"></i></router-link> -->
             <router-link to="/skill"><i class="el-icon-key"></i></router-link>
             <router-link to="/rank"><i class="el-icon-s-data"></i></router-link>
             <router-link to="/ladder"><i class="el-icon-trophy"></i></router-link>
+            <router-link to="/story"><i class="el-icon-film"></i></router-link>
         </div>
     </div>
 </template>

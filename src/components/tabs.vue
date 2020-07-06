@@ -48,12 +48,12 @@
             </span>
         </el-tab-pane>
 
-        <!-- <el-tab-pane label="背景故事" name="story">
+        <el-tab-pane label="背景故事" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
                 <b>背景故事</b>
             </span>
-        </el-tab-pane> -->
+        </el-tab-pane>
 
     </el-tabs>
 </template>
