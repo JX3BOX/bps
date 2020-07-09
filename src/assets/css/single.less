@@ -3,6 +3,7 @@
         color: #888;
         font-weight:300;
     }
+    .pr;
 }
 
 //头部
@@ -14,9 +15,14 @@
         .y(top);
     }
 }
+@media screen and (max-width:@phone){
+    .m-single-header{
+        padding:15px;
+    }
+}
 
 .m-single-panel{
-    .pa;.rb(20px);
+    .pa;.rt(24px,30px);
     .x(right);
     .u-minigroup{
         .mb(20px);
@@ -27,13 +33,18 @@
 }
 
 @media screen and (max-width:@phone){
-    .m-single-header{
-        padding:15px;
-    }
     .m-single-panel{
-        .none;
+        .ps;
+        .x;
+        border:1px dashed #ddd;
+        margin:20px;
+        background-color:@bg-light;
+        padding:10px;
+        .r(3px);
     }
 }
+
+
 
 .m-single-title {
     .fz(32px);
