@@ -29,6 +29,9 @@
     }
     .u-fn{
         .ml(15px);
+        &:first-child{
+            .ml(0);
+        }
     }
 }
 
@@ -43,8 +46,6 @@
         .r(3px);
     }
 }
-
-
 
 .m-single-title {
     .fz(32px);
@@ -144,20 +145,13 @@
 @media screen and (max-width: @phone) {
     .m-single-info {
         .u-admin,
-        .u-edit,
-        .u-views {
+        .u-podate{
             .none;
-        }
-        .u-modate {
-            .mr(0);
         }
     }
 }
 @media screen and (max-width:@ip5){
     .m-single-info{
-        .u-podate {
-            .none;
-        }
     }
 }
 
