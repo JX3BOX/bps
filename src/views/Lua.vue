@@ -79,7 +79,7 @@
 
 <script>
 import { getMap, getLua } from "../service/lua";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
 import schoolmap from "../assets/data/lua.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import "../plugins/prism.js";
@@ -170,7 +170,7 @@ export default {
     },
     filters: {
         iconURL: function(val) {
-            return __imgPath + "image/school/" + schoolmap[val] + ".png";
+            return __ossRoot + "image/school/" + schoolmap[val] + ".png";
         },
     },
     mounted: function() {

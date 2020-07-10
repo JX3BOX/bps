@@ -178,7 +178,7 @@
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { getSchoolSkills } from "../service/raw";
-import { __iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __iconPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
 
 export default {
     name: "Raw",
@@ -258,7 +258,7 @@ export default {
             return str && str.replace(/\\n/g, "\n");
         },
         iconURL: function(id) {
-            return __iconPath + "icon/" + id + ".png";
+            return __ossRoot + "icon/" + id + ".png";
         },
     },
     created: function() {

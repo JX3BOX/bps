@@ -64,7 +64,7 @@
 <script>
 import ladder from "../assets/data/ladder.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import { __ossMirror,__imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __ossMirror,__imgPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
 export default {
     name: "list_side",
     props: [],
@@ -82,7 +82,7 @@ export default {
     },
     filters: {
         xficon: function(val) {
-            return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
+            return __ossRoot + "image/xf/" + xfmap[val]["id"] + ".png";
         },
     },
     mounted: function() {},
