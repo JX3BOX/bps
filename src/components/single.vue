@@ -77,7 +77,7 @@
             <!-- 操作 -->
             <div class="m-single-panel" v-if="!loading">
                 <div class="u-minigroup">
-                    <Print class="u-fn" :title="title"/>
+                    <Print class="u-fn" :title="title" :authorID="post.post_author"/>
                     <QRcode class="u-fn" />
                     <Sharing class="u-fn" :title="title"/>
                 </div>
