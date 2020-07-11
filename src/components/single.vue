@@ -6,7 +6,7 @@
 
             <!-- 标题 -->
             <div class="m-single-title">
-                <a class="u-title u-sub-block" :href="url">{{title}}</a>
+                <a class="u-title u-sub-block" :href="url"><i v-if="isOriginal" class="u-original">原创</i> {{title}}</a>
             </div>
 
             <!-- 信息 -->
@@ -132,6 +132,9 @@ export default {
         };
     },
     computed: {
+        isOriginal:function (){
+            return !!~~_.get(this.post, "original")
+        },
         id: function() {
             return this.$store.state.pid;
         },
