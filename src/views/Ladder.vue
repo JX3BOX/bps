@@ -8,12 +8,12 @@
                 :key="item"
             ></el-tab-pane>
         </el-tabs>
-        <el-table class="m-rank-table" :data="data" v-if="data.length" :default-sort = "{prop: 'higherDps', order: 'descending'}">
+        <el-table class="m-rank-table" :data="data" v-if="data.length" :default-sort = "{prop: 'highestDps', order: 'descending'}">
             <el-table-column type="index" label="排名" sortable></el-table-column>
             <el-table-column prop="mountName" label="心法"></el-table-column>
             <el-table-column prop="medianDps" label="平均秒伤" sortable></el-table-column>
-            <el-table-column prop="highestDps" label="top10%秒伤" sortable></el-table-column>
-            <el-table-column prop="higherDps" label="最高秒伤" sortable></el-table-column>
+            <el-table-column prop="higherDps" label="top10%秒伤" sortable></el-table-column>
+            <el-table-column prop="highestDps" label="最高秒伤" sortable></el-table-column>
         </el-table>
     </div>
 </template>
