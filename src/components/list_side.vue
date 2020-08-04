@@ -37,7 +37,7 @@
                     </li>
                 </ul>
             </div>
-            <router-link class="m-bps-ladder-more" to="/rank">仅作参考 · 榜单来源</router-link>
+            <router-link class="m-bps-ladder-more" to="/ladder">仅作参考 · 榜单来源</router-link>
         </div>
 
         <!-- 其他链接 -->

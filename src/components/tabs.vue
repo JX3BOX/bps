@@ -12,7 +12,7 @@
             <span slot="label">
                 <i class="el-icon-reading"></i>
                 <b>原始数据</b>
-                <em class="u-new">全新上线</em>
+                <em class="u-hot">重磅独家</em>
             </span>
         </el-tab-pane>
 
@@ -36,7 +36,7 @@
             <span slot="label">
                 <i class="el-icon-s-data"></i>
                 <b>DPS排行榜</b>
-                <em class="u-ready">即将推出</em>
+                <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
 
@@ -44,7 +44,7 @@
             <span slot="label">
                 <i class="el-icon-trophy"></i>
                 <b>门派天梯榜</b>
-                <em class="u-ready">即将推出</em>
+                <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
 
