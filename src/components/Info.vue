@@ -1,7 +1,7 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <router-link class="u-item" to="/story">🌈 职业背景故事页上线</router-link>
+            <!-- <router-link class="u-item" to="/story">🌈 职业背景故事页上线</router-link> -->
         </div>
 
         <div class="m-info-router">

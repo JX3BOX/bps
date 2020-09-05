@@ -14,9 +14,13 @@
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-group">
             <a href="/app/database" target="_blank">
-                <img svg-inline src="../assets/img/list/database.svg" />
+                <i class="el-icon-suitcase"></i> 
                 <span>剑三数据库</span>
-                <i class="u-mark isnew">全新上线</i>
+                <!-- <i class="u-mark isnew">全新上线</i> -->
+            </a>
+            <a href="https://www.j3pz.com/tools/haste/" target="_blank">
+                <i class="el-icon-stopwatch"></i> 
+                <span>急速阈值查询</span>
             </a>
         </div>
     </div>
