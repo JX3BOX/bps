@@ -18,10 +18,6 @@
                 <span>剑三数据库</span>
                 <!-- <i class="u-mark isnew">全新上线</i> -->
             </a>
-            <a href="https://www.j3pz.com/tools/haste/" target="_blank">
-                <i class="el-icon-stopwatch"></i> 
-                <span>急速阈值查询</span>
-            </a>
         </div>
     </div>
 </template>
@@ -49,7 +45,7 @@ export default {
     },
     filters : {
         xficon : function (val){
-            return __ossRoot + 'image/xf/' + val + '.png'
+            return __imgPath + 'image/xf/' + val + '.png'
         },
     },
     mounted: function() {},

@@ -289,7 +289,7 @@ export default {
         xficon: function(val) {
             if (!val || val == "其它") val = "通用";
             let xf_id = xfmap[val] && xfmap[val]["id"];
-            return __ossRoot + "image/xf/" + xf_id + ".png";
+            return __imgPath + "image/xf/" + xf_id + ".png";
         },
     },
     created: function() {

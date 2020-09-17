@@ -170,7 +170,7 @@ export default {
     },
     filters: {
         iconURL: function(val) {
-            return __ossRoot + "image/school/" + schoolmap[val] + ".png";
+            return __imgPath + "image/school/" + schoolmap[val] + ".png";
         },
     },
     mounted: function() {

@@ -82,7 +82,7 @@ export default {
     },
     filters: {
         xficon: function(val) {
-            return __ossRoot + "image/xf/" + xfmap[val]["id"] + ".png";
+            return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
         },
     },
     mounted: function() {},
