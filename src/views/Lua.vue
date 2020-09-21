@@ -1,5 +1,5 @@
 <template>
-    <div class="v-lua" v-loading="loading" v-if="isMember">
+    <div class="v-lua" v-loading="loading" v-if="isSuperAuthor">
         <div class="m-lua-index m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
@@ -17,6 +17,7 @@
                 }}</span>
             </div>
         </div>
+        <el-alert class="m-lua-warning" title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！" type="error" effect="dark" show-icon></el-alert>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
@@ -72,14 +73,13 @@
         </div>
     </div>
     <div class="v-null" v-else>
-        <el-alert :title="isGuest ? '需要登录才能查看' : '仅邮箱验证用户可见'" type="warning" show-icon>
-        </el-alert>
+        <el-alert title="没有查看权限" type="warning" show-icon> </el-alert>
     </div>
 </template>
 
 <script>
 import { getMap, getLua } from "../service/lua";
-import { __imgPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath, __ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
 import schoolmap from "../assets/data/lua.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import "../plugins/prism.js";
@@ -96,8 +96,7 @@ export default {
             current: "",
             data: "",
             file: "",
-            isMember: false,
-            isGuest: true,
+            isSuperAuthor: User.isSuperAuthor(),
         };
     },
     computed: {
@@ -162,11 +161,6 @@ export default {
             this.current = type;
             this.data = "";
         },
-        checkPermission: function() {
-            let group = User.getInfo().group;
-            if (group > 1) this.isGuest = false;
-            return group > 7;
-        },
     },
     filters: {
         iconURL: function(val) {
@@ -174,8 +168,7 @@ export default {
         },
     },
     mounted: function() {
-        this.isMember = this.checkPermission()
-        if (this.isMember) {
+        if (this.isSuperAuthor) {
             this.current = this.school_name;
             this.loadMap();
         }

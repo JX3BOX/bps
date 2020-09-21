@@ -41,7 +41,7 @@
                 <div class="u-primary">
                     <span class="u-name"
                         >{{ o.Name }}
-                        <em>({{ o.SkillName }})</em>
+                        <em v-if="o.SkillName">({{ o.SkillName }})</em>
                     </span>
                     <span class="u-content">{{ o.Desc | filterRaw }}</span>
                     <div class="u-remarks">

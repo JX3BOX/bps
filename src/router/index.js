@@ -6,7 +6,7 @@ const Skill = () => import("../views/Skill.vue");
 const Raw = () => import("../views/Raw.vue");
 const Rank = () => import("../views/Rank.vue");
 const Ladder = () => import("../views/Ladder.vue");
-// const Lua = () => import("../views/Lua.vue");
+const Lua = () => import("../views/Lua.vue");
 const Story = () => import("../views/Story.vue");
 
 Vue.use(VueRouter);
@@ -18,7 +18,7 @@ const routes = [
     { name: "rank", path: "/rank", component: Rank },
     { name: "ladder", path: "/ladder", component: Ladder },
     { name: "story", path: "/story", component: Story },
-    // { name: "lua", path: "/lua", component: Lua },
+    { name: "lua", path: "/lua", component: Lua },
 ];
 
 const router = new VueRouter({
