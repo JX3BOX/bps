@@ -130,7 +130,7 @@ export default {
             this.loadLua(path);
         },
         showList: function() {
-            this.file = "";
+            this.file = this.current;
             this.data = "";
         },
         loadMap: function() {
