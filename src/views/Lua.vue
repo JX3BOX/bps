@@ -158,7 +158,7 @@ export default {
                 });
         },
         changeType(type) {
-            this.current = type;
+            this.file = this.current = type;
             this.data = "";
         },
     },
