@@ -58,11 +58,11 @@
                     <li class="u-item" v-for="(item, i) in data" :key="i">
                         <!-- Banner -->
                         <!-- <a
-                        class="u-banner"
-                        :href="item.post.ID | postLink"
-                        :target="target"
-                        ><img :src="showBanner(item.post.post_banner)"
-                    /></a> -->
+                            class="u-banner"
+                            :href="item.post.ID | postLink"
+                            :target="target"
+                            ><img :src="showBanner(item.post.post_banner)"
+                        /></a> -->
 
                         <h2
                             class="u-post"
