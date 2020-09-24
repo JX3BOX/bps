@@ -57,12 +57,12 @@
                 <ul class="u-list">
                     <li class="u-item" v-for="(item, i) in data" :key="i">
                         <!-- Banner -->
-                        <!-- <a
+                        <a
                             class="u-banner"
                             :href="item.post.ID | postLink"
                             :target="target"
-                            ><img :src="showBanner(item.post.post_banner)"
-                        /></a> -->
+                            ><img :src="showBanner(item)"
+                        /></a>
 
                         <h2
                             class="u-post"
@@ -164,6 +164,7 @@ import {
     publishLink,
     buildTarget,
 } from "@jx3box/jx3box-common/js/utils";
+import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
 export default {
     name: "list",
     props: [],
@@ -224,10 +225,6 @@ export default {
         target: function() {
             return buildTarget();
         },
-        // 根据栏目定义
-        defaultBanner: function() {
-            return "";
-        },
         publish_link: function(val) {
             return publishLink("bps");
         },
@@ -263,8 +260,15 @@ export default {
             this[o["type"]] = o["val"];
             this.loadPosts();
         },
-        showBanner: function(val) {
-            return val ? showMinibanner(val) : this.defaultBanner;
+        showBanner: function(item) {
+            let banner = item.post.post_banner
+            return banner
+                ? showMinibanner(item.post.post_banner)
+                : this.showDefaultBanner(item.post.post_subtype);
+        },
+        showDefaultBanner: function(subtype) {
+            let img_name = subtype && mountmap[subtype] || 0;
+            return __imgPath + 'image/bps_thumbnail/' + img_name + '.png'
         },
     },
     filters: {
