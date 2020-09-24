@@ -17,13 +17,22 @@
                 }}</span>
             </div>
         </div>
-        <el-alert
-            class="m-lua-warning"
-            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！"
-            type="error"
-            effect="dark"
-            show-icon
-        ></el-alert>
+        <!-- 搜索 -->
+        <div class="m-lua-search">
+            <el-input
+                placeholder="请输入关键词"
+                v-model="search"
+                class="input-with-select"
+                @change="searchLua"
+            >
+                <span slot="prepend">关键词</span>
+                <el-button
+                    slot="append"
+                    icon="el-icon-search"
+                    @change="searchLua"
+                ></el-button>
+            </el-input>
+        </div>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
@@ -45,6 +54,7 @@
                     class="u-subitem"
                     v-for="(subitem, subgroup) in item"
                     :key="subgroup"
+                    :class="{ isHidden: search && !hasResult(subitem) }"
                 >
                     <div class="u-wrapper">
                         <div class="u-container" v-if="isDirectory(subitem)">
@@ -73,10 +83,17 @@
             </div>
             <div class="u-data" v-show="data">
                 <div class="u-code" ref="lua">
-                    <pre><code class="language-lua" id="lua">{{data}}</code></pre>
+                    <pre><code class="language-lua" id="lua" v-html="data"></code></pre>
                 </div>
             </div>
         </div>
+        <el-alert
+            class="m-lua-warning"
+            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！"
+            type="error"
+            effect="dark"
+            show-icon
+        ></el-alert>
     </div>
     <div class="v-null" v-else>
         <el-alert title="没有查看权限" type="warning" show-icon> </el-alert>
@@ -103,6 +120,7 @@ export default {
             data: "",
             file: "",
             isSuperAuthor: User.isSuperAuthor(),
+            search: "",
         };
     },
     computed: {
@@ -158,6 +176,7 @@ export default {
                 .then(() => {
                     let root = this.$refs.lua;
                     root && Prism.highlightAllUnder(root);
+                    this.$forceUpdate();
                 })
                 .finally(() => {
                     this.loading = false;
@@ -166,6 +185,28 @@ export default {
         changeType(type) {
             this.file = this.current = type;
             this.data = "";
+            this.search = "";
+        },
+        hasResult: function(subitem) {
+            if (this.isDirectory(subitem)) {
+                for (let filename of subitem) {
+                    if (filename.includes(this.search)) {
+                        return true;
+                        break;
+                    }
+                }
+                return false;
+            } else {
+                return subitem.includes(this.search);
+            }
+        },
+        searchLua: function() {
+            if (this.data) {
+                this.$notify.error({
+                    title: "错误",
+                    message: "请切至指定目录再进行搜索",
+                });
+            }
         },
     },
     filters: {
