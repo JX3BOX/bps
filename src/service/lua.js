@@ -1,6 +1,7 @@
 import axios from "axios";
-import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
-const API = __ossMirror + "kungfu/";
+import { __luaPath,__ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
+// const API = __ossMirror + "kungfu/";
+const API = __luaPath + 'kungfu/'
 
 function getMap() {
     return axios
