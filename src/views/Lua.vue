@@ -25,7 +25,7 @@
                 class="input-with-select"
                 @change="searchLua"
             >
-                <span slot="prepend">关键词</span>
+                <span slot="prepend">搜索</span>
                 <el-button
                     slot="append"
                     icon="el-icon-search"
