@@ -25,12 +25,13 @@ module.exports = {
     devServer: {
         proxy: {
             "/api": {
-                "target": "https://j3dps.com/",
+                "target": "https://next.jx3box.com/",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
             }
-        }
+        },
+        disableHostCheck: true
     },
 
     //webpack配置
