@@ -166,6 +166,7 @@ import {
     buildTarget,
 } from "@jx3box/jx3box-common/js/utils";
 import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
+import zlps from '@/assets/data/zlp.json'
 export default {
     name: "list",
     props: [],
@@ -187,12 +188,7 @@ export default {
             pvmode: "",
             zlp: "",
 
-            zlps: {
-                结庐在江湖: "结庐在江湖",
-                凌雪藏锋: "凌雪藏锋",
-                怒海争锋: "怒海争锋",
-                其它: "其它",
-            },
+            zlps: zlps,
             pvmodes: { pve: "PVE", pvp: "PVP", pvx: "PVX" },
             marks: mark_map,
         };
