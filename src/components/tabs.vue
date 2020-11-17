@@ -32,7 +32,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="DPS排行榜" name="rank">
+        <!-- <el-tab-pane label="DPS排行榜" name="rank">
             <span slot="label">
                 <i class="el-icon-s-data"></i>
                 <b>DPS排行榜</b>
@@ -46,7 +46,7 @@
                 <b>门派天梯榜</b>
                 <em class="u-new">全新上线</em>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="背景故事" name="story">
             <span slot="label">
