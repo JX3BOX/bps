@@ -7,7 +7,7 @@
                 ><a href="https://jq.qq.com/?_wv=1027&k=bRftczVN"
                     >978285140</a
                 ></strong
-            >
+            ><span>(带作品)</span>
         </RightSideMsg>
 
         <!-- 排行榜 -->
