@@ -1,6 +1,11 @@
 <template>
     <div class="v-story" v-loading="loading">
-        <el-tabs v-show="isSchool" v-model="active" type="card" @tab-click="loadData">
+        <el-tabs
+            v-show="isSchool"
+            v-model="active"
+            type="card"
+            @tab-click="loadData"
+        >
             <el-tab-pane label="门派背景" name="introduction"> </el-tab-pane>
             <el-tab-pane label="门派事记" name="history"> </el-tab-pane>
             <el-tab-pane label="门派人物" name="person"> </el-tab-pane>
@@ -53,7 +58,7 @@ export default {
         return {
             active: "introduction",
             data: "",
-            loading : false
+            loading: false,
         };
     },
     computed: {
@@ -63,32 +68,40 @@ export default {
         force: function() {
             return xfmap[this.xf]["force"];
         },
-        isSchool : function (){
-            return !!this.force
-        }
+        isSchool: function() {
+            return !!this.force;
+        },
     },
     methods: {
         loadData: function() {
-            this.loading = true
-            getStory(this.active, this.force).then((res) => {
-                // console.log(res.data.data);
-                let data = res.data.data;
-                if(data){
-                    if (this.active == "introduction") {
-                        data.descs.sort((a, b) => {
-                            return a.part - b.part;
-                        });
-                        this.data = data.descs;
-                    } else {
-                        data.sort((a, b) => {
-                            return a.index - b.index;
-                        });
-                        this.data = data;
+            this.loading = true;
+            getStory(this.active, this.force)
+                .then((res) => {
+                    // console.log(res.data.data);
+                    let data = res.data.data;
+                    if (data) {
+                        // 门派背景
+                        if (this.active == "introduction") {
+                            data.descs.sort((a, b) => {
+                                return a.part - b.part;
+                            });
+                            this.data = data.descs;
+                        } else {
+                            data.sort((a, b) => {
+                                return a.index - b.index;
+                            });
+                            data.forEach((item) => {
+                                item.descs.sort((a, b) => {
+                                    return a.part - b.part;
+                                });
+                            });
+                            this.data = data;
+                        }
                     }
-                }
-            }).finally(() => {
-                this.loading = false
-            })
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
     mounted: function() {

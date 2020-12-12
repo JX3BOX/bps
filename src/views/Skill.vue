@@ -39,6 +39,7 @@
                                 :item="item"
                                 v-for="(item, i) in talent.forceSkills"
                                 :key="i"
+                                :force="true"
                             />
                         </div>
                     </div>
