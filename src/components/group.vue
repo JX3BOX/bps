@@ -10,7 +10,7 @@
       >申请展示</a
       >
     </h2>
-    <el-collapse accordion v-if="groups && groups.length">
+    <el-collapse accordion v-if="groups && JSON.stringify(groups) !== '{}'">
       <el-collapse-item
           v-for="(school, key) in groups"
           :title="key"
