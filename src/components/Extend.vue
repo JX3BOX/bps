@@ -2,8 +2,8 @@
     <div class="m-extend">
         <single_side v-if="mode == 'single'"/>
         <template v-else>
-            <list_side />
             <group />
+            <list_side />
         </template>
     </div>
 </template>
