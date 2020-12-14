@@ -74,7 +74,7 @@
         this.$notify({title: "浏览器不支持", type: "error"});
       },
       kungfu_color(val){
-        return xfmap[val]["color"];
+        return xfmap[val] ? xfmap[val]["color"] : '';
       }
     },
     mounted: function () {
