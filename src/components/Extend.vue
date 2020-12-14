@@ -1,13 +1,18 @@
 <template>
     <div class="m-extend">
         <single_side v-if="mode == 'single'"/>
-        <list_side v-else />
+        <template v-else>
+            <list_side />
+            <group />
+        </template>
     </div>
 </template>
 
 <script>
 import list_side from "@/components/list_side.vue";
 import single_side from "@/components/single_side.vue";
+import group from "@/components/group.vue";
+
 export default {
     name: "Extend",
     props: [],
@@ -24,6 +29,7 @@ export default {
     components: {
         list_side,
         single_side,
+        group,
     },
 };
 </script>
