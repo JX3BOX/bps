@@ -23,6 +23,7 @@
                 class="u-kungfu"
                 v-if="group.kungfu"
                 size="mini"
+                effect="dark"
                 :style="{backgroundColor: kungfu_color(group.kungfu)}"
                 v-text="`${group.kungfu}`"
             ></el-tag>
