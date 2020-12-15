@@ -2,6 +2,15 @@
     <div class="m-extend">
         <single_side v-if="mode == 'single'"/>
         <template v-else>
+            <!-- 群号 -->
+            <RightSideMsg>
+                <em>签约作者交流群</em> :
+                <strong
+                ><a href="https://jq.qq.com/?_wv=1027&k=bRftczVN"
+                >978285140</a
+                ></strong
+                ><span>(带作品)</span>
+            </RightSideMsg>
             <group />
             <list_side />
         </template>

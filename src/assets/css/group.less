@@ -50,7 +50,7 @@
 
   .u-groups {
     margin: 0;
-    padding: 0 0 0 15px;
+    padding: 0;
     list-style: none;
 
     li {
@@ -60,21 +60,30 @@
 
       .u-kungfu {
         margin-right: 8px;
-        color: white;
         border: none;
+      }
+
+      .u-tags {
+        margin-right: 8px;
       }
 
       .u-platform {
         width: 45px;
-        margin-right: 5px;
+        margin-right: 8px;
         text-align: center;
       }
 
       .u-number {
-        padding-left: 10px;
-        padding-right: 10px;
-        border: none;
+        padding: 0;
+        color: black;
+        border-color: transparent;
         text-align: left;
+        background-color: transparent !important;
+        cursor: pointer;
+
+        &:hover {
+          color: #0366D6;
+        }
       }
 
       .u-result {

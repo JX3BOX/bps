@@ -19,35 +19,56 @@
       >
         <ul class="u-groups">
           <li v-for="(group, k) in school" :key="k">
-            <el-tag
-                class="u-kungfu"
-                v-if="group.kungfu"
-                size="mini"
-                effect="dark"
-                :style="{backgroundColor: kungfu_color(group.kungfu)}"
-                v-text="`${group.kungfu}`"
-            ></el-tag>
-            <el-tag
-                class="u-platform"
-                v-if="group.platform == 'QQ'"
-                size="mini"
-                v-text="`${group.platform}群`"
-            ></el-tag>
-            <el-tag
-                class="u-platform"
-                v-if="group.platform == 'YY'"
-                size="mini"
-                type="info"
-                v-text="`${group.platform}群`"
-            ></el-tag>
-            <el-button
-                class="u-number"
-                size="mini"
-                v-text="group.number"
-                v-clipboard:copy="group.number"
-                v-clipboard:success="copy_success"
-                v-clipboard:error="copy_error"
-            ></el-button>
+            <el-popover
+                placement="left-start"
+                trigger="hover"
+                :content="group.tags"
+                :disabled="group.tags.split(',').length <= 3">
+              <div slot="reference">
+                <el-tag
+                    class="u-kungfu"
+                    v-if="group.kungfu"
+                    size="mini"
+                    effect="dark"
+                    :style="{backgroundColor: kungfu_color(group.kungfu)}"
+                    v-text="`${group.kungfu}`"
+                ></el-tag>
+                <template v-for="(tag, i) in group.tags.split(',')">
+                  <el-tag
+                      class="u-tags"
+                      v-if="tag && i < 3"
+                      size="mini"
+                      effect="plain"
+                      :key="i"
+                      v-text="tag"
+                  ></el-tag>
+                </template>
+                <div style="height:3px" v-if="group.tags"></div>
+                <el-tag
+                    class="u-platform"
+                    v-if="group.platform == 'QQ'"
+                    size="mini"
+                    v-text="`${group.platform}群`"
+                ></el-tag>
+                <el-tag
+                    class="u-platform"
+                    v-if="group.platform == 'YY'"
+                    size="mini"
+                    type="info"
+                    v-text="`${group.platform}群`"
+                ></el-tag>
+                <el-tag
+                    class="u-number"
+                    size="mini"
+                    v-clipboard:copy="group.number"
+                    v-clipboard:success="copy_success"
+                    v-clipboard:error="copy_error"
+                >
+                  <i class="el-icon-document-copy"></i>
+                  <span v-text="' ' + group.number"></span>
+                </el-tag>
+              </div>
+            </el-popover>
           </li>
         </ul>
       </el-collapse-item>
@@ -74,7 +95,7 @@
       copy_error() {
         this.$notify({title: "浏览器不支持", type: "error"});
       },
-      kungfu_color(val){
+      kungfu_color(val) {
         return xfmap[val] ? xfmap[val]["color"] : '';
       }
     },
@@ -83,9 +104,7 @@
       get_groups('bps', {order_by: 'school', group_by: 'school'}).then(
         (data) => {
           data = data.data;
-          if (data.code === 200) {
-            this.groups = data.data.groups;
-          }
+          if (data.code === 200) this.groups = data.data.groups;
         },
         () => {
           this.groups = false;
