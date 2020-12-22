@@ -166,7 +166,12 @@ import {
     buildTarget,
 } from "@jx3box/jx3box-common/js/utils";
 import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
-import zlps from '@/assets/data/zlp.json'
+// import zlps from '@/assets/data/zlp.json'
+import zlps from '@jx3box/jx3box-common/data/zlps.json'
+const _zlps = {}
+zlps.forEach((item) => {
+    _zlps[item] = item
+})
 export default {
     name: "list",
     props: [],
@@ -188,7 +193,7 @@ export default {
             pvmode: "",
             zlp: "",
 
-            zlps: zlps,
+            zlps: _zlps,
             pvmodes: { pve: "PVE", pvp: "PVP", pvx: "PVX" },
             marks: mark_map,
         };
