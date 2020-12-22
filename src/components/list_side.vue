@@ -1,15 +1,5 @@
 <template>
     <div class="m-list-side">
-        <!-- 群号 -->
-        <RightSideMsg>
-            <em>签约作者交流群</em> :
-            <strong
-                ><a href="https://jq.qq.com/?_wv=1027&k=bRftczVN"
-                    >978285140</a
-                ></strong
-            ><span>(带作品)</span>
-        </RightSideMsg>
-
         <!-- 排行榜 -->
         <div class="m-side-rank">
             <h3 class="c-sidebar-right-title">

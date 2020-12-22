@@ -1,13 +1,27 @@
 <template>
     <div class="m-extend">
         <single_side v-if="mode == 'single'"/>
-        <list_side v-else />
+        <template v-else>
+            <!-- 群号 -->
+            <RightSideMsg>
+                <em>签约作者交流群</em> :
+                <strong
+                ><a href="https://jq.qq.com/?_wv=1027&k=bRftczVN"
+                >978285140</a
+                ></strong
+                ><span>(带作品)</span>
+            </RightSideMsg>
+            <group />
+            <list_side />
+        </template>
     </div>
 </template>
 
 <script>
 import list_side from "@/components/list_side.vue";
 import single_side from "@/components/single_side.vue";
+import group from "@/components/group.vue";
+
 export default {
     name: "Extend",
     props: [],
@@ -24,6 +38,7 @@ export default {
     components: {
         list_side,
         single_side,
+        group,
     },
 };
 </script>
