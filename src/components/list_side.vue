@@ -1,7 +1,7 @@
 <template>
     <div class="m-list-side">
         <!-- 排行榜 -->
-        <div class="m-side-rank">
+        <!-- <div class="m-side-rank">
             <h3 class="c-sidebar-right-title">
                 <img
                     class="u-icon"
@@ -28,7 +28,7 @@
                 </ul>
             </div>
             <router-link class="m-bps-ladder-more" to="/ladder">仅作参考 · 榜单来源</router-link>
-        </div>
+        </div> -->
 
         <!-- 其他链接 -->
         <!-- <div class="m-side-links">
