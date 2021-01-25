@@ -164,6 +164,7 @@ import {
     showMinibanner,
     publishLink,
     buildTarget,
+    getAppType
 } from "@jx3box/jx3box-common/js/utils";
 import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
 // import zlps from '@/assets/data/zlp.json'
@@ -284,7 +285,8 @@ export default {
             return authorLink(val);
         },
         postLink: function(val) {
-            return "./?pid=" + val;
+            // return "./?pid=" + val;
+            return location.origin + '/' + getAppType() + '/' + val;
         },
         isHighlight: function(val) {
             return val ? `color:${val};font-weight:600;` : "";
