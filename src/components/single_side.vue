@@ -45,7 +45,7 @@ export default {
     },
     watch: {
         collection_id: function(val) {
-            if (isNaN(val)) return;
+            if (!val || isNaN(val)) return;
             getCollection(this.collection_id).then((res) => {
                 this.data = res.data.data.collection;
             });
