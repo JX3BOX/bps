@@ -48,8 +48,8 @@ export default {
                     this.loading = false;
                 });
 
-            getStat('bps',this.id).then((data) => {
-                this.stat = this.$store.state.stat = data;
+            getStat('bps',this.id).then((res) => {
+                this.stat = this.$store.state.stat = res.data;
             });
             postStat('bps',this.id);
         }
