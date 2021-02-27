@@ -33,12 +33,12 @@
                             <talent_item
                                 :item="item"
                                 v-for="(item, i) in talent.kungfuSkills"
-                                :key="i"
+                                :key="'kungfu-' + i"
                             />
                             <talent_item
                                 :item="item"
                                 v-for="(item, i) in talent.forceSkills"
-                                :key="i"
+                                :key="'force-' + i"
                                 :force="true"
                             />
                         </div>
