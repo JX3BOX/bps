@@ -170,8 +170,8 @@ export default {
         loadLua: function(path) {
             this.loading = true;
             getLua(path)
-                .then((data) => {
-                    this.data = data;
+                .then((res) => {
+                    this.data = res.data;
                 })
                 .then(() => {
                     let root = this.$refs.lua;
