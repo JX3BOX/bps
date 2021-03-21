@@ -102,7 +102,7 @@
 
 <script>
 import { getMap, getLua } from "../service/lua";
-import { __imgPath, __ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import schoolmap from "../assets/data/lua.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import "../plugins/prism.js";

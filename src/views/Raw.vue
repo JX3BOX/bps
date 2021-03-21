@@ -178,7 +178,7 @@
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { getSchoolSkills } from "../service/raw";
-import { __iconPath,__ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __iconPath,__ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 
 export default {
     name: "Raw",

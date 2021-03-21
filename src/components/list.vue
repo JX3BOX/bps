@@ -9,31 +9,14 @@
             @appendPage="appendPage"
             @changePage="changePage"
         >
-            <template slot="filter">
+            <!-- 搜索 -->
+            <div class="m-archive-search" slot="search-before">
                 <a
                     :href="publish_link"
-                    class="u-publish el-button el-button--primary el-button--small"
+                    class="u-publish el-button el-button--primary"
                 >
-                    + 发布职业攻略
+                    + 发布作品
                 </a>
-                <menuBy
-                    @filter="filter"
-                    :data="zlps"
-                    type="zlp"
-                    placeholder="资料片"
-                ></menuBy>
-                <markBy
-                    @filter="filter"
-                    mode="menu"
-                    placeholder="精选"
-                ></markBy>
-                <!-- pvmode -->
-                <tagBy @filter="filter" :data="pvmodes" type="pvmode"></tagBy>
-                <!-- 排序过滤 -->
-                <orderBy @filter="filter"></orderBy>
-            </template>
-            <!-- 搜索 -->
-            <div class="m-archive-search" slot="search-after">
                 <el-input
                     placeholder="请输入搜索内容"
                     v-model="search"
@@ -52,6 +35,25 @@
                     <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
             </div>
+            <template slot="filter">
+                <!-- 版本过滤 -->
+                <clientBy @filter="filter" type="std"></clientBy>
+                <menuBy
+                    @filter="filter"
+                    :data="zlps"
+                    type="zlp"
+                    placeholder="资料片"
+                ></menuBy>
+                <markBy
+                    @filter="filter"
+                    mode="menu"
+                    placeholder="精选"
+                ></markBy>
+                <!-- pvmode -->
+                <tagBy @filter="filter" :data="pvmodes" type="pvmode"></tagBy>
+                <!-- 排序过滤 -->
+                <orderBy @filter="filter"></orderBy>
+            </template>
             <!-- 列表 -->
             <div class="m-archive-list" v-if="data.length">
                 <ul class="u-list">
@@ -147,7 +149,7 @@
 
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
-import { cms as mark_map } from "@jx3box/jx3box-common/js/mark.json";
+import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import _ from "lodash";
 import { getPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
@@ -155,23 +157,23 @@ import {
     __ossMirror,
     __imgPath,
     __ossRoot,
-} from "@jx3box/jx3box-common/js/jx3box";
+} from "@jx3box/jx3box-common/data/jx3box";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import {
     showAvatar,
     authorLink,
-    showMinibanner,
+    showBanner,
     publishLink,
     buildTarget,
-    getAppType
+    getAppType,
 } from "@jx3box/jx3box-common/js/utils";
 import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
 // import zlps from '@/assets/data/zlp.json'
-import zlps from '@jx3box/jx3box-common/data/zlps.json'
-const _zlps = {}
+import zlps from "@jx3box/jx3box-common/data/zlps.json";
+const _zlps = {};
 zlps.forEach((item) => {
-    _zlps[item] = item
-})
+    _zlps[item] = item;
+});
 export default {
     name: "list",
     props: [],
@@ -184,7 +186,7 @@ export default {
             total: 1, //总条目数
             pages: 1, //总页数
             per: 15, //每页条目
-            appendMode : false, //追加模式
+            appendMode: false, //追加模式
 
             search: "",
             searchType: "title",
@@ -193,6 +195,7 @@ export default {
             mark: "", //筛选模式
             pvmode: "",
             zlp: "",
+            client: "",
 
             zlps: _zlps,
             pvmodes: { pve: "PVE", pvp: "PVP", pvx: "PVX" },
@@ -207,7 +210,7 @@ export default {
             let params = {
                 per: this.per,
                 subtype: this.subtype,
-                page : ~~this.page || 1
+                page: ~~this.page || 1,
             };
             if (this.search) {
                 params.search = this.search;
@@ -223,6 +226,9 @@ export default {
             }
             if (this.pvmode) {
                 params.meta_2 = this.pvmode;
+            }
+            if (this.client) {
+                params.client = this.client;
             }
             return params;
         },
@@ -251,27 +257,27 @@ export default {
                 });
         },
         changePage: function(i) {
-            this.appendMode = false
-            this.page = i
+            this.appendMode = false;
+            this.page = i;
             window.scrollTo(0, 0);
         },
         appendPage: function(i) {
-            this.appendMode = true
-            this.page = i
+            this.appendMode = true;
+            this.page = i;
         },
         filter: function(o) {
-            this.appendMode = false
+            this.appendMode = false;
             this[o["type"]] = o["val"];
         },
         showBanner: function(item) {
-            let banner = item.post.post_banner
+            let banner = item.post.post_banner;
             return banner
-                ? showMinibanner(item.post.post_banner)
+                ? showBanner(item.post.post_banner)
                 : this.showDefaultBanner(item.post.post_subtype);
         },
         showDefaultBanner: function(subtype) {
-            let img_name = subtype && mountmap[subtype] || 0;
-            return __imgPath + 'image/bps_thumbnail/' + img_name + '.png'
+            let img_name = (subtype && mountmap[subtype]) || 0;
+            return __imgPath + "image/bps_thumbnail/" + img_name + ".png";
         },
     },
     filters: {
@@ -286,7 +292,7 @@ export default {
         },
         postLink: function(val) {
             // return "./?pid=" + val;
-            return location.origin + '/' + getAppType() + '/' + val;
+            return location.origin + "/" + getAppType() + "/" + val;
         },
         isHighlight: function(val) {
             return val ? `color:${val};font-weight:600;` : "";
@@ -300,20 +306,20 @@ export default {
             return __imgPath + "image/xf/" + xf_id + ".png";
         },
     },
-    watch : {
-        params : {
-            deep : true,
-            handler : function (){
-                this.loadPosts()
-            }
+    watch: {
+        params: {
+            deep: true,
+            handler: function() {
+                this.loadPosts();
+            },
         },
-        '$route.query.page' : function (val){
-            this.page = ~~val
-        }
+        "$route.query.page": function(val) {
+            this.page = ~~val;
+        },
     },
     created: function() {
-        this.page = ~~this.$route.query.page || 1
-        this.loadPosts()
+        this.page = ~~this.$route.query.page || 1;
+        this.loadPosts();
     },
     components: {
         listbox,
