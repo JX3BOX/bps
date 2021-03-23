@@ -37,7 +37,7 @@
             </div>
             <template slot="filter">
                 <!-- 版本过滤 -->
-                <clientBy @filter="filter" type="std"></clientBy>
+                <clientBy @filter="filter" :type="client"></clientBy>
                 <menuBy
                     @filter="filter"
                     :data="zlps"
@@ -319,7 +319,13 @@ export default {
     },
     created: function() {
         this.page = ~~this.$route.query.page || 1;
-        this.loadPosts();
+        let query = new URLSearchParams(location.search);
+        let client = (this.$route && this.$route.query.client) || query.get("client");
+        if(client){
+            this.client = client
+        }else{
+            this.client = 'std'
+        }
     },
     components: {
         listbox,
