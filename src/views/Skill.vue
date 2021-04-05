@@ -138,9 +138,12 @@ export default {
     },
     created: function () {},
     watch: {
-        xf: function () {
-            this.loadData();
-        },
+        xf: {
+            immediate : true,
+            handler : function (){
+                this.loadData();
+            }
+        }
     },
     components: {
         skill_item,
