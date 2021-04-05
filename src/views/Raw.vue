@@ -197,7 +197,7 @@ export default {
     },
     computed: {
         subtype: function() {
-            return this.$store.state.subtype;
+            return this.$route.query.subtype;
         },
         school: function() {
             let subtype = this.subtype || '通用'
@@ -263,6 +263,11 @@ export default {
     },
     created: function() {
         this.loadSkills(1);
+    },
+    watch : {
+        subtype : function (){
+            this.loadSkills(1)
+        }
     },
     components: {},
 };

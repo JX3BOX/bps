@@ -11,17 +11,8 @@
         >
             <!-- 搜索 -->
             <div class="m-archive-search" slot="search-before">
-                <a
-                    :href="publish_link"
-                    class="u-publish el-button el-button--primary"
-                >
-                    + 发布作品
-                </a>
-                <el-input
-                    placeholder="请输入搜索内容"
-                    v-model="search"
-                    class="input-with-select"
-                >
+                <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
+                <el-input placeholder="请输入搜索内容" v-model="search" class="input-with-select">
                     <span slot="prepend">关键词</span>
                     <!-- <el-select
                         v-model="searchType"
@@ -31,26 +22,17 @@
                     >
                         <el-option label="标题" value="title"></el-option>
                         <el-option label="作者" value="authorname"></el-option>
-                    </el-select> -->
+                    </el-select>-->
                     <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
             </div>
             <template slot="filter">
                 <!-- 版本过滤 -->
-                <clientBy @filter="filter" type="std"></clientBy>
-                <menuBy
-                    @filter="filter"
-                    :data="zlps"
-                    type="zlp"
-                    placeholder="资料片"
-                ></menuBy>
-                <markBy
-                    @filter="filter"
-                    mode="menu"
-                    placeholder="精选"
-                ></markBy>
-                <!-- pvmode -->
-                <tagBy @filter="filter" :data="pvmodes" type="pvmode"></tagBy>
+                <clientBy @filter="filter" :type="client"></clientBy>
+                <!-- 角标过滤 -->
+                <markBy @filter="filter"></markBy>
+                <!-- 资料片 -->
+                <zlpBy @filter="filter" :client="client"></zlpBy>
                 <!-- 排序过滤 -->
                 <orderBy @filter="filter"></orderBy>
             </template>
@@ -59,64 +41,49 @@
                 <ul class="u-list">
                     <li class="u-item" v-for="(item, i) in data" :key="i">
                         <!-- Banner -->
-                        <a
-                            class="u-banner"
-                            :href="item.post.ID | postLink"
-                            :target="target"
-                            ><img :src="showBanner(item)"
-                        /></a>
+                        <a class="u-banner" :href="item.ID | postLink" :target="target">
+                            <img :src="showBanner(item)" />
+                        </a>
 
-                        <h2
-                            class="u-post"
-                            :class="{ isSticky: item.post.sticky }"
-                        >
+                        <h2 class="u-post" :class="{ isSticky: item.sticky }">
                             <img
                                 class="u-icon"
-                                :src="item.post.post_subtype | xficon"
-                                :alt="item.post.post_subtype"
-                                :title="item.post.post_subtype"
+                                :src="item.post_subtype | xficon"
+                                :alt="item.post_subtype"
+                                :title="item.post_subtype"
                             />
 
                             <!-- 标题文字 -->
                             <a
                                 class="u-title"
-                                :style="item.post.color | isHighlight"
-                                :href="item.post.ID | postLink"
+                                :style="item.color | isHighlight"
+                                :href="item.ID | postLink"
                                 :target="target"
-                                >{{ item.post.post_title || "无标题" }}</a
-                            >
+                            >{{ item.post_title || "无标题" }}</a>
 
                             <!-- 角标 -->
-                            <span
-                                class="u-marks"
-                                v-if="item.post.mark && item.post.mark.length"
-                            >
+                            <span class="u-marks" v-if="item.mark && item.mark.length">
                                 <i
-                                    v-for="mark in item.post.mark"
+                                    v-for="mark in item.mark"
                                     class="u-mark"
                                     :key="mark"
-                                    >{{ mark | showMark }}</i
-                                >
+                                >{{ mark | showMark }}</i>
                             </span>
                         </h2>
 
                         <!-- 字段 -->
                         <div class="u-content">
-                            <div
-                                class="u-metalist u-zlp"
-                                v-if="item.post.post_meta"
-                            >
+                            <div class="u-metalist u-zlp" v-if="item.post_meta">
                                 <strong>版本</strong>
-                                <em>{{ item.post.post_meta.zlp || "全部" }}</em>
+                                <em>{{ item.zlp || item.post_meta.zlp || "全部" }}</em>
                             </div>
-                            <div
-                                class="u-metalist u-pvmode"
-                                v-if="item.post.post_meta"
-                            >
+                            <div class="u-metalist u-pvmode" v-if="item.post_meta">
                                 <strong>方向</strong>
-                                <em>{{
-                                    item.post.post_meta.pvmode || "全部"
-                                }}</em>
+                                <em>
+                                    {{
+                                    (item.tags && item.tags.join(',')) || item.post_meta.pvmode || "全部"
+                                    }}
+                                </em>
                             </div>
                         </div>
 
@@ -124,20 +91,20 @@
                         <div class="u-misc">
                             <img
                                 class="u-author-avatar"
-                                :src="item.author.avatar | showAvatar"
-                                :alt="item.author.name"
+                                :src="item.author_info.user_avatar | showAvatar"
+                                :alt="item.author_info.display_name"
                             />
                             <a
                                 class="u-author-name"
-                                :href="item.author.uid | authorLink"
+                                :href="item.post_author | authorLink"
                                 target="_blank"
-                                >{{ item.author.name }}</a
-                            >
+                            >{{ item.author_info.display_name }}</a>
                             <span class="u-date">
                                 Updated on
-                                <time>{{
-                                    item.post.post_modified | dateFormat
-                                }}</time>
+                                <time
+                                    v-if="order == 'update'"
+                                >{{item.post_modified | dateFormat}}</time>
+                                <time v-else>{{item.post_date | dateFormat}}</time>
                             </span>
                         </div>
                     </li>
@@ -177,7 +144,7 @@ zlps.forEach((item) => {
 export default {
     name: "list",
     props: [],
-    data: function() {
+    data: function () {
         return {
             loading: false, //加载状态
 
@@ -189,13 +156,12 @@ export default {
             appendMode: false, //追加模式
 
             search: "",
-            searchType: "title",
 
-            order: "", //排序模式
+            order: "update", //排序模式
             mark: "", //筛选模式
             pvmode: "",
             zlp: "",
-            client: "",
+            client: this.$store.state.client, //版本选择
 
             zlps: _zlps,
             pvmodes: { pve: "PVE", pvp: "PVP", pvx: "PVX" },
@@ -203,44 +169,44 @@ export default {
         };
     },
     computed: {
-        subtype: function() {
-            return this.$store.state.subtype;
+        subtype: function () {
+            return this.$route.query.subtype
         },
-        params: function() {
+        resetParams : function (){
+            return [this.subtype,this.search,this.mark,this.client,this.zlp]
+        },
+        params: function () {
             let params = {
                 per: this.per,
-                subtype: this.subtype,
                 page: ~~this.page || 1,
             };
-            if (this.search) {
-                params.search = this.search;
-            }
-            if (this.order) {
-                params.order = this.order;
-            }
-            if (this.mark) {
-                params.mark = this.mark;
-            }
-            if (this.zlp) {
-                params.meta_1 = this.zlp;
-            }
-            if (this.pvmode) {
-                params.meta_2 = this.pvmode;
-            }
-            if (this.client) {
-                params.client = this.client;
+            let optionalParams = [
+                "subtype",
+                "search",
+                "mark",
+                "client",
+                "zlp",
+                "order",
+            ];
+            optionalParams.forEach((item) => {
+                if (this[item]) {
+                    params[item] = this[item];
+                }
+            });
+            if (this.subtype) {
+                params.sticky = 1;
             }
             return params;
         },
-        target: function() {
+        target: function () {
             return buildTarget();
         },
-        publish_link: function(val) {
+        publish_link: function (val) {
             return publishLink("bps");
         },
     },
     methods: {
-        loadPosts: function(i = 1, append = false) {
+        loadPosts: function (i = 1, append = false) {
             this.loading = true;
             getPosts(this.params, this)
                 .then((res) => {
@@ -256,70 +222,72 @@ export default {
                     this.loading = false;
                 });
         },
-        changePage: function(i) {
+        changePage: function (i) {
             this.appendMode = false;
             this.page = i;
             window.scrollTo(0, 0);
         },
-        appendPage: function(i) {
+        appendPage: function (i) {
             this.appendMode = true;
             this.page = i;
         },
-        filter: function(o) {
+        filter: function (o) {
             this.appendMode = false;
             this[o["type"]] = o["val"];
         },
-        showBanner: function(item) {
-            let banner = item.post.post_banner;
+        showBanner: function (item) {
+            let banner = item.post_banner;
             return banner
-                ? showBanner(item.post.post_banner)
-                : this.showDefaultBanner(item.post.post_subtype);
+                ? showBanner(item.post_banner)
+                : this.showDefaultBanner(item.post_subtype);
         },
-        showDefaultBanner: function(subtype) {
+        showDefaultBanner: function (subtype) {
             let img_name = (subtype && mountmap[subtype]) || 0;
             return __imgPath + "image/bps_thumbnail/" + img_name + ".png";
         },
     },
     filters: {
-        dateFormat: function(val) {
+        dateFormat: function (val) {
             return dateFormat(new Date(val));
         },
-        showAvatar: function(val) {
+        showAvatar: function (val) {
             return showAvatar(val);
         },
-        authorLink: function(val) {
+        authorLink: function (val) {
             return authorLink(val);
         },
-        postLink: function(val) {
-            // return "./?pid=" + val;
+        postLink: function (val) {
             return location.origin + "/" + getAppType() + "/" + val;
         },
-        isHighlight: function(val) {
+        isHighlight: function (val) {
             return val ? `color:${val};font-weight:600;` : "";
         },
-        showMark: function(val) {
+        showMark: function (val) {
             return mark_map[val];
         },
-        xficon: function(val) {
+        xficon: function (val) {
             if (!val || val == "其它") val = "通用";
             let xf_id = xfmap[val] && xfmap[val]["id"];
             return __imgPath + "image/xf/" + xf_id + ".png";
         },
     },
     watch: {
+        resetParams: function () {
+            this.page = 1;
+        },
         params: {
             deep: true,
-            handler: function() {
+            immediate: true,
+            handler: function () {
                 this.loadPosts();
             },
         },
-        "$route.query.page": function(val) {
+        "$route.query.page": function (val) {
             this.page = ~~val;
         },
     },
-    created: function() {
+    created: function () {
         this.page = ~~this.$route.query.page || 1;
-        this.loadPosts();
     },
     components: {
         listbox,

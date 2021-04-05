@@ -1,5 +1,15 @@
 <template>
     <div class="m-list-side">
+        <!-- 群号 -->
+        <RightSideMsg>
+            <em>签约作者交流群</em> :
+            <strong>
+                <a href="https://jq.qq.com/?_wv=1027&k=CAiizina" v-if="client == 'origin'">590349918</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=t1uvYnW1" v-else>297985102</a>
+            </strong>
+        </RightSideMsg>
+        <group />
+
         <!-- 排行榜 -->
         <!-- <div class="m-side-rank">
             <h3 class="c-sidebar-right-title">
@@ -28,7 +38,7 @@
                 </ul>
             </div>
             <router-link class="m-bps-ladder-more" to="/ladder">仅作参考 · 榜单来源</router-link>
-        </div> -->
+        </div>-->
 
         <!-- 其他链接 -->
         <!-- <div class="m-side-links">
@@ -45,41 +55,53 @@
                 <a class="u-item" href="https://www.j3pz.com/" target="_blank">配装模拟器</a>
                 <a class="u-item" href="http://minamistudio.online/jx3simulator/index.html" target="_blank">DPS模拟器</a>
             </div>
-        </div> -->
+        </div>-->
 
         <!-- <Github_REPO REPO="fb" coder="8"></Github_REPO> -->
     </div>
 </template>
 
 <script>
+import group from "@/components/group.vue";
 import ladder from "../assets/data/ladder.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import { __ossMirror,__imgPath,__ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import {
+    __ossMirror,
+    __imgPath,
+    __ossRoot,
+} from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "list_side",
     props: [],
-    data: function() {
+    data: function () {
         return {
             ladder,
             xfmap,
         };
     },
-    computed: {},
+    computed: {
+        client: function () {
+            return this.$store.state.client;
+        },
+    },
     methods: {
-        xfcolor: function(val) {
+        xfcolor: function (val) {
             return this.xfmap[val]["color"];
         },
     },
     filters: {
-        xficon: function(val) {
+        xficon: function (val) {
             return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
         },
     },
-    mounted: function() {},
-    components: {},
+    mounted: function () {},
+    components: {
+        group,
+    },
 };
 </script>
 
 <style lang="less">
+@import "../assets/css/side.less";
 @import "../assets/css/list_side.less";
 </style>

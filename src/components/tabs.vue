@@ -77,7 +77,12 @@ export default {
     computed: {},
     methods: {
         changeView: function() {
-            this.$router.push({ name: this.view });
+            this.$router.push({
+                name: this.view,
+                query: {
+                    subtype: this.$route.query.subtype,
+                },
+            });
         },
     },
 };

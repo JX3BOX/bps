@@ -63,7 +63,7 @@ export default {
     },
     computed: {
         xf: function() {
-            return this.$store.state.subtype || "通用";
+            return this.$route.query.subtype || "通用";
         },
         force: function() {
             return xfmap[this.xf]["force"];
@@ -106,7 +106,11 @@ export default {
     },
     mounted: function() {
         this.loadData();
-        // console.log(this.isSchool)
+    },
+    watch : {
+        xf : function (){
+            this.loadData()
+        }
     },
     components: {},
 };

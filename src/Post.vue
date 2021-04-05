@@ -10,16 +10,12 @@
             :feedbackEnable="true"
         >
             <img slot="logo" svg-inline src="./assets/img/bps.svg" />
-            <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
         <Main :withoutRight="false">
-            <div class="m-main">
-                <tabs />
-                <router-view />
-            </div>
+            <single />
             <RightSidebar>
                 <Side class="m-extend" />
             </RightSidebar>
@@ -29,25 +25,24 @@
 </template>
 
 <script>
-import Info from "@/components/Info.vue";
-import Nav from "@/components/list_nav.vue";
-import Side from "@/components/list_side.vue";
-import tabs from "@/components/tabs";
-
+import Nav from "@/components/single_nav.vue";
+import Side from "@/components/single_side.vue";
+import single from "@/components/single.vue";
 export default {
     name: "App",
     props: [],
     data: function () {
         return {};
     },
-    computed: {},
     methods: {},
     components: {
-        Info,
         Nav,
         Side,
-        tabs,
+        single,
     },
+    beforeCreate : function (){
+        
+    }
 };
 </script>
 
