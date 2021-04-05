@@ -219,6 +219,7 @@ export default {
                     this.pages = res.data.data.pages;
                 })
                 .finally(() => {
+                    this.appendMode = false
                     this.loading = false;
                 });
         },
@@ -272,8 +273,14 @@ export default {
         },
     },
     watch: {
+        subtype : function (){
+            this.search = ''  
+        },
         resetParams: function () {
             this.page = 1;
+        },
+        client : function (){
+            this.zlp = ''  
         },
         params: {
             deep: true,
