@@ -170,10 +170,16 @@ export default {
     },
     computed: {
         subtype: function () {
-            return this.$route.query.subtype
+            return this.$route.query.subtype;
         },
-        resetParams : function (){
-            return [this.subtype,this.search,this.mark,this.client,this.zlp]
+        resetParams: function () {
+            return [
+                this.subtype,
+                this.search,
+                this.mark,
+                this.client,
+                this.zlp,
+            ];
         },
         params: function () {
             let params = {
@@ -219,7 +225,7 @@ export default {
                     this.pages = res.data.data.pages;
                 })
                 .finally(() => {
-                    this.appendMode = false
+                    this.appendMode = false;
                     this.loading = false;
                 });
         },
@@ -273,14 +279,14 @@ export default {
         },
     },
     watch: {
-        subtype : function (){
-            this.search = ''  
+        subtype: function () {
+            this.search = "";
         },
         resetParams: function () {
             this.page = 1;
         },
-        client : function (){
-            this.zlp = ''  
+        client: function () {
+            this.zlp = "";
         },
         params: {
             deep: true,

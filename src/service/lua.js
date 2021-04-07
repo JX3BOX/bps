@@ -15,7 +15,8 @@ function getMap() {
 }
 
 function getLua(path) {
-    return axios.get(API + path + '?version=' + Date.now(),{
+    let _path = encodeURIComponent(path)
+    return axios.get(API + _path + '?version=' + Date.now(),{
         headers: {'content-type': 'text/plain'},
     }).catch((err) => {
         console.log(err);
