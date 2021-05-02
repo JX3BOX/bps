@@ -125,7 +125,9 @@ export default {
     },
     filters: {
         filterRaw: function (str) {
-            return str && str.replace(/\\n/g, "\n");
+            str = str && str.replace(/\\n/g, "\n");
+            str = str && str.replace(/(\<TALENT.*?\>)/g, "\n$1");
+            return str
         },
         iconURL: function (id) {
             return __iconPath + "icon/" + id + ".png";
