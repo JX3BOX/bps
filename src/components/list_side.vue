@@ -8,7 +8,7 @@
                 <a href="https://jq.qq.com/?_wv=1027&k=t1uvYnW1" v-else>297985102</a>
             </strong>
         </RightSideMsg>
-        <!-- 天梯榜图 -->
+        <router-link class="u-link-rank" to="/ladder"><img src="../assets/img/rank.png" /></router-link>
         <!-- Q群 -->
         <group />
 
@@ -55,7 +55,15 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 @import "../assets/css/side.less";
 @import "../assets/css/list_side.less";
+.u-link-rank{
+    .db;
+    .x;
+    img{
+        .r(3px);
+    }
+    .mt(10px);
+}
 </style>

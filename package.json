@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@jx3box/jx3box-common": "^6.4.2",
-    "@jx3box/jx3box-common-ui": "^4.5.5",
-    "@jx3box/jx3box-data": "^1.0.7",
-    "@jx3box/jx3box-page": "^0.4.9",
+    "@jx3box/jx3box-common-ui": "^4.6.3",
+    "@jx3box/jx3box-data": "^1.0.8",
+    "@jx3box/jx3box-page": "^0.5.0",
     "ant-design-vue": "^1.6.2",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",

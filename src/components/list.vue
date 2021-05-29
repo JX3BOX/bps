@@ -170,7 +170,7 @@ export default {
     },
     computed: {
         subtype: function () {
-            return this.$route.query.subtype;
+            return this.$store.state.subtype;
         },
         resetParams: function () {
             return [
@@ -298,6 +298,9 @@ export default {
         "$route.query.page": function (val) {
             this.page = ~~val;
         },
+        '$route.query.subtype' : function (val){
+            this.$store.state.subtype = val
+        }
     },
     created: function () {
         this.page = ~~this.$route.query.page || 1;

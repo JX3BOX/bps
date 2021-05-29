@@ -1,8 +1,7 @@
 <template>
     <div class="v-ladder">
         <h3 class="m-ladder-header">
-            <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" />
-            门派天梯榜 ·
+            <span class="u-title"><img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜<span class="u-dot"> · </span></span>
             <el-select v-model="zlp" placeholder="请选择">
                 <el-option
                     v-for="item in zlps"
