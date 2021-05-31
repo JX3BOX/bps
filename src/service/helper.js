@@ -8,4 +8,12 @@ function getCollection($collection_id, params = {}) {
     });
 }
 
-export { getCollection };
+function getSkillGroups(keys) {
+    return $helper().get(`/api/skill_groups`, {
+        params: {
+            keys,
+        },
+    });
+}
+
+export { getCollection,getSkillGroups };
