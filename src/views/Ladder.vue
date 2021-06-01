@@ -28,15 +28,15 @@
                             class="u-item"
                             :style="{
                             width: getRate(item.dps),
-                            backgroundColor: xfcolor(item.label),
+                            backgroundColor: xfcolor(item.xf),
                         }"
                         >
-                            <img :src="item.label | xficon" class="u-pic" />
+                            <img :src="item.xf | xficon" class="u-pic" />
                             <span class="u-text">
-                                {{ item.label }}
+                                {{ item.xf }}
                                 <span
                                     class="u-desc"
-                                    v-if="item.label"
+                                    v-if="item.xf"
                                 >&lt;{{item.label}}&gt;</span>
                             </span>
                         </div>
@@ -46,15 +46,15 @@
                         class="u-item"
                         :style="{
                             width: getRate(item.dps),
-                            backgroundColor: xfcolor(item.label),
+                            backgroundColor: xfcolor(item.xf),
                         }"
                     >
-                        <img :src="item.label | xficon" class="u-pic" />
+                        <img :src="item.xf | xficon" class="u-pic" />
                         <span class="u-text">
-                            {{ item.label }}
+                            {{ item.xf }}
                             <span
                                 class="u-desc"
-                                v-if="item.label"
+                                v-if="item.xf"
                             >&lt;{{item.label}}&gt;</span>
                         </span>
                     </div>
