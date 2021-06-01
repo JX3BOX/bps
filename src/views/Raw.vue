@@ -54,6 +54,7 @@
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { getSkills } from "../service/raw";
+import { getSkillGroup } from "../service/helper";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
 import kungfumap from "@jx3box/jx3box-data/data/bps/kungfu.json";

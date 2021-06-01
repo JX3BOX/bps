@@ -25,12 +25,34 @@
                 </ul>
             </el-tab-pane>
         </el-tabs>
+
+        <div class="m-ladder-contributor">
+            <div class="u-label">❤️ 感谢以下人员的贡献</div>
+            <div class="u-list" v-if="authors && authors.length">
+                <a
+                    class="u-author"
+                    target="_blank"
+                    :href="item.ID | authorLink"
+                    v-for="(item,i) in authors"
+                    :key="i"
+                >
+                    <img :src="item.user_avatar | showAvatar" :alt="item.display_name" />
+                    {{item.display_name}}
+                </a>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import { getSkillGroups } from "@/service/helper.js";
-import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
+import { getSkillGroups, getSkillGroup } from "@/service/helper.js";
+import { getUsers, getBread } from "@/service/ladder.js";
+import {
+    getLink,
+    iconLink,
+    showAvatar,
+    authorLink,
+} from "@jx3box/jx3box-common/js/utils";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 export default {
     name: "Collection",
@@ -100,7 +122,7 @@ export default {
                     label: "疾行",
                     desc: "包含加速等。",
                     key: "jixing",
-                    icon: "el-icon-apple",
+                    icon: "el-icon-milk-tea",
                 },
                 {
                     label: "滞行",
@@ -120,6 +142,7 @@ export default {
             data: {},
             origin: "",
             xfmap,
+            authors: [],
         };
     },
     computed: {
@@ -159,9 +182,18 @@ export default {
         showXfIcon: function (xf) {
             return xfmap[xf] && iconLink(xfmap[xf]["icon"]);
         },
+        authorLink,
+        showAvatar,
     },
     mounted: function () {
         this.loadData();
+
+        // 加载贡献名单
+        getBread("bps_collection_authors").then((ids) => {
+            getUsers(ids).then((data) => {
+                this.authors = data || [];
+            });
+        });
     },
 };
 </script>

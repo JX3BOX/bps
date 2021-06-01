@@ -16,4 +16,10 @@ function getUsers(ids) {
     })
 }
 
-export { getUsers,getBread };
+function getRank(key){
+    return $helper().get(`/api/dps_group/${key}`).then((res) => {
+        return res.data.data.group.items
+    })
+}
+
+export { getUsers,getBread,getRank };

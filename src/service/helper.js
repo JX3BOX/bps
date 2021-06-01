@@ -16,4 +16,8 @@ function getSkillGroups(keys) {
     });
 }
 
-export { getCollection,getSkillGroups };
+function getSkillGroup(key) {
+    return $helper().get(`/api/skill_group/${key}`);
+}
+
+export { getCollection, getSkillGroups, getSkillGroup };

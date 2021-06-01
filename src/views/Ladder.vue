@@ -1,7 +1,10 @@
 <template>
     <div class="v-ladder">
         <h3 class="m-ladder-header">
-            <span class="u-title"><img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜<span class="u-dot"> · </span></span>
+            <span class="u-title">
+                <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜
+                <span class="u-dot">·</span>
+            </span>
             <el-select v-model="zlp" placeholder="请选择">
                 <el-option
                     v-for="item in zlps"
@@ -15,16 +18,25 @@
         <div class="m-ladder-rank">
             <ul>
                 <li v-for="(item, i) in data" :key="i">
-                    <span
-                        class="u-item"
-                        :style="{
-                            width: item.max + '%',
-                            backgroundColor: xfcolor(item.name),
-                        }"
+                    <el-tooltip
+                        effect="dark"
+                        :content="item.remark || 无"
+                        placement="top-start"
                     >
-                        <img :src="item.name | xficon" class="u-pic" />
-                        <span class="u-text">{{ item.name }}</span>
-                    </span>
+                        <div
+                            class="u-item"
+                            :style="{
+                            width: getRate(item.dps),
+                            backgroundColor: xfcolor(item.label),
+                        }"
+                        >
+                            <img :src="item.label | xficon" class="u-pic" />
+                            <span class="u-text">
+                                {{ item.label }}
+                                <span class="u-desc" v-if="item.label">&lt;{{item.label}}&gt;</span>
+                            </span>
+                        </div>
+                    </el-tooltip>
                 </li>
             </ul>
         </div>
@@ -48,10 +60,10 @@
 
 <script>
 import { authorLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
-import { getUsers, getBread } from "@/service/ladder.js";
+import { getUsers, getBread, getRank } from "@/service/ladder.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import testdata from "@/assets/data/ladder.json";
+import zlps from "@/assets/data/ladder.json";
 
 export default {
     name: "Ladder",
@@ -59,22 +71,42 @@ export default {
     data: function () {
         return {
             xfmap,
-            zlp: "jielu",
-            zlps: [
-                {
-                    label: "结庐在江湖",
-                    value: "jielu",
-                },
-            ],
+            zlp: zlps[0]["value"] || "",
+            zlps,
             authors: [],
-            // TODO:修改为线上接口
-            data: testdata || [],
+            data: [],
         };
     },
-    computed: {},
+    computed: {
+        maxBase: function () {
+            let arr = [];
+            this.data.forEach((item) => {
+                arr.push(item.dps);
+            });
+            return ~~Math.max(...arr);
+        },
+    },
     methods: {
         xfcolor: function (val) {
-            return this.xfmap[val]["color"];
+            return xfmap[val]["color"];
+        },
+        getRate: function (val) {
+            return ((val / this.maxBase) * 100).toFixed(2) + "%";
+        },
+        loadRank: function () {
+            getRank(this.zlp).then((data) => {
+                this.data = data;
+            });
+        },
+        loadContributors: function () {
+            getBread("bps_ladder_authors").then((ids) => {
+                getUsers(ids).then((data) => {
+                    this.authors = data || [];
+                });
+            });
+        },
+        init: function () {
+            this.loadContributors();
         },
     },
     filters: {
@@ -85,12 +117,15 @@ export default {
         },
     },
     mounted: function () {
-        // 加载贡献名单
-        getBread("bps_ladder_authors").then((ids) => {
-            getUsers(ids).then((data) => {
-                this.authors = data || [];
-            });
-        });
+        this.init();
+    },
+    watch: {
+        zlp: {
+            immediate: true,
+            handler: function () {
+                this.loadRank();
+            },
+        },
     },
 };
 </script>
