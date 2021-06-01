@@ -14,7 +14,7 @@
                 ></el-option>
             </el-select>
         </h3>
-        <div class="m-ladder-desc">本榜单仅作参考，主要全流派在相同水平装备下以单体静止目标作为参考。</div>
+        <div class="m-ladder-desc">本榜单仅作参考，以平民毕业装对单体静止目标伤害作为参考。</div>
         <div class="m-ladder-rank" v-loading="loading">
             <ul>
                 <li v-for="(item, i) in data" :key="i">
