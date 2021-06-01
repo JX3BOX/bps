@@ -15,13 +15,14 @@
             </el-select>
         </h3>
         <div class="m-ladder-desc">本榜单仅作参考，主要全流派在相同水平装备下以单体静止目标作为参考。</div>
-        <div class="m-ladder-rank">
+        <div class="m-ladder-rank" v-loading="loading">
             <ul>
                 <li v-for="(item, i) in data" :key="i">
                     <el-tooltip
                         effect="dark"
-                        :content="item.remark || 无"
+                        :content="item.remark"
                         placement="top-start"
+                        v-if="item.remark"
                     >
                         <div
                             class="u-item"
@@ -33,10 +34,30 @@
                             <img :src="item.label | xficon" class="u-pic" />
                             <span class="u-text">
                                 {{ item.label }}
-                                <span class="u-desc" v-if="item.label">&lt;{{item.label}}&gt;</span>
+                                <span
+                                    class="u-desc"
+                                    v-if="item.label"
+                                >&lt;{{item.label}}&gt;</span>
                             </span>
                         </div>
                     </el-tooltip>
+                    <div
+                        v-else
+                        class="u-item"
+                        :style="{
+                            width: getRate(item.dps),
+                            backgroundColor: xfcolor(item.label),
+                        }"
+                    >
+                        <img :src="item.label | xficon" class="u-pic" />
+                        <span class="u-text">
+                            {{ item.label }}
+                            <span
+                                class="u-desc"
+                                v-if="item.label"
+                            >&lt;{{item.label}}&gt;</span>
+                        </span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -75,6 +96,7 @@ export default {
             zlps,
             authors: [],
             data: [],
+            loading: false,
         };
     },
     computed: {
@@ -94,9 +116,15 @@ export default {
             return ((val / this.maxBase) * 100).toFixed(2) + "%";
         },
         loadRank: function () {
-            getRank(this.zlp).then((data) => {
-                this.data = data;
-            });
+            this.loading = true;
+            getRank(this.zlp)
+                .then((data) => {
+                    this.data = data;
+                    this.$forceUpdate()
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         loadContributors: function () {
             getBread("bps_ladder_authors").then((ids) => {
