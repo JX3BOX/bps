@@ -39,6 +39,7 @@
                                     v-if="item.xf"
                                 >&lt;{{item.label}}&gt;</span>
                             </span>
+                            <span class="u-dps">{{item.dps}}</span>
                         </div>
                     </el-tooltip>
                     <div
@@ -57,6 +58,7 @@
                                 v-if="item.xf"
                             >&lt;{{item.label}}&gt;</span>
                         </span>
+                        <span class="u-dps">{{item.dps}}</span>
                     </div>
                 </li>
             </ul>
