@@ -7,6 +7,7 @@
                 v-for="kungfu in kungfus"
                 :key="kungfu"
             ></el-tab-pane>
+            <el-tab-pane label="心法被动" name="pasv" key="pasv"></el-tab-pane>
         </el-tabs>
 
         <!-- 搜索 -->
@@ -20,7 +21,7 @@
                 <template slot="prepend">技能名</template>
                 <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
-        </div> -->
+        </div>-->
 
         <ul class="m-resource-list" v-if="data.length">
             <li v-for="(o, i) in data" class="u-item" :key="i">
@@ -45,15 +46,13 @@
                 </div>
             </li>
         </ul>
-
-        <!-- 空 -->
         <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
     </div>
 </template>
 
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import { getSkills } from "../service/raw";
+import { getSkills, getSkill } from "../service/raw";
 import { getSkillGroup } from "../service/helper";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
@@ -80,7 +79,6 @@ export default {
             return this.$route.query.subtype || "通用";
         },
         school: function () {
-            let subtype = this.subtype || "通用";
             return xfmap[subtype]["school"];
         },
         mountid: function () {
@@ -92,43 +90,53 @@ export default {
         skill_ids: function () {
             return kungfumap[this.mountid]["skills"][this.kungfuid];
         },
+        pasv_skill: function () {
+            return xfmap[this.subtype]["pasv"];
+        },
+        params : function (){
+            if(this.kungfuid == 'pasv'){
+                return this.pasv_skill
+            }else{
+                return this.skill_ids.join(",")
+            }
+        }
     },
     methods: {
         loadSkills: function () {
             this.loading = true;
-            getSkills(this.skill_ids.join(","))
+            getSkills(this.params)
                 .then((res) => {
                     let data = res.data || [];
-                    this.data = this.removeLowLevelSkills(data)
+                    this.data = this.removeLowLevelSkills(data);
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
         changeKungfu: function () {},
-        removeLowLevelSkills : function (data){
-            let arr = []
-            let _data = []
+        removeLowLevelSkills: function (data) {
+            let arr = [];
+            let _data = [];
             // 只保留最高等级
             data.forEach((item) => {
-                if(!arr.includes(item.SkillID)){
-                    arr.push(item.SkillID)
-                    _data.push(item)
-                }else{
-                    let i = arr.indexOf(item.SkillID)
-                    if(~~item.Level > ~~_data[i].Level){
-                        _data[i] = item
+                if (!arr.includes(item.SkillID)) {
+                    arr.push(item.SkillID);
+                    _data.push(item);
+                } else {
+                    let i = arr.indexOf(item.SkillID);
+                    if (~~item.Level > ~~_data[i].Level) {
+                        _data[i] = item;
                     }
                 }
-            })
-            return _data
-        }
+            });
+            return _data;
+        },
     },
     filters: {
         filterRaw: function (str) {
             str = str && str.replace(/\\n/g, "\n");
             str = str && str.replace(/(\<TALENT.*?\>)/g, "\n$1");
-            return str
+            return str;
         },
         iconURL: function (id) {
             return __iconPath + "icon/" + id + ".png";
@@ -149,7 +157,7 @@ export default {
         },
         kungfuid: {
             immediate: true,
-            handler: function () {
+            handler: function (val) {
                 this.loadSkills();
             },
         },
