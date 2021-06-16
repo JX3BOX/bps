@@ -36,7 +36,7 @@
                                 {{ item.xf }}
                                 <span
                                     class="u-desc"
-                                    v-if="item.xf"
+                                    v-if="item.label"
                                 >&lt;{{item.label}}&gt;</span>
                             </span>
                             <span class="u-dps">{{item.dps}}</span>
@@ -55,7 +55,7 @@
                             {{ item.xf }}
                             <span
                                 class="u-desc"
-                                v-if="item.xf"
+                                v-if="item.label"
                             >&lt;{{item.label}}&gt;</span>
                         </span>
                         <span class="u-dps">{{item.dps}}</span>
