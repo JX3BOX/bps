@@ -18,13 +18,17 @@
         <div class="m-ladder-rank" v-loading="loading">
             <ul>
                 <li v-for="(item, i) in data" :key="i">
-                    <el-tooltip
-                        effect="dark"
-                        :content="item.remark"
-                        placement="top-start"
+                    <el-popover
                         v-if="item.remark"
+                        placement="top-start"
+                        :title="item.xf"
+                        width="500"
+                        trigger="hover"
+                        :content="item.remark"
+                        popper-class="m-ladder-pop"
                     >
                         <div
+                            slot="reference"
                             class="u-item"
                             :style="{
                             width: getRate(item.dps),
@@ -41,7 +45,7 @@
                             </span>
                             <span class="u-dps">{{item.dps}}</span>
                         </div>
-                    </el-tooltip>
+                    </el-popover>
                     <div
                         v-else
                         class="u-item"
@@ -122,7 +126,7 @@ export default {
             getRank(this.zlp)
                 .then((data) => {
                     this.data = data;
-                    this.$forceUpdate()
+                    this.$forceUpdate();
                 })
                 .finally(() => {
                     this.loading = false;
