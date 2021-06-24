@@ -5,8 +5,13 @@
             <router-link class="u-more" :to="{query:{subtype:''}}">全部心法 &raquo;</router-link>
         </h5>
         <ul class="m-bps-nav u-list">
-            <li class="u-item" v-for="(item,i) in xfmap" :key="i" v-show="item.client.includes(client)">
-                <router-link class="u-link" :to="{query : {subtype : item.name}}">
+            <li
+                class="u-item"
+                v-for="(item,i) in xfmap"
+                :key="i"
+                v-show="item.client.includes(client)"
+            >
+                <router-link class="u-link" :to="{query : {subtype : item.name,tab : tab}}">
                     <i class="u-pic">
                         <img :src="item.id | xficon" :alt="item.name" />
                     </i>
@@ -58,9 +63,12 @@ export default {
         };
     },
     computed: {
-        client : function (){
-            return this.$store.state.client
-        }
+        client: function () {
+            return this.$store.state.client;
+        },
+        tab: function () {
+            return this.$route.query.tab;
+        },
     },
     methods: {
         isActive: function (name) {

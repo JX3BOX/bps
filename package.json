@@ -10,9 +10,9 @@
     "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-data@latest @jx3box/jx3box-page@latest"
   },
   "dependencies": {
-    "@jx3box/jx3box-common": "^6.4.7",
+    "@jx3box/jx3box-common": "^6.4.8",
     "@jx3box/jx3box-common-ui": "^4.6.3",
-    "@jx3box/jx3box-data": "^1.1.2",
+    "@jx3box/jx3box-data": "^1.1.4",
     "@jx3box/jx3box-page": "^0.5.2",
     "ant-design-vue": "^1.6.2",
     "axios": "^0.21.1",

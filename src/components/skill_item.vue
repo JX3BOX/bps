@@ -22,7 +22,7 @@
             <div class="u-desc" v-html="format(item.desc)"></div>
             <div class="u-sdesc">{{ item.simpleDesc }}</div>
         </div>
-        <div class="u-cheasts" v-if="item.cheasts.length">
+        <div class="u-cheasts" v-if="item.cheasts.length" v-show="!!item.collapse">
             <div
                 class="u-cheast"
                 v-for="(cheast, i) in item.cheasts"
@@ -33,6 +33,7 @@
                 <span class="u-cheast-desc">{{ cheast.desc }}</span>
             </div>
         </div>
+        <el-button class="u-panel" size="mini" icon="el-icon-connection" @click="toggleCheasts(item)" v-if="item.cheasts.length">秘籍</el-button>
     </div>
 </template>
 
@@ -47,6 +48,10 @@ export default {
     methods: {
         format : function (txt){
             return txt.replace(/\\n/g,'\n')
+        },
+        toggleCheasts : function (item){
+            item.collapse = !item.collapse
+            this.$forceUpdate()
         }
     },
     filters : {
@@ -55,3 +60,12 @@ export default {
     components: {},
 };
 </script>
+
+<style scoped lang="less">
+    .u-item{
+        .pr;
+    }
+    .u-panel{
+        .pa;.rt(10px);
+    }
+</style>

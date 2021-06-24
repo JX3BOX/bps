@@ -2,15 +2,19 @@
     <div class="v-collection">
         <el-tabs v-model="type" type="card">
             <el-tab-pane :label="item.label" :name="item.key" v-for="(item,i) in types" :key="i">
-                <span slot="label" class="u-tab-icon">
+                <router-link
+                    slot="label"
+                    class="u-tab-icon"
+                    :to="{name:'collection',query : {tab:item.key,subtype}}"
+                >
                     <i :class="item.icon"></i>
                     {{item.label}}
-                </span>
+                </router-link>
                 <div class="m-collection-box">
                     <div class="m-collection-header">{{item.desc}}</div>
                 </div>
                 <ul class="m-collection-list" v-if="origin && data[item.key].length">
-                    <li class="u-item" v-for="(item,j) in data[item.key]" :key="j">
+                    <li class="u-item" v-for="(item,j) in data[item.key]" :key="j" v-show="filterSchool(item)">
                         <a :href="getItemLink(item)" target="_blank">
                             <img class="u-icon" :src="item.icon | iconLink" />
                             <span class="u-name">{{item.label}}</span>
@@ -54,6 +58,7 @@ import {
     authorLink,
 } from "@jx3box/jx3box-common/js/utils";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
+import relation from "@jx3box/jx3box-data/data/xf/relation.json";
 export default {
     name: "Collection",
     props: [],
@@ -143,6 +148,7 @@ export default {
             origin: "",
             xfmap,
             authors: [],
+            relation:relation['mount_relation']
         };
     },
     computed: {
@@ -155,6 +161,9 @@ export default {
         },
         keys: function () {
             return this.key_list.join(",");
+        },
+        subtype: function () {
+            return this.$route.query.subtype;
         },
     },
     methods: {
@@ -176,6 +185,13 @@ export default {
         getItemLink: function (item) {
             return getLink(item.key || "skill", item.meta_1);
         },
+        filterSchool : function (item){
+            if(!this.subtype || this.subtype == '通用'){
+                return true
+            }else{
+                return this.relation[this.subtype].includes(item.meta_2) 
+            }
+        }
     },
     filters: {
         iconLink,
@@ -194,6 +210,12 @@ export default {
                 this.authors = data || [];
             });
         });
+
+        // 初始化tab
+        if(this.$route.query.tab){
+            this.type = this.$route.query.tab
+        }
+
     },
 };
 </script>
