@@ -11,7 +11,7 @@
                     {{item.label}}
                 </router-link>
                 <div class="m-collection-box">
-                    <div class="m-collection-header">{{desc || item.desc}}</div>
+                    <div class="m-collection-header" v-html="desc || item.desc"></div>
                 </div>
                 <ul class="m-collection-list" v-if="origin && data[item.key].length">
                     <li class="u-item" v-for="(item,j) in data[item.key]" :key="j" v-show="filterSchool(item)">
@@ -141,6 +141,12 @@ export default {
                         "大部分技能为坦克心法独有，少量门派与宠物也有仇恨技能，强仇后将固定攻击该目标。",
                     key: "chaofeng",
                     icon: "el-icon-ice-cream-round",
+                },
+                {
+                    label: "回内",
+                    desc: "回复蓝量。",
+                    key: "huifu",
+                    icon: "el-icon-ice-drink",
                 },
             ],
             type: "jianshang",
