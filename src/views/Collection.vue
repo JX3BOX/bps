@@ -11,7 +11,7 @@
                     {{item.label}}
                 </router-link>
                 <div class="m-collection-box">
-                    <div class="m-collection-header">{{item.desc}}</div>
+                    <div class="m-collection-header">{{desc || item.desc}}</div>
                 </div>
                 <ul class="m-collection-list" v-if="origin && data[item.key].length">
                     <li class="u-item" v-for="(item,j) in data[item.key]" :key="j" v-show="filterSchool(item)">
@@ -148,7 +148,7 @@ export default {
             origin: "",
             xfmap,
             authors: [],
-            relation:relation['mount_relation']
+            relation:relation['mount_relation'],
         };
     },
     computed: {
@@ -165,6 +165,9 @@ export default {
         subtype: function () {
             return this.$route.query.subtype;
         },
+        desc : function (){
+            return this.origin && this.origin[this.type] && this.origin[this.type]['description']
+        }
     },
     methods: {
         loadData: function () {
