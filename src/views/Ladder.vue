@@ -26,11 +26,12 @@
                     <el-option
                         v-for="(school_name,school_id) in schoolmap"
                         :key="school_id"
-                        :label="school_name"
+                        :label="~~school_id ? school_name : '全部'"
                         :value="school_id"
                     >
                         <img :src="school_id | showSchoolIcon" class="u-school-icon"/>
-                        <span class="u-school-name">{{school_id ? school_name : '全部'}}</span>
+                        <span class="u-school-name">{{~~school_id ? school_name : '全部'}}</span>
+                        <!-- <span class="u-school-name">{{school_name}}</span> -->
                     </el-option>
                 </el-select>
             </div>
@@ -146,7 +147,7 @@ export default {
     },
     methods: {
         xfcolor: function (val) {
-            return xfmap[val]["color"];
+            return xfmap[val] && xfmap[val]["color"];
         },
         getRate: function (val) {
             return ((val / this.maxBase) * 100).toFixed(2) + "%";
@@ -162,8 +163,10 @@ export default {
 
             // 门派可视过滤
             let school_visible = true;
-            if (this.school) {
+            if (~~this.school) {
                 school_visible = item.school == this.school;
+            }else{
+                school_visible = true
             }
 
             return filter_visible && school_visible;
@@ -194,7 +197,11 @@ export default {
         authorLink,
         showAvatar,
         xficon: function (val) {
-            return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
+            if(xfmap[val]){
+                return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
+            }else{
+                return ''
+            }
         },
         showSchoolIcon: function (val) {
             return __imgPath + "image/school/" + val + ".png";
