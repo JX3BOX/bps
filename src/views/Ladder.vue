@@ -1,23 +1,43 @@
 <template>
     <div class="v-ladder">
-        <h3 class="m-ladder-header">
-            <span class="u-title">
-                <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜
-                <span class="u-dot">·</span>
-            </span>
-            <el-select v-model="zlp" placeholder="请选择">
-                <el-option
-                    v-for="item in zlps"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                ></el-option>
-            </el-select>
-        </h3>
-        <div class="m-ladder-desc">本榜单仅作参考，以无团队增益下对单体静止114目标伤害作为参考。</div>
+        <div class="m-ladder-header">
+            <h3 class="m-ladder-title">
+                <span class="u-title">
+                    <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜
+                    <span class="u-dot">·</span>
+                </span>
+                <el-select v-model="zlp" placeholder="请选择">
+                    <el-option
+                        v-for="item in zlps"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </h3>
+            <div class="m-ladder-desc">本榜单仅作参考，以无团队增益下对单体静止114目标伤害作为参考。</div>
+            <div class="m-ladder-filter">
+                <el-radio-group class="u-filter-rank" v-model="filter" size="medium">
+                    <el-radio-button label="全部"></el-radio-button>
+                    <el-radio-button label="只显示最低"></el-radio-button>
+                    <el-radio-button label="只显示最高"></el-radio-button>
+                </el-radio-group>
+                <el-select class="u-filter-school" v-model="school" placeholder="只看门派">
+                    <el-option
+                        v-for="(school_name,school_id) in schoolmap"
+                        :key="school_id"
+                        :label="school_name"
+                        :value="school_id"
+                    >
+                        <img :src="school_id | showSchoolIcon" class="u-school-icon"/>
+                        <span class="u-school-name">{{school_id ? school_name : '全部'}}</span>
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
         <div class="m-ladder-rank" v-loading="loading">
             <ul>
-                <li v-for="(item, i) in data" :key="i">
+                <li v-for="(item, i) in data" :key="i" v-show="isVisible(item)">
                     <el-popover
                         v-if="item.remark"
                         placement="top-start"
@@ -89,19 +109,29 @@
 import { authorLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { getUsers, getBread, getRank } from "@/service/ladder.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
+import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import zlps from "@/assets/data/ladder.json";
-
 export default {
     name: "Ladder",
     props: [],
     data: function () {
         return {
-            xfmap,
+            // 版本
             zlp: zlps[0]["value"] || "",
             zlps,
-            authors: [],
+
+            // 排行
+            xfmap,
             data: [],
+
+            // 过滤
+            filter: "全部",
+            school: "",
+            schoolmap,
+
+            // 杂项
+            authors: [],
             loading: false,
         };
     },
@@ -120,6 +150,23 @@ export default {
         },
         getRate: function (val) {
             return ((val / this.maxBase) * 100).toFixed(2) + "%";
+        },
+        isVisible: function (item) {
+            // rank可视过滤
+            let filter_visible = true;
+            if (this.filter == "只显示最低") {
+                filter_visible = !~~item.icon;
+            } else if (this.filter == "只显示最高") {
+                filter_visible = item.icon == 4;
+            }
+
+            // 门派可视过滤
+            let school_visible = true;
+            if (this.school) {
+                school_visible = item.school == this.school;
+            }
+
+            return filter_visible && school_visible;
         },
         loadRank: function () {
             this.loading = true;
@@ -149,6 +196,9 @@ export default {
         xficon: function (val) {
             return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
         },
+        showSchoolIcon: function (val) {
+            return __imgPath + "image/school/" + val + ".png";
+        },
     },
     mounted: function () {
         this.init();
@@ -166,4 +216,13 @@ export default {
 
 <style lang="less">
 @import "../assets/css/ladder.less";
+
+.u-school-icon{
+    .size(24px);
+    .y;
+    .mr(5px);
+}
+.u-school-name{
+    .fz(14px);
+}
 </style>

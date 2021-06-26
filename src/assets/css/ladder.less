@@ -1,4 +1,4 @@
-.m-ladder-header {
+.m-ladder-title {
     .x;
     .u-icon {
         .y(-5px);
@@ -9,7 +9,7 @@
     }
 }
 @media screen and (max-width:@phone){
-    .m-ladder-header{
+    .m-ladder-title{
         .u-dot{
             .none;
         }
@@ -25,7 +25,7 @@
     color: #888;
     border-bottom: 1px dashed #ddd;
     padding-bottom: 20px;
-    .mb(40px);
+    .mb(20px);
 }
 .m-ladder-contributor {
     .fz(14px);
@@ -105,4 +105,37 @@
         .bold;
         color:@color-link;
     }
+}
+.m-ladder-header{
+    .mb(20px);
+}
+
+.m-ladder-filter{
+    .u-filter-rank{
+        .fl;
+    }
+    .u-filter-school{
+        .fr;
+
+        .el-radio__input{
+            .none;
+        }
+        .is-checked{
+            .bold;
+        }
+
+        img{
+            .size(24px);
+            .y;
+        }
+
+        .el-radio__label{
+            padding-left:0;
+        }
+
+        .el-radio{
+            .mr(5px);
+        }
+    }
+    .clearfix;
 }
