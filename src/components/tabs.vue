@@ -32,10 +32,10 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能集合" name="collection">
+        <el-tab-pane label="技能合集" name="collection">
             <span slot="label">
                 <i class="el-icon-paperclip"></i>
-                <b>技能集合</b>
+                <b>技能合集</b>
                 <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
