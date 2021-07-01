@@ -192,7 +192,7 @@ export default {
                 });
         },
         getItemLink: function (item) {
-            return getLink(item.key || "skill", item.meta_1);
+            return getLink(item.key || "skill", item.id);
         },
         filterSchool : function (item){
             if(!this.subtype || this.subtype == '通用'){
