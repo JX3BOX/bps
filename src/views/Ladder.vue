@@ -29,7 +29,7 @@
                         :label="~~school_id ? school_name : '全部'"
                         :value="school_id"
                     >
-                        <img :src="school_id | showSchoolIcon" class="u-school-icon"/>
+                        <img :src="school_id | showSchoolIcon" class="u-school-icon" />
                         <span class="u-school-name">{{~~school_id ? school_name : '全部'}}</span>
                         <!-- <span class="u-school-name">{{school_name}}</span> -->
                     </el-option>
@@ -41,7 +41,7 @@
                 <li v-for="(item, i) in data" :key="i" v-show="isVisible(item)">
                     <el-popover
                         v-if="item.remark"
-                        placement="top-start"
+                        placement="bottom-start"
                         :title="item.xf"
                         width="500"
                         trigger="hover"
@@ -57,13 +57,24 @@
                         }"
                         >
                             <img :src="item.xf | xficon" class="u-pic" />
-                            <span class="u-text">
-                                {{ item.xf }}
-                                <span
-                                    class="u-desc"
-                                    v-if="item.label"
-                                >&lt;{{item.label}}&gt;</span>
-                            </span>
+                            <template v-if="!!item.link">
+                                <a class="u-text" :href="item.link" target="_blank">
+                                    {{ item.xf }}
+                                    <span
+                                        class="u-desc"
+                                        v-if="item.label"
+                                    >&lt;{{item.label}}&gt;</span>
+                                </a>
+                            </template>
+                            <template v-else>
+                                <span class="u-text">
+                                    {{ item.xf }}
+                                    <span
+                                        class="u-desc"
+                                        v-if="item.label"
+                                    >&lt;{{item.label}}&gt;</span>
+                                </span>
+                            </template>
                             <span class="u-dps">{{item.dps}}</span>
                         </div>
                     </el-popover>
@@ -76,13 +87,24 @@
                         }"
                     >
                         <img :src="item.xf | xficon" class="u-pic" />
-                        <span class="u-text">
-                            {{ item.xf }}
-                            <span
-                                class="u-desc"
-                                v-if="item.label"
-                            >&lt;{{item.label}}&gt;</span>
-                        </span>
+                        <template v-if="!!item.link">
+                            <a class="u-text" :href="item.link" target="_blank">
+                                {{ item.xf }}
+                                <span
+                                    class="u-desc"
+                                    v-if="item.label"
+                                >&lt;{{item.label}}&gt;</span>
+                            </a>
+                        </template>
+                        <template v-else>
+                            <span class="u-text">
+                                {{ item.xf }}
+                                <span
+                                    class="u-desc"
+                                    v-if="item.label"
+                                >&lt;{{item.label}}&gt;</span>
+                            </span>
+                        </template>
                         <span class="u-dps">{{item.dps}}</span>
                     </div>
                 </li>
@@ -165,8 +187,8 @@ export default {
             let school_visible = true;
             if (~~this.school) {
                 school_visible = item.school == this.school;
-            }else{
-                school_visible = true
+            } else {
+                school_visible = true;
             }
 
             return filter_visible && school_visible;
@@ -197,10 +219,10 @@ export default {
         authorLink,
         showAvatar,
         xficon: function (val) {
-            if(xfmap[val]){
+            if (xfmap[val]) {
                 return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
-            }else{
-                return ''
+            } else {
+                return "";
             }
         },
         showSchoolIcon: function (val) {
@@ -224,12 +246,12 @@ export default {
 <style lang="less">
 @import "../assets/css/ladder.less";
 
-.u-school-icon{
+.u-school-icon {
     .size(24px);
     .y;
     .mr(5px);
 }
-.u-school-name{
+.u-school-name {
     .fz(14px);
 }
 </style>
