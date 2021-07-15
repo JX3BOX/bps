@@ -38,7 +38,7 @@
         </div>
         <div class="m-ladder-rank" v-loading="loading">
             <ul>
-                <li v-for="(item, i) in data" :key="i" v-show="isVisible(item)">
+                <li v-for="(item, i) in rank" :key="i" v-show="isVisible(item)">
                     <el-popover
                         v-if="item.remark"
                         placement="bottom-start"
@@ -166,6 +166,13 @@ export default {
             });
             return ~~Math.max(...arr);
         },
+        rank : function (){
+            let data = this.data
+            data.sort((a,b) => {
+                return ~~(b.dps) - ~~(a.dps)
+            })
+            return data
+        }
     },
     methods: {
         xfcolor: function (val) {
