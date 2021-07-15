@@ -76,7 +76,7 @@ export default {
                 {
                     label: "抵御",
                     desc: "包含闪避、格挡、招架等，部分技能将无视此效果。",
-                    key: "diyu",
+                    key: "defence",
                     icon: "el-icon-dessert",
                 },
                 {
