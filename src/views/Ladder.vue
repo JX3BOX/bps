@@ -141,8 +141,7 @@ export default {
     data: function () {
         return {
             // 版本
-            zlp: zlps[0]["value"] || "",
-            zlps,
+            zlp: "",
 
             // 排行
             xfmap,
@@ -172,6 +171,15 @@ export default {
                 return ~~(b.dps) - ~~(a.dps)
             })
             return data
+        },
+        client : function (){
+            return this.$store.state.client == 'std' ? 1 : 2
+        },
+        c : function (){
+            return this.$store.state.client
+        },
+        zlps : function (){
+            return zlps[this.c] || []
         }
     },
     methods: {
@@ -202,7 +210,7 @@ export default {
         },
         loadRank: function () {
             this.loading = true;
-            getRank(this.zlp)
+            getRank(this.zlp,this.client)
                 .then((data) => {
                     this.data = data;
                     this.$forceUpdate();
@@ -235,6 +243,9 @@ export default {
         showSchoolIcon: function (val) {
             return __imgPath + "image/school/" + val + ".png";
         },
+    },
+    created : function (){
+        this.zlp = zlps[this.c][0]["value"]
     },
     mounted: function () {
         this.init();

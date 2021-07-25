@@ -1,10 +1,18 @@
-[
-    {
-        "label": "白帝风云（110级）",
-        "value": "baidifengyun"
-    },
-    {
-        "label": "结庐在江湖（100级）",
-        "value": "jielu"
-    }
-]
+{
+    "std":[
+        {
+            "label": "白帝风云（110级）",
+            "value": "baidifengyun"
+        },
+        {
+            "label": "结庐在江湖（100级）",
+            "value": "jielu"
+        }
+    ],
+    "origin":[
+        {
+            "label": "物华天宝（70级）",
+            "value": "wuhuatianbao"
+        }
+    ]
+}

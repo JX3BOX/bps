@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getSkillGroups, getSkillGroup } from "@/service/helper.js";
+import { getSkillGroups } from "@/service/helper.js";
 import { getUsers, getBread } from "@/service/ladder.js";
 import {
     getLink,
@@ -173,12 +173,15 @@ export default {
         },
         desc : function (){
             return this.origin && this.origin[this.type] && this.origin[this.type]['description']
+        },
+        client : function (){
+            return this.$store.state.client == 'std' ? 1 : 2
         }
     },
     methods: {
         loadData: function () {
             this.loading = true;
-            getSkillGroups(this.keys)
+            getSkillGroups(this.keys,this.client)
                 .then((res) => {
                     let data = res.data.data.data;
                     this.origin = data;

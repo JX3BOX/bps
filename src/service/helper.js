@@ -8,8 +8,12 @@ function getCollection($collection_id, params = {}) {
     });
 }
 
-function getSkillGroups(keys) {
-    return $helper().get(`/api/skill_groups`, {
+function getSkillGroups(keys, client) {
+    return $helper({
+        headers: {
+            "JX3-Client-Type": client,
+        },
+    }).get(`/api/skill_groups`, {
         params: {
             keys,
         },
