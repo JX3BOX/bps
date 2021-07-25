@@ -180,6 +180,9 @@ export default {
         },
         zlps : function (){
             return zlps[this.c] || []
+        },
+        contributors : function (){
+            return this.$store.state.client == 'std' ? 'bps_ladder_authors' : 'bps_ladder_authors_origin'
         }
     },
     methods: {
@@ -209,6 +212,9 @@ export default {
             return filter_visible && school_visible;
         },
         loadRank: function () {
+
+            if(!this.zlp) return
+
             this.loading = true;
             getRank(this.zlp,this.client)
                 .then((data) => {
@@ -220,7 +226,8 @@ export default {
                 });
         },
         loadContributors: function () {
-            getBread("bps_ladder_authors").then((ids) => {
+            getBread(this.contributors).then((ids) => {
+                if(!ids) return
                 getUsers(ids).then((data) => {
                     this.authors = data || [];
                 });

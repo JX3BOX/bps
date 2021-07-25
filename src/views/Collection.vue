@@ -174,8 +174,14 @@ export default {
         desc : function (){
             return this.origin && this.origin[this.type] && this.origin[this.type]['description']
         },
+        c : function (){
+            return this.$store.state.client
+        },
         client : function (){
             return this.$store.state.client == 'std' ? 1 : 2
+        },
+        contributors : function (){
+            return this.$store.state.client == 'std' ? 'bps_collection_authors' : 'bps_collection_authors_origin'
         }
     },
     methods: {
@@ -217,7 +223,8 @@ export default {
         this.loadData();
 
         // 加载贡献名单
-        getBread("bps_collection_authors").then((ids) => {
+        getBread(this.contributors).then((ids) => {
+            if(!ids) return
             getUsers(ids).then((data) => {
                 this.authors = data || [];
             });
