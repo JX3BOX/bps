@@ -96,7 +96,7 @@
         ></el-alert>
     </div>
     <div class="v-null" v-else>
-        <el-alert title="没有查看权限" type="warning" show-icon> </el-alert>
+        <el-alert type="warning" show-icon><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert>
     </div>
 </template>
 
@@ -119,7 +119,7 @@ export default {
             current: "",
             data: "",
             file: "",
-            isSuperAuthor: User.isSuperAuthor(),
+            isSuperAuthor: false,
             search: "",
         };
     },
@@ -215,10 +215,14 @@ export default {
         },
     },
     mounted: function() {
-        if (this.isSuperAuthor) {
-            this.current = this.school_name;
-            this.loadMap();
-        }
+        User.isSuperAuthor().then((data) => {
+            this.isSuperAuthor = data
+
+            if (this.isSuperAuthor) {
+                this.current = this.school_name;
+                this.loadMap();
+            }
+        })
     },
     components: {},
 };
