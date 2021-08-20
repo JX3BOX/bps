@@ -1,6 +1,6 @@
 <template>
     <div class="v-collection">
-        <el-tabs v-model="type" type="card">
+        <el-tabs v-model="type" type="card" @tab-click="changeTab">
             <el-tab-pane :label="item.label" :name="item.key" v-for="(item,i) in types" :key="i">
                 <router-link
                     slot="label"
@@ -14,7 +14,12 @@
                     <div class="m-collection-header" v-html="desc || item.desc"></div>
                 </div>
                 <ul class="m-collection-list" v-if="origin && data[item.key].length">
-                    <li class="u-item" v-for="(item,j) in data[item.key]" :key="j" v-show="filterSchool(item)">
+                    <li
+                        class="u-item"
+                        v-for="(item,j) in data[item.key]"
+                        :key="j"
+                        v-show="filterSchool(item)"
+                    >
                         <a :href="getItemLink(item)" target="_blank">
                             <img class="u-icon" :src="item.icon | iconLink" />
                             <span class="u-name">{{item.label}}</span>
@@ -154,7 +159,7 @@ export default {
             origin: "",
             xfmap,
             authors: [],
-            relation:relation['mount_relation'],
+            relation: relation["mount_relation"],
         };
     },
     computed: {
@@ -171,23 +176,29 @@ export default {
         subtype: function () {
             return this.$route.query.subtype;
         },
-        desc : function (){
-            return this.origin && this.origin[this.type] && this.origin[this.type]['description']
+        desc: function () {
+            return (
+                this.origin &&
+                this.origin[this.type] &&
+                this.origin[this.type]["description"]
+            );
         },
-        c : function (){
-            return this.$store.state.client
+        c: function () {
+            return this.$store.state.client;
         },
-        client : function (){
-            return this.$store.state.client == 'std' ? 1 : 2
+        client: function () {
+            return this.$store.state.client == "std" ? 1 : 2;
         },
-        contributors : function (){
-            return this.$store.state.client == 'std' ? 'bps_collection_authors' : 'bps_collection_authors_origin'
-        }
+        contributors: function () {
+            return this.$store.state.client == "std"
+                ? "bps_collection_authors"
+                : "bps_collection_authors_origin";
+        },
     },
     methods: {
         loadData: function () {
             this.loading = true;
-            getSkillGroups(this.keys,this.client)
+            getSkillGroups(this.keys, this.client)
                 .then((res) => {
                     let data = res.data.data.data;
                     this.origin = data;
@@ -203,13 +214,18 @@ export default {
         getItemLink: function (item) {
             return getLink(item.key || "skill", item.id);
         },
-        filterSchool : function (item){
-            if(!this.subtype || this.subtype == '通用'){
-                return true
-            }else{
-                return this.relation[this.subtype].includes(item.meta_2) 
+        filterSchool: function (item) {
+            if (!this.subtype || this.subtype == "通用") {
+                return true;
+            } else {
+                return this.relation[this.subtype].includes(item.meta_2);
             }
-        }
+        },
+        changeTab: function (item) {
+            this.$router.push({
+                query: { tab: item.name, subtype: this.subtype },
+            });
+        },
     },
     filters: {
         iconLink,
@@ -224,17 +240,16 @@ export default {
 
         // 加载贡献名单
         getBread(this.contributors).then((ids) => {
-            if(!ids) return
+            if (!ids) return;
             getUsers(ids).then((data) => {
                 this.authors = data || [];
             });
         });
 
         // 初始化tab
-        if(this.$route.query.tab){
-            this.type = this.$route.query.tab
+        if (this.$route.query.tab) {
+            this.type = this.$route.query.tab;
         }
-
     },
 };
 </script>

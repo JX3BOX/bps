@@ -6,6 +6,7 @@
                 {{ post_subtype }}
             </span>
         </div>
+        <Thx class="m-thx" slot="single-append" :postId="id" postType="bps" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
     </singlebox>
 </template>
 
@@ -28,6 +29,9 @@ export default {
     computed: {
         id: function() {
             return this.$store.state.id;
+        },
+        author_id : function (){
+            return this.post?.post_author || 0  
         },
         post_subtype: function() {
             return _.get(this.post,'post_subtype') || '其它'
