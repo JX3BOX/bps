@@ -11,11 +11,9 @@ import { $node } from "@jx3box/jx3box-common/js/https";
 //         });
 // }
 
-function getSkills(ids) {
+function getSkills(params) {
     return $node().get("/skills", {
-        params: {
-            ids,
-        },
+        params: params
     });
 }
 

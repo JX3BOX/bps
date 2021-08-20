@@ -52,11 +52,12 @@
 
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import { getSkills, getSkill } from "../service/raw";
-import { getSkillGroup } from "../service/helper";
+import { getSkills } from "../service/raw";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
-import kungfumap from "@jx3box/jx3box-data/data/bps/kungfu.json";
+import kungfumap_std from "@jx3box/jx3box-data/data/bps/kungfu_std.json";
+import kungfumap_origin from "@jx3box/jx3box-data/data/bps/kungfu_origin.json";
+import pasvmap from "@jx3box/jx3box-data/data/bps/pasv.json";
 import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
 import kungfus from "@jx3box/jx3box-data/data/xf/kungfuid.json";
 export default {
@@ -67,7 +68,7 @@ export default {
             data: [],
             loading: false,
 
-            kungfumap,
+            // kungfumap,
             mountmap,
 
             kungfuid: "",
@@ -85,20 +86,30 @@ export default {
             return mountmap[this.subtype] || "0";
         },
         kungfus: function () {
-            return kungfumap[this.mountid]["kungfus"];
+            return this.kungfumap[this.mountid]["kungfus"];
         },
         skill_ids: function () {
-            return kungfumap[this.mountid]["skills"][this.kungfuid];
+            return this.kungfumap[this.mountid]["skills"][this.kungfuid];
         },
-        pasv_skill: function () {
-            return xfmap[this.subtype]["pasv"];
+        pasv_skills: function () {
+            return pasvmap[this.subtype][this.client];
         },
-        params : function (){
-            if(this.kungfuid == 'pasv'){
-                return this.pasv_skill
-            }else{
-                return this.skill_ids.join(",")
-            }
+        ids: function () {
+            return this.kungfuid == "pasv"
+                ? this.pasv_skills.join(",")
+                : this.skill_ids.join(",");
+        },
+        client: function () {
+            return this.$store.state.client || "std";
+        },
+        params: function () {
+            return {
+                ids: this.ids,
+                client: this.client,
+            };
+        },
+        kungfumap : function (){
+            return this.client == 'origin' ? kungfumap_origin : kungfumap_std
         }
     },
     methods: {
