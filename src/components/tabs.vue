@@ -20,11 +20,11 @@
             <span slot="label">
                 <i class="el-icon-reading"></i>
                 <b>原始数据</b>
-                <!-- <em class="u-hot">重磅独家</em> -->
+                <em class="u-hot">怀旧服同步</em>
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="源码解析" name="lua">
+        <el-tab-pane label="源码解析" name="lua" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>源码分析</b>
