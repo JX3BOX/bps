@@ -27,6 +27,10 @@
                 <span>剑三数据库</span>
                 <!-- <i class="u-mark isnew">全新上线</i> -->
             </a>
+            <a href="/app/haste/" target="_blank">
+                <i class="el-icon-stopwatch"></i>
+                <span>急速阈值</span>
+            </a>
             <a href="/collection" target="_blank">
                 <i class="el-icon-notebook-1"></i>
                 <span>文集小册</span>
@@ -38,10 +42,6 @@
             <a href="https://www.j3pz.com/" target="_blank">
                 <i class="el-icon-shopping-bag-1"></i>
                 <span>在线配装</span>
-            </a>
-            <a href="https://www.j3pz.com/tools/haste/" target="_blank">
-                <i class="el-icon-stopwatch"></i>
-                <span>急速阈值</span>
             </a>
         </div>
     </div>
