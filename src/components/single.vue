@@ -6,6 +6,28 @@
                 {{ post_subtype }}
             </span>
         </div>
+        <div class="u-collection" v-if="collectionList && collectionList.length">
+            <div class="u-collection-title" @click="handleShow" :class="{ on: showCollection }">
+                <span><i class="el-icon-notebook-1"></i> 该作品已被收录至作者的剑三小册</span>
+                <a @click.stop :href="collectionInfo.id | getLink">《{{ collapseTitle }}》</a>
+            </div>
+            <transition name="fade">
+                <div v-if="showCollection">
+                    <ol
+                        v-if="collectionList && collectionList.length"
+                        class="u-list u-collection-content"
+                        :style="{ display: showCollection ? 'block' : 'none' }"
+                    >
+                        <li v-for="(item, i) in collectionList" :key="i" class="u-item">
+                            <a v-if="item" :href="item | showLink" target="_blank">
+                                <i class="el-icon-link"></i>
+                                {{ item.title }}
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+            </transition>
+        </div>
         <Thx class="m-thx" slot="single-append" :postId="id" postType="bps" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
     </singlebox>
 </template>
@@ -14,6 +36,7 @@
 import singlebox from "@jx3box/jx3box-page/src/cms-single";
 import { getPost } from "../service/post.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
+import { getLink } from "@jx3box/jx3box-common/js/utils";
 import _ from 'lodash'
 export default {
     name: "single",
@@ -24,6 +47,8 @@ export default {
             post: {},
             author: {},
             stat: {},
+
+            showCollection: false
         };
     },
     computed: {
@@ -36,8 +61,34 @@ export default {
         post_subtype: function() {
             return _.get(this.post,'post_subtype') || '其它'
         },
+
+        collectionInfo: function (){
+            return this.$store.state.collectionInfo;
+        },
+        collapseTitle: function (){
+            return this.collectionInfo?.title
+        },
+        collectionList: function (){
+            return this.collectionInfo?.posts
+        }
     },
-    filters: {},
+    filters: {
+        getLink: function (id){
+            return getLink('collection', id);
+        },
+        showLink: function (item) {
+            if (item.type == "custom") {
+                return item.url;
+            } else {
+                return getLink(item.type, item.id);
+            }
+        },
+    },
+    methods: {
+        handleShow: function (){
+            this.showCollection = !this.showCollection;
+        },
+    },
     created: function() {
         if (this.id) {
             this.loading = true;
