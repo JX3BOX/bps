@@ -2,10 +2,9 @@
     <div class="m-list-side">
         <!-- 群号 -->
         <RightSideMsg>
-            <em>作者交流群</em> :
+            <em>签约作者交流群</em> :
             <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=CAiizina" v-if="client == 'origin'">590349918</a>
-                <a href="https://jq.qq.com/?_wv=1027&k=t1uvYnW1" v-else>297985102</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=0kEOVaTY">789184680</a>
             </strong>
         </RightSideMsg>
         <router-link class="u-link-rank" to="/ladder"><img src="../assets/img/rank.png" /></router-link>
