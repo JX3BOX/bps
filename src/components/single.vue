@@ -6,28 +6,10 @@
                 {{ post_subtype }}
             </span>
         </div>
-        <div class="u-collection" v-if="collectionList && collectionList.length">
-            <div class="u-collection-title" @click="handleShow" :class="{ on: showCollection }">
-                <span><i class="el-icon-notebook-1"></i> 该作品已被收录至作者的剑三小册</span>
-                <a @click.stop :href="collectionInfo.id | getLink">《{{ collapseTitle }}》</a>
-            </div>
-            <transition name="fade">
-                <div v-if="showCollection">
-                    <ol
-                        v-if="collectionList && collectionList.length"
-                        class="u-list u-collection-content"
-                        :style="{ display: showCollection ? 'block' : 'none' }"
-                    >
-                        <li v-for="(item, i) in collectionList" :key="i" class="u-item">
-                            <a v-if="item" :href="item | showLink" target="_blank">
-                                <i class="el-icon-link"></i>
-                                {{ item.title }}
-                            </a>
-                        </li>
-                    </ol>
-                </div>
-            </transition>
-        </div>
+        <!-- 文集+联合创作者 -->
+        <Creators class="m-creators" :postId="id" :postType="post.post_type"/>
+        <Collection class="m-collection" :id="post.post_collection" :defaultVisible="post.collection_collapse"/>
+        <!-- 打赏 -->
         <Thx class="m-thx" slot="single-append" :postId="id" postType="bps" :userId="author_id" :adminBoxcoinEnable="true" :userBoxcoinEnable="true"/>
     </singlebox>
 </template>
@@ -37,6 +19,9 @@ import singlebox from "@jx3box/jx3box-page/src/cms-single";
 import { getPost } from "../service/post.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
+import Collection from '@jx3box/jx3box-common-ui/src/single/Collection.vue'
+import Creators from '@jx3box/jx3box-common-ui/src/single/Creators.vue'
+
 import _ from 'lodash'
 export default {
     name: "single",
@@ -110,6 +95,8 @@ export default {
     },
     components: {
         singlebox,
+        Collection,
+        Creators
     },
 };
 </script>
