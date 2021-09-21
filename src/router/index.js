@@ -8,6 +8,7 @@ const Collection = () => import("../views/Collection.vue");
 const Ladder = () => import("../views/Ladder.vue");
 const Lua = () => import("../views/Lua.vue");
 const Story = () => import("../views/Story.vue");
+const Recipe = () => import("../views/Recipe.vue");
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,7 @@ const routes = [
     { name: "ladder", path: "/ladder", component: Ladder },
     { name: "story", path: "/story", component: Story },
     { name: "lua", path: "/lua", component: Lua },
+    { name: "recipe", path: "/recipe", component: Recipe },
 ];
 
 const router = new VueRouter({

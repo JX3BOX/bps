@@ -58,7 +58,6 @@ import { getLink } from "@jx3box/jx3box-common/js/utils";
 import kungfumap_std from "@jx3box/jx3box-data/data/bps/kungfu_std.json";
 import kungfumap_origin from "@jx3box/jx3box-data/data/bps/kungfu_origin.json";
 import pasvmap from "@jx3box/jx3box-data/data/bps/pasv.json";
-import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
 import kungfus from "@jx3box/jx3box-data/data/xf/kungfuid.json";
 export default {
     name: "Raw",
@@ -68,9 +67,6 @@ export default {
             data: [],
             loading: false,
 
-            // kungfumap,
-            mountmap,
-
             kungfuid: "",
             search: "",
         };
@@ -79,11 +75,8 @@ export default {
         subtype: function () {
             return this.$route.query.subtype || "通用";
         },
-        school: function () {
-            return xfmap[subtype]["school"];
-        },
         mountid: function () {
-            return mountmap[this.subtype] || "0";
+            return xfmap[this.subtype]?.['id'] || "0";
         },
         kungfus: function () {
             return this.kungfumap[this.mountid]["kungfus"];

@@ -32,7 +32,7 @@
                 <!-- 角标过滤 -->
                 <markBy @filter="filter"></markBy>
                 <!-- 资料片 -->
-                <zlpBy @filter="filter" :client="client"></zlpBy>
+                <!-- <zlpBy @filter="filter" :client="client"></zlpBy> -->
                 <!-- 排序过滤 -->
                 <orderBy @filter="filter"></orderBy>
             </template>
@@ -134,13 +134,12 @@ import {
     buildTarget,
     getAppType,
 } from "@jx3box/jx3box-common/js/utils";
-import { mount as mountmap } from "@jx3box/jx3box-data/data/xf/school.json";
 // import zlps from '@/assets/data/zlp.json'
-import zlps from "@jx3box/jx3box-common/data/zlps.json";
-const _zlps = {};
-zlps.forEach((item) => {
-    _zlps[item] = item;
-});
+// import zlps from "@jx3box/jx3box-common/data/zlps.json";
+// const _zlps = {};
+// zlps.forEach((item) => {
+//     _zlps[item] = item;
+// });
 export default {
     name: "list",
     props: [],
@@ -163,7 +162,7 @@ export default {
             zlp: "",
             client: this.$store.state.client, //版本选择
 
-            zlps: _zlps,
+            // zlps: _zlps,
             pvmodes: { pve: "PVE", pvp: "PVP", pvx: "PVX" },
             marks: mark_map,
         };
@@ -249,7 +248,7 @@ export default {
                 : this.showDefaultBanner(item.post_subtype);
         },
         showDefaultBanner: function (subtype) {
-            let img_name = (subtype && mountmap[subtype]) || 0;
+            let img_name = (subtype && xfmap[subtype]?.['id']) || 0;
             return __imgPath + "image/bps_thumbnail/" + img_name + ".png";
         },
     },

@@ -5,16 +5,51 @@
 </template>
 
 <script>
+import {getRecipe} from '@/service/node.js'
+import {mount_belong_school} from '@jx3box/jx3box-data/data/xf/relation.json'
 export default {
     name: "Recipe",
     props: [],
     components: {},
     data: function () {
-        return {};
+        return {
+            data : []
+        };
     },
-    computed: {},
-    watch: {},
-    methods: {},
+    computed: {
+        mount_name : function (){
+            return this.$route.query.subtype || '通用'
+        },
+        school_name : function (){
+            if(this.mount_name == '通用'){
+                return '通用'
+            }else{
+                return mount_belong_school[this.mount_name]
+            }
+        },
+        params : function (){
+            return {
+                school_name : this.school_name
+            }
+        }
+    },
+    watch: {
+        params : {
+            deep : true,
+            immediate : true,
+            handler : function (){
+                this.loadData()
+            }
+        }
+    },
+    methods: {
+        // 加载秘籍
+        loadData : function (){
+            getRecipe(this.params).then((res) => {
+                this.data = res.data
+            })
+        }
+    },
     filters: {},
     created: function () {},
     mounted: function () {},
