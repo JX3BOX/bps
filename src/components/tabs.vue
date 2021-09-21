@@ -40,6 +40,14 @@
             </span>
         </el-tab-pane>
 
+        <el-tab-pane label="秘籍大全" name="recipe" v-if="client == 'origin'">
+            <span slot="label">
+                <i class="el-icon-key"></i>
+                <b>秘籍大全</b>
+                <em class="u-new">全新上线</em>
+            </span>
+        </el-tab-pane>
+
         <el-tab-pane label="门派天梯榜" name="ladder">
             <span slot="label">
                 <i class="el-icon-s-data"></i>
