@@ -1,7 +1,6 @@
 const parse = require("csv-parse/lib/sync");
 const fs = require("fs");
 const iconv = require("iconv-lite");
-
 function buildKungfuMap(client, filename) {
     // 读取心法与套路关系
     let data = fs.readFileSync(`./raw/${client}/skill_mkungfu_kungfu.txt`);
@@ -34,19 +33,20 @@ function buildKungfuMap(client, filename) {
             if (kungfumap[mount]["kungfus"].includes(item.KungfuID)) {
                 // 特殊处理
                 let skills = item.Skill.replace(/\|/g, ";");
-                if (isNaN(skills[0])) {
+                if (isNaN(skills[0]) || !~~skills[0]) {
                     skills = skills.slice(1);
                 }
-                if (isNaN(skills[skills.length - 1])) {
+                if (isNaN(skills[skills.length - 1]) || !~~skills[0]) {
                     skills = skills.slice(0, -1);
                 }
-                kungfumap[mount]["skills"][item.KungfuID] = skills.split(";");
+                let skills_arr = skills.split(";")
+                kungfumap[mount]["skills"][item.KungfuID] = skills_arr.filter((value) => {return !!~~value})
             }
         }
     });
     // console.log(kungfumap)
-    fs.writeFileSync(`./src/assets/data/${filename}`, JSON.stringify(kungfumap));
+    fs.writeFileSync(`./src/assets/data/kungfu_${client}.json`, JSON.stringify(kungfumap));
 }
 
-buildKungfuMap('std', 'kungfu_std.json')
-buildKungfuMap('origin', 'kungfu_origin.json')
+buildKungfuMap('std')
+buildKungfuMap('origin')

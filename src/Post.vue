@@ -8,8 +8,9 @@
             :publishEnable="true"
             :adminEnable="true"
             :feedbackEnable="true"
+            :crumbEnable="true"
         >
-            <img slot="logo" svg-inline src="./assets/img/bps.svg" />
+            <img slot="logo" svg-inline :src="getAppIcon('bps')" />
         </Breadcrumb>
         <LeftSidebar>
             <Nav class="m-nav" />
@@ -28,24 +29,28 @@
 import Nav from "@/components/single_nav.vue";
 import Side from "@/components/single_side.vue";
 import single from "@/components/single.vue";
+import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     props: [],
     data: function () {
         return {};
     },
-    methods: {},
+    methods: {getAppIcon},
     components: {
         Nav,
         Side,
         single,
     },
-    beforeCreate : function (){
-        
-    }
+    beforeCreate: function () {},
 };
 </script>
 
 <style lang="less">
 @import "./assets/css/app.less";
+@media screen and (max-width: @phone) {
+    .c-crumb {
+        .none;
+    }
+}
 </style>

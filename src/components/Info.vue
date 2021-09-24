@@ -6,10 +6,11 @@
 
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
-            <router-link to="/skill"><i class="el-icon-key"></i></router-link>
+            <router-link to="/skill" v-if="client == 'std'"><i class="el-icon-key"></i></router-link>
             <router-link to="/raw"><i class="el-icon-cpu"></i></router-link>
-            <router-link to="/lua" v-if="isSuperAuthor"><i class="el-icon-folder"></i></router-link>
+            <router-link to="/lua" v-if="isSuperAuthor && client == 'std'"><i class="el-icon-folder"></i></router-link>
             <router-link to="/collection"><i class="el-icon-paperclip"></i></router-link>
+            <router-link to="/recipe" v-if="client == 'origin'"><i class="el-icon-notebook-1"></i></router-link>
             <router-link to="/ladder"><i class="el-icon-s-data"></i></router-link>
             <router-link to="/story"><i class="el-icon-film"></i></router-link>
         </div>
@@ -27,6 +28,9 @@ export default {
         };
     },
     computed: {
+        client : function (){
+            return this.$store.state.client || 'std'
+        }
     },
     methods: {},
     mounted: function() {}

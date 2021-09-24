@@ -55,10 +55,10 @@ import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { getSkills } from "../service/raw";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
-import kungfumap_std from "@jx3box/jx3box-data/data/bps/kungfu_std.json";
-import kungfumap_origin from "@jx3box/jx3box-data/data/bps/kungfu_origin.json";
-import pasvmap from "@jx3box/jx3box-data/data/bps/pasv.json";
-import kungfus from "@jx3box/jx3box-data/data/xf/kungfuid.json";
+import kungfumap_std from "@/assets/data/kungfu_std.json";
+import kungfumap_origin from "@/assets/data/kungfu_origin.json";
+import pasvmap from "@/assets/data/pasv.json";
+import kungfus from "@/assets/data/kungfuid.json";
 export default {
     name: "Raw",
     props: [],

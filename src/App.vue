@@ -10,7 +10,7 @@
             :feedbackEnable="true"
             :crumbEnable="true"
         >
-            <img slot="logo" svg-inline src="./assets/img/bps.svg" />
+            <img slot="logo" svg-inline :src="getAppIcon('bps')" />
             <Info />
         </Breadcrumb>
         <LeftSidebar>
@@ -34,7 +34,7 @@ import Info from "@/components/Info.vue";
 import Nav from "@/components/list_nav.vue";
 import Side from "@/components/list_side.vue";
 import tabs from "@/components/tabs";
-
+import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     props: [],
@@ -42,7 +42,7 @@ export default {
         return {};
     },
     computed: {},
-    methods: {},
+    methods: {getAppIcon},
     components: {
         Info,
         Nav,
@@ -54,4 +54,14 @@ export default {
 
 <style lang="less">
 @import "./assets/css/app.less";
+@media screen and (max-width: @phone) {
+    .c-crumb{
+        .none;
+    }
+    .c-breadcrumb {
+        .u-op {
+            .none;
+        }
+    }
+}
 </style>
