@@ -36,7 +36,7 @@ export default {
     data: function () {
         return {};
     },
-    methods: {getAppIcon},
+    methods: { getAppIcon },
     components: {
         Nav,
         Side,
