@@ -2,15 +2,14 @@
     <div class="m-list-side">
         <!-- 群号 -->
         <RightSideMsg>
-            <em>签约作者交流群</em> :
+            <em>作者交流群</em> :
             <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=0kEOVaTY">789184680</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=mEl1e2hL">297985102</a>
             </strong>
         </RightSideMsg>
         <router-link class="u-link-rank" to="/ladder"><img src="../assets/img/rank.png" /></router-link>
         <!-- Q群 -->
         <group />
-
     </div>
 </template>
 

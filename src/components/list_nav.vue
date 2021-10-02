@@ -27,7 +27,7 @@
                 <span>剑三数据库</span>
                 <!-- <i class="u-mark isnew">全新上线</i> -->
             </a>
-            <a href="/j3pz" target="_blank">
+            <a href="/pz" target="_blank">
                 <i class="el-icon-shopping-bag-1"></i>
                 <span>在线配装</span>
             </a>

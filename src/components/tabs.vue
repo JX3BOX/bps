@@ -12,7 +12,7 @@
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>技能系数</b>
-                <!-- <em class="u-new">最新同步</em> -->
+                <em class="u-new">最新同步</em>
             </span>
         </el-tab-pane>
 
@@ -20,7 +20,7 @@
             <span slot="label">
                 <i class="el-icon-reading"></i>
                 <b>原始数据</b>
-                <em class="u-hot">怀旧服同步</em>
+                <em class="u-hot">独家资料</em>
             </span>
         </el-tab-pane>
 
@@ -48,7 +48,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="门派天梯榜" name="ladder">
+        <el-tab-pane label="门派天梯榜" name="ladder" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-s-data"></i>
                 <b>门派天梯榜</b>

@@ -16,7 +16,7 @@
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="false">
+        <Main :withoutRight="withoutRight">
             <div class="m-main">
                 <tabs />
                 <router-view />
@@ -41,7 +41,11 @@ export default {
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        withoutRight : function (){
+            return this.$store.state.client == 'origin' ? true : false
+        }
+    },
     methods: {getAppIcon},
     components: {
         Info,
