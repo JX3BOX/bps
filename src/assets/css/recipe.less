@@ -1,0 +1,26 @@
+.m-recipe-search{
+    .mb(20px);
+}
+.m-recipe-list{
+    .u-icon{
+        .size(32px);
+        .y;
+        .mr(5px);
+    }
+    .u-task{
+        &:last-child{
+            &::after{
+                .none;
+            }
+        }
+        &:after{
+            content:"、";
+            color:#888;
+        }
+    }
+    .u-points{
+        img{.size(18px);.y;}
+        .bold;
+        color:#c00;
+    }
+}
