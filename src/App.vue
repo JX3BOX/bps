@@ -8,7 +8,7 @@
             :publishEnable="true"
             :adminEnable="true"
             :feedbackEnable="true"
-            :crumbEnable="false"
+            :crumbEnable="true"
         >
             <img slot="logo" svg-inline :src="getAppIcon('bps')" />
             <Info />
