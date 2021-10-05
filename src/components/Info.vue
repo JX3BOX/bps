@@ -1,13 +1,5 @@
 <template>
     <div class="m-info">
-        <RightSideMsg class="u-group">
-            <em>作者交流群</em> :
-            <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=DmkyZkDi" v-if="client == 'origin'">590349918</a>
-                <a href="https://jq.qq.com/?_wv=1027&k=X2iXDnzB" v-else>297985102</a>
-            </strong>
-        </RightSideMsg>
-
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
             <router-link to="/skill" v-if="client == 'std'"><i class="el-icon-key"></i></router-link>
