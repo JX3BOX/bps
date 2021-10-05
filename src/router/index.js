@@ -9,6 +9,7 @@ const Ladder = () => import("../views/Ladder.vue");
 const Lua = () => import("../views/Lua.vue");
 const Story = () => import("../views/Story.vue");
 const Recipe = () => import("../views/Recipe.vue");
+const Group = () => import("../views/Group.vue");
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const routes = [
     { name: "story", path: "/story", component: Story },
     { name: "lua", path: "/lua", component: Lua },
     { name: "recipe", path: "/recipe", component: Recipe },
+    { name: "group", path: "/group", component: Group },
 ];
 
 const router = new VueRouter({

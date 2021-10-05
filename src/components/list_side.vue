@@ -9,12 +9,17 @@
         </RightSideMsg>
         <router-link class="u-link-rank" to="/ladder"><img src="../assets/img/rank.png" /></router-link>
         <!-- Q群 -->
+        <h2 class="c-sidebar-right-title m-title">
+            <img class="u-icon" svg-inline src="../assets/img/puzzle.svg" />
+            <span class="u-text">各职业门派群</span>
+            <a class="u-show-message" target="_blank" href="/tool/13659/">申请展示</a>
+        </h2>
         <group />
     </div>
 </template>
 
 <script>
-import group from "@/components/group.vue";
+
 import ladder from "../assets/data/ladder.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import {

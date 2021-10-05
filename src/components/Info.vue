@@ -1,16 +1,20 @@
 <template>
     <div class="m-info">
-        <div class="m-info-notice">
-            <!-- <router-link class="u-item" to="/story">🌈 职业背景故事页上线</router-link> -->
-        </div>
+        <RightSideMsg class="u-group">
+            <em>作者交流群</em> :
+            <strong>
+                <a href="https://jq.qq.com/?_wv=1027&k=DmkyZkDi" v-if="client == 'origin'">590349918</a>
+                <a href="https://jq.qq.com/?_wv=1027&k=X2iXDnzB" v-else>297985102</a>
+            </strong>
+        </RightSideMsg>
 
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
             <router-link to="/skill" v-if="client == 'std'"><i class="el-icon-key"></i></router-link>
-            <router-link to="/raw"><i class="el-icon-cpu"></i></router-link>
-            <router-link to="/lua" v-if="isSuperAuthor && client == 'std'"><i class="el-icon-folder"></i></router-link>
-            <router-link to="/collection"><i class="el-icon-paperclip"></i></router-link>
-            <router-link to="/recipe" v-if="client == 'origin'"><i class="el-icon-notebook-1"></i></router-link>
+            <router-link to="/raw"><i class="el-icon-reading"></i></router-link>
+            <router-link to="/lua" v-if="client == 'std'"><i class="el-icon-cpu"></i></router-link>
+            <router-link to="/collection"><i class="el-icon-notebook-1"></i></router-link>
+            <router-link to="/recipe" v-if="client == 'origin'"><i class="el-icon-paperclip"></i></router-link>
             <router-link to="/ladder"><i class="el-icon-s-data"></i></router-link>
             <router-link to="/story"><i class="el-icon-film"></i></router-link>
         </div>
@@ -28,9 +32,9 @@ export default {
         };
     },
     computed: {
-        client : function (){
-            return this.$store.state.client || 'std'
-        }
+        client: function () {
+            return this.$store.state.client;
+        },
     },
     methods: {},
     mounted: function() {}

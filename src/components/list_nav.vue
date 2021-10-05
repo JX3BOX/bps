@@ -39,10 +39,6 @@
                 <i class="el-icon-notebook-1"></i>
                 <span>文集小册</span>
             </a>
-            <a href="/exam" target="_blank">
-                <i class="el-icon-tickets"></i>
-                <span>趣味题库</span>
-            </a>
         </div>
     </div>
 </template>

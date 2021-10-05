@@ -1,10 +1,5 @@
 <template>
     <div class="m-group">
-        <h2 class="c-sidebar-right-title m-title">
-            <img class="u-icon" svg-inline src="../assets/img/puzzle.svg" />
-            <span class="u-text">各职业门派群</span>
-            <a class="u-show-message" target="_blank" href="/tool/13659/">申请展示</a>
-        </h2>
         <el-collapse accordion v-if="groups && JSON.stringify(groups) !== '{}'">
             <el-collapse-item v-for="(school, key) in groups" :title="key" :key="key" :name="key">
                 <ul class="u-groups">
@@ -71,7 +66,6 @@
 <script>
 import { get_groups } from "../service/group";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-
 export default {
     name: "group",
     data() {

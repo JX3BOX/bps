@@ -8,7 +8,7 @@
             :publishEnable="true"
             :adminEnable="true"
             :feedbackEnable="true"
-            :crumbEnable="true"
+            :crumbEnable="false"
         >
             <img slot="logo" svg-inline :src="getAppIcon('bps')" />
             <Info />
@@ -16,14 +16,14 @@
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="withoutRight">
+        <Main :withoutRight="true">
             <div class="m-main">
                 <tabs />
                 <router-view />
             </div>
-            <RightSidebar>
+            <!-- <RightSidebar>
                 <Side class="m-extend" />
-            </RightSidebar>
+            </RightSidebar> -->
             <Footer></Footer>
         </Main>
     </div>
@@ -32,7 +32,7 @@
 <script>
 import Info from "@/components/Info.vue";
 import Nav from "@/components/list_nav.vue";
-import Side from "@/components/list_side.vue";
+// import Side from "@/components/list_side.vue";
 import tabs from "@/components/tabs";
 import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
@@ -50,7 +50,7 @@ export default {
     components: {
         Info,
         Nav,
-        Side,
+        // Side,
         tabs,
     },
 };
