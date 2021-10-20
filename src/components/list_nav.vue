@@ -11,7 +11,7 @@
                 :key="i"
                 v-show="item.client.includes(client)"
             >
-                <router-link class="u-link" :to="{query : {subtype : item.name,tab : tab}}">
+                <router-link class="u-link" :class="{'router-link-exact-active': activeName === item.name}" :to="{query : {subtype : item.name,tab : tab}}">
                     <i class="u-pic">
                         <img :src="item.id | xficon" :alt="item.name" />
                     </i>
@@ -65,11 +65,11 @@ export default {
         tab: function () {
             return this.$route.query.tab;
         },
+        activeName: function (){
+            return this.$route?.query?.subtype
+        }
     },
     methods: {
-        isActive: function (name) {
-            return this.$store.state.subtype == name;
-        },
         navLink: function (val) {
             return `./?subtype=${val}` + "#" + this.$route.path;
         },
