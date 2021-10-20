@@ -11,7 +11,7 @@
         <el-tab-pane label="职业数据" name="skill" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-key"></i>
-                <b>技能系数</b>
+                <b>技能简介</b>
                 <!-- <em class="u-new">最新同步</em> -->
             </span>
         </el-tab-pane>
@@ -48,7 +48,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="门派天梯" name="ladder">
+        <el-tab-pane label="门派天梯" name="ladder" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-s-data"></i>
                 <b>门派天梯</b>
