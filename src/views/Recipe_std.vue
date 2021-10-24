@@ -14,6 +14,20 @@
         <!-- 列表 -->
         <div class="m-recipe-list" v-if="data && data.length">
             <el-table :data="data" :default-sort="{prop:'name'}" size="small">
+                <el-table-column type="expand">
+                    <template slot-scope="props">
+                        <el-form label-position="left" inline class="u-expand">
+                            <el-form-item
+                                :label="key"
+                                v-for="(val,key) in props.row"
+                                :key="key"
+                                v-show="isNotHidden(key) && hasValidValue(val)"
+                            >
+                                <span>{{ props.row[key] }}</span>
+                            </el-form-item>
+                        </el-form>
+                    </template>
+                </el-table-column>
                 <el-table-column
                     prop="skill_name"
                     label="技能名称"
@@ -47,11 +61,6 @@
                         </template>
                     </template>
                 </el-table-column>
-                <el-table-column prop="op" label="更多" width="120">
-                    <el-button plain size="mini" icon="el-icon-view">查看属性</el-button>
-                </el-table-column>
-
-                
             </el-table>
         </div>
     </div>
@@ -70,6 +79,7 @@ export default {
             search: "",
             raw: [],
             loading: false,
+            hidden_fields: ["idkey", "recipe_info", "recipe_extra"],
         };
     },
     computed: {
@@ -103,16 +113,26 @@ export default {
         data: function () {
             // 过滤废弃数据
             let clean_list = this.raw.filter((item) => {
-                return item.recipe_info && item.recipe_extra && item.recipe_extra.Quality
-            })
+                return (
+                    item.recipe_info &&
+                    item.recipe_extra &&
+                    item.recipe_extra.Quality
+                );
+            });
             // 补全技能名称与武功套路
             return clean_list.map((item) => {
-                let re = /《(.*?)·(.*?)》/
-                let name = item.RecipeName.match(re)
-                item.skill_name = name && name[2]
-                item.kungfu_name = name && name[1]
-                return item
-            })
+                let re = /《(.*?)·(.*?)》/;
+                let name = item.RecipeName.match(re);
+                item.skill_name = name && name[2];
+                item.kungfu_name = name && name[1];
+                item.IconID = item.recipe_info.IconID;
+                item.Desc = item.recipe_info.Desc;
+                item.ExamPrint = item.recipe_info.ExamPrint;
+                item.Quality = item.recipe_extra.Quality;
+                item.BindType = item.recipe_extra.BindType;
+                item.UiID = item.recipe_extra.UiID;
+                return item;
+            });
         },
     },
     watch: {
@@ -139,6 +159,12 @@ export default {
         filterHandler(value, row, column) {
             return row["skill_name"] === value;
         },
+        isNotHidden: function (key) {
+            return !this.hidden_fields.includes(key);
+        },
+        hasValidValue(val) {
+            return val !== '' && val !== undefined && val !== null
+        }
     },
     filters: {
         iconLink,

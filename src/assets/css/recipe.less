@@ -1,29 +1,45 @@
-.m-recipe-search{
+.m-recipe-search {
     .mb(20px);
 }
-.m-recipe-list{
-    .u-icon{
+.m-recipe-list {
+    .u-icon {
         .size(32px);
         .y;
         .mr(5px);
     }
-    .u-name{
+    .u-name {
         .bold;
     }
-    .u-task{
-        &:last-child{
-            &::after{
+    .u-task {
+        &:last-child {
+            &::after {
                 .none;
             }
         }
-        &:after{
-            content:"、";
-            color:#888;
+        &:after {
+            content: "、";
+            color: #888;
         }
     }
-    .u-points{
-        img{.size(18px);.y;}
+    .u-points {
+        img {
+            .size(18px);
+            .y;
+        }
         .bold;
-        color:#c00;
+        color: #c00;
+    }
+
+    .u-expand {
+        font-size: 0;
+        label {
+            width: 160px;
+            color: #99a9bf;
+        }
+        .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
     }
 }
