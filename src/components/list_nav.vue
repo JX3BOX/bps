@@ -31,7 +31,7 @@
                 <i class="el-icon-shopping-bag-1"></i>
                 <span>在线配装</span>
             </a>
-            <a href="/app/haste/" target="_blank">
+            <a href="/app/haste" target="_blank">
                 <i class="el-icon-stopwatch"></i>
                 <span>急速阈值</span>
             </a>
