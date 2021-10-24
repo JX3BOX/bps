@@ -148,9 +148,28 @@ export default {
         // 加载秘籍
         loadData: function () {
             this.loading = true;
+            let cache = sessionStorage.getItem(
+                `bps-recipe-${this.school_name}`
+            );
+            if (cache) {
+                try {
+                    this.raw = JSON.parse(cache);
+                    this.loading = false;
+                } catch (e) {
+                    this.getRecipe();
+                }
+            } else {
+                this.getRecipe();
+            }
+        },
+        getRecipe: function () {
             getRecipe(this.params)
                 .then((res) => {
                     this.raw = res.data;
+                    sessionStorage.setItem(
+                        `bps-recipe-${this.school_name}`,
+                        JSON.stringify(this.raw)
+                    );
                 })
                 .finally(() => {
                     this.loading = false;
@@ -163,8 +182,8 @@ export default {
             return !this.hidden_fields.includes(key);
         },
         hasValidValue(val) {
-            return val !== '' && val !== undefined && val !== null
-        }
+            return val !== "" && val !== undefined && val !== null;
+        },
     },
     filters: {
         iconLink,
