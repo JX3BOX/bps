@@ -2,7 +2,7 @@
     <div class="m-recipe" v-loading="loading">
         <!-- 搜索 -->
         <div class="m-recipe-search">
-            <el-input v-model="search" placeholder="请输入关键词.." @input="handleSearch">
+            <el-input v-model="search" placeholder="请输入关键词..">
                 <template slot="prepend">
                     <i class="el-icon-search"></i> 搜索
                 </template>
@@ -48,12 +48,12 @@
                         <!-- </a> -->
                     </template>
                 </el-table-column>
-                <el-table-column prop="Desc" label="秘籍描述">
+                <el-table-column prop="Desc" label="秘籍描述" sortable>
                     <template slot-scope="scope">
                         <span class="u-desc">{{scope.row.Desc}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="exam_print" label="监本" width="100">
+                <el-table-column prop="exam_print" label="监本" width="100" sortable>
                     <template slot-scope="scope">
                         <template v-if="scope.row.ExamPrint">
                             <span class="u-points">
@@ -157,7 +157,7 @@ export default {
     methods: {
         // 加载秘籍
         loadData: function () {
-            this.loading = true;
+            // this.loading = true;
             // let cache = sessionStorage.getItem(
             //     `bps-recipe-${this.school_name}`
             // );
@@ -173,6 +173,7 @@ export default {
             // }
         },
         getRecipe: function () {
+            this.loading = true;
             getRecipe(this.params)
                 .then((res) => {
                     this.raw = res.data;
@@ -196,15 +197,6 @@ export default {
         },
         hasValidValue(val) {
             return val !== "" && val !== undefined && val !== null;
-        },
-        // 搜索
-        handleSearch: function (val){
-            if (!val) {
-                this.loadData()
-            } else {
-                this.loading = true
-                this.getRecipe()
-            }
         },
         expandRow : function (row, column, event){
             this.$refs.recipeTable.toggleRowExpansion(row)
