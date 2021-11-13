@@ -156,31 +156,31 @@ export default {
         // 加载秘籍
         loadData: function () {
             this.loading = true;
-            let cache = sessionStorage.getItem(
-                `bps-recipe-${this.school_name}`
-            );
-            if (cache) {
-                try {
-                    this.raw = JSON.parse(cache);
-                    this.loading = false;
-                } catch (e) {
-                    this.getRecipe();
-                }
-            } else {
+            // let cache = sessionStorage.getItem(
+            //     `bps-recipe-${this.school_name}`
+            // );
+            // if (cache) {
+            //     try {
+            //         this.raw = JSON.parse(cache);
+            //         this.loading = false;
+            //     } catch (e) {
+            //         this.getRecipe();
+            //     }
+            // } else {
                 this.getRecipe();
-            }
+            // }
         },
         getRecipe: function () {
             getRecipe(this.params)
                 .then((res) => {
                     this.raw = res.data;
-                    if (this.isInit) {
-                        sessionStorage.setItem(
-                            `bps-recipe-${this.school_name}`,
-                            JSON.stringify(this.raw)
-                        );
-                        this.isInit = false
-                    }
+                    // if (this.isInit) {
+                    //     sessionStorage.setItem(
+                    //         `bps-recipe-${this.school_name}`,
+                    //         JSON.stringify(this.raw)
+                    //     );
+                    //     this.isInit = false
+                    // }
                 })
                 .finally(() => {
                     this.loading = false;
