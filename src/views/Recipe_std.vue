@@ -13,7 +13,7 @@
         </div>
         <!-- 列表 -->
         <div class="m-recipe-list" v-if="data && data.length">
-            <el-table :data="data" :default-sort="{prop:'name'}" size="small" :loading="loading">
+            <el-table :data="data" :default-sort="{prop:'name'}" size="small" :loading="loading" @row-click="expandRow" ref="recipeTable">
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="u-expand">
@@ -37,13 +37,15 @@
                 ></el-table-column>
                 <el-table-column prop="name" label="秘籍名称" sortable width="300">
                     <template slot-scope="scope">
-                        <a :href="scope.row.RecipeName | getItemLink" class="u-link">
+                        <!-- <a :href="scope.row.RecipeName | getItemLink" class="u-link"> -->
+                        <span :href="scope.row.RecipeName | getItemLink" class="u-link">
                             <img :src="scope.row.IconID | iconLink" class="u-icon" />
                             <span
                                 class="u-name"
                                 :class="'isQuality-' + scope.row.Quality"
                             >{{scope.row.RecipeName}}</span>
-                        </a>
+                        </span>
+                        <!-- </a> -->
                     </template>
                 </el-table-column>
                 <el-table-column prop="Desc" label="秘籍描述">
@@ -203,7 +205,10 @@ export default {
                 this.loading = true
                 this.getRecipe()
             }
-        }
+        },
+        expandRow : function (row, column, event){
+            this.$refs.recipeTable.toggleRowExpansion(row)
+        },
     },
     filters: {
         iconLink,
