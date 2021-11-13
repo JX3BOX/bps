@@ -39,8 +39,10 @@ function buildKungfuMap(client, filename) {
                 if (isNaN(skills[skills.length - 1]) || !~~skills[0]) {
                     skills = skills.slice(0, -1);
                 }
-                let skills_arr = skills.split(";")
-                kungfumap[mount]["skills"][item.KungfuID] = skills_arr.filter((value) => {return !!~~value})
+                let skills_arr = skills.split(";");
+                kungfumap[mount]["skills"][item.KungfuID] = skills_arr.filter((value) => {
+                    return !!~~value;
+                });
             }
         }
     });
@@ -48,5 +50,5 @@ function buildKungfuMap(client, filename) {
     fs.writeFileSync(`./src/assets/data/kungfu_${client}.json`, JSON.stringify(kungfumap));
 }
 
-buildKungfuMap('std')
-buildKungfuMap('origin')
+buildKungfuMap("std");
+buildKungfuMap("origin");

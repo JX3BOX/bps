@@ -1,13 +1,19 @@
-import { $node } from "@jx3box/jx3box-common/js/https";
+// import { $node } from "@jx3box/jx3box-common/js/https";
+// const $ = $node()
+
+import axios from 'axios'
+const $ = axios.create({
+    baseURL: 'http://localhost:7002/',
+})
 
 function getCheat(params) {
-    return $node().get("/bps/cheat", {
+    return $.get("/bps/cheat", {
         params,
     });
 }
 
 function getRecipe(params) {
-    return $node().get("/bps/recipe", {
+    return $.get("/bps/recipe", {
         params,
     });
 }

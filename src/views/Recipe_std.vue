@@ -29,7 +29,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="skill_name"
+                    prop="SkillName"
                     label="技能名称"
                     width="120"
                     :filters="skills"
@@ -38,25 +38,25 @@
                 <el-table-column prop="name" label="秘籍名称" sortable width="300">
                     <template slot-scope="scope">
                         <a :href="scope.row.RecipeName | getItemLink" class="u-link">
-                            <img :src="scope.row.recipe_info.IconID | iconLink" class="u-icon" />
+                            <img :src="scope.row.IconID | iconLink" class="u-icon" />
                             <span
                                 class="u-name"
-                                :class="'isQuality-' + scope.row.recipe_extra.Quality"
+                                :class="'isQuality-' + scope.row.Quality"
                             >{{scope.row.RecipeName}}</span>
                         </a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="Desc" label="秘籍描述">
                     <template slot-scope="scope">
-                        <span class="u-desc">{{scope.row.recipe_info.Desc}}</span>
+                        <span class="u-desc">{{scope.row.Desc}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="exam_print" label="监本" width="100">
                     <template slot-scope="scope">
-                        <template v-if="scope.row.recipe_info.ExamPrint">
+                        <template v-if="scope.row.ExamPrint">
                             <span class="u-points">
                                 <img src="../assets/img/recipe/exam_points.png" alt />
-                                {{scope.row.recipe_info.ExamPrint}}
+                                {{scope.row.ExamPrint}}
                             </span>
                         </template>
                     </template>
@@ -102,7 +102,7 @@ export default {
         skills: function () {
             let list = new Set();
             this.data.forEach((item) => {
-                list.add(item.skill_name);
+                list.add(item.SkillName);
             });
             list = [...list];
             list = list.map((item) => {
@@ -113,24 +113,20 @@ export default {
         data: function () {
             // 过滤废弃数据
             let clean_list = this.raw.filter((item) => {
-                return (
-                    item.recipe_info &&
-                    item.recipe_extra &&
-                    item.recipe_extra.Quality
-                );
-            });
+                return item.Name && !!item.SkillID && !item.RecipeName.includes('废') && !item.RecipeName.includes('镜像') && !item.RecipeName.includes('删除') && !item.RecipeName.includes('复制')
+            })
             // 补全技能名称与武功套路
             return clean_list.map((item) => {
                 let re = /《(.*?)·(.*?)》/;
                 let name = item.RecipeName.match(re);
-                item.skill_name = name && name[2];
-                item.kungfu_name = name && name[1];
-                item.IconID = item.recipe_info.IconID;
-                item.Desc = item.recipe_info.Desc;
-                item.ExamPrint = item.recipe_info.ExamPrint;
-                item.Quality = item.recipe_extra.Quality;
-                item.BindType = item.recipe_extra.BindType;
-                item.UiID = item.recipe_extra.UiID;
+                item.SkillName = name && name[2];
+                item.KungfuName = name && name[1];
+                item.IconID = item.IconID;
+                item.Desc = item.Desc;
+                item.ExamPrint = item.ExamPrint;
+                item.Quality = item.Quality;
+                item.BindType = item.BindType;
+                item.UiID = item.UiID;
                 return item;
             });
         },
