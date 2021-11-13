@@ -118,7 +118,7 @@ export default {
                 return item.Name && !!item.SkillID && !item.RecipeName.includes('废') && !item.RecipeName.includes('镜像') && !item.RecipeName.includes('删除') && !item.RecipeName.includes('复制')
             })
             // 补全技能名称与武功套路
-            return clean_list.map((item) => {
+            clean_list = clean_list.map((item) => {
                 let re = /《(.*?)·(.*?)》/;
                 let name = item.RecipeName.match(re);
                 item.SkillName = name && name[2];
@@ -131,6 +131,10 @@ export default {
                 item.UiID = item.UiID;
                 return item;
             });
+            clean_list = clean_list.filter((item) => {
+                return item.SkillName
+            })
+            return clean_list
         },
     },
     watch: {
