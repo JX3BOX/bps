@@ -2,7 +2,7 @@
     <div class="m-recipe" v-loading="loading">
         <!-- 搜索 -->
         <div class="m-recipe-search">
-            <el-input v-model="search" placeholder="请输入关键词..">
+            <el-input v-model="search" placeholder="请输入关键词.." @input="handleSearch">
                 <template slot="prepend">
                     <i class="el-icon-search"></i> 搜索
                 </template>
@@ -13,7 +13,7 @@
         </div>
         <!-- 列表 -->
         <div class="m-recipe-list" v-if="data && data.length">
-            <el-table :data="data" :default-sort="{prop:'name'}" size="small">
+            <el-table :data="data" :default-sort="{prop:'name'}" size="small" :loading="loading">
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="u-expand">
@@ -79,7 +79,9 @@ export default {
             search: "",
             raw: [],
             loading: false,
-            hidden_fields: ["idkey", "recipe_info", "recipe_extra"],
+            hidden_fields: ["idkey"],
+
+            isInit: true
         };
     },
     computed: {
@@ -139,6 +141,12 @@ export default {
                 this.loadData();
             },
         },
+        school_name: {
+            handler: function (){
+                this.search = ""
+                this.isInit = true
+            }
+        }
     },
     methods: {
         // 加载秘籍
@@ -162,17 +170,20 @@ export default {
             getRecipe(this.params)
                 .then((res) => {
                     this.raw = res.data;
-                    sessionStorage.setItem(
-                        `bps-recipe-${this.school_name}`,
-                        JSON.stringify(this.raw)
-                    );
+                    if (this.isInit) {
+                        sessionStorage.setItem(
+                            `bps-recipe-${this.school_name}`,
+                            JSON.stringify(this.raw)
+                        );
+                        this.isInit = false
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
         filterHandler(value, row, column) {
-            return row["skill_name"] === value;
+            return row["SkillName"] === value;
         },
         isNotHidden: function (key) {
             return !this.hidden_fields.includes(key);
@@ -180,6 +191,15 @@ export default {
         hasValidValue(val) {
             return val !== "" && val !== undefined && val !== null;
         },
+        // 搜索
+        handleSearch: function (val){
+            if (!val) {
+                this.loadData()
+            } else {
+                this.loading = true
+                this.getRecipe()
+            }
+        }
     },
     filters: {
         iconLink,
