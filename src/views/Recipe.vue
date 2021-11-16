@@ -70,21 +70,21 @@
                 </el-table-column>
                 <el-table-column prop="tasks" label="任务来源">
                     <template slot-scope="scope">
-                        <a v-for="task in scope.row.tasks" :key="task.name" :href="task.name | getTaskLink" target="_blank">
+                        <a v-for="task in scope.row.tasks" :key="task.name" :href="task.name | getTaskLink" target="_blank" @click.stop>
                             [{{task.name}}]
                         </a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="books" label="书籍来源">
                     <template slot-scope="scope">
-                        <a v-for="book in scope.row.books" :key="book.name" :href="book.name | getItemLink" target="_blank">
+                        <a v-for="book in scope.row.books" :key="book.name" :href="book.name | getItemLink" target="_blank" @click.stop>
                             [{{book.name}}]
                         </a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="doodad_template_id" label="碑铭来源">
                     <template slot-scope="scope">
-                        <a v-for="doodad in scope.row.doodad_template_id" :key="doodad.name" :href="doodad.name | getDoodadLink" target="_blank">
+                        <a v-for="doodad in scope.row.doodad_template_id" :key="doodad.name" :href="doodad.name | getDoodadLink" target="_blank" @click.stop>
                             [{{doodad.name}}]
                         </a>
                     </template>
@@ -96,7 +96,7 @@
                 </el-table-column>
                 <el-table-column prop="RecipeName" label="百科">
                     <template slot-scope="scope">
-                        <a :href="scope.row.RecipeName | getItemLink" class="u-link" target="_blank">查看百科&raquo;</a>
+                        <a :href="scope.row.RecipeName | getItemLink" class="u-link" target="_blank" @click.stop>查看百科&raquo;</a>
                     </template>
                 </el-table-column>
             </el-table>
@@ -117,7 +117,7 @@ export default {
             search: "",
             raw: [],
             loading: false,
-            hidden_fields: ["idkey"],
+            hidden_fields: ["idkey",'tasks','books','doodad_template_id','_remark'],
 
             isInit: true,
         };
