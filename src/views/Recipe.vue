@@ -68,6 +68,32 @@
                         </template>
                     </template>
                 </el-table-column>
+                <el-table-column prop="tasks" label="任务来源">
+                    <template slot-scope="scope">
+                        <a v-for="task in scope.row.tasks" :key="task.name" :href="task.name | getTaskLink" target="_blank">
+                            [{{task.name}}]
+                        </a>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="books" label="书籍来源">
+                    <template slot-scope="scope">
+                        <a v-for="book in scope.row.books" :key="book.name" :href="book.name | getItemLink" target="_blank">
+                            [{{book.name}}]
+                        </a>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="doodad_template_id" label="碑铭来源">
+                    <template slot-scope="scope">
+                        <a v-for="doodad in scope.row.doodad_template_id" :key="doodad.name" :href="doodad.name | getDoodadLink" target="_blank">
+                            [{{doodad.name}}]
+                        </a>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="_remark" label="备注">
+                    <template slot-scope="scope">
+                        <span>{{scope.row._remark}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="RecipeName" label="百科">
                     <template slot-scope="scope">
                         <a :href="scope.row.RecipeName | getItemLink" class="u-link" target="_blank">查看百科&raquo;</a>
@@ -224,6 +250,12 @@ export default {
         getItemLink: function (name) {
             return `/item/#/search/${name}?page=1`;
         },
+        getTaskLink : function (name){
+            return `/quest/#/search/${name}?page=1`
+        },
+        getDoodadLink : function (name){
+            return `/app/database/?type=doodad&query=${name}`
+        }
     },
     created: function () {},
     mounted: function () {},
