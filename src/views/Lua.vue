@@ -40,7 +40,7 @@
                 <span class="u-title-file"
                     ><i class="el-icon-arrow-right"></i> {{ file }}</span
                 >
-                <div class="u-back" @click="showList">
+                <div class="u-back" @click="showList" v-if="data">
                     <i class="el-icon-caret-left"></i> 返 回
                 </div>
             </div>
