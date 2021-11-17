@@ -25,10 +25,10 @@
                 class="input-with-select"
                 @change="searchLua"
             >
-                <span slot="prepend">搜索</span>
+                <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
                 <el-button
                     slot="append"
-                    icon="el-icon-search"
+                    icon="el-icon-position"
                     @change="searchLua"
                 ></el-button>
             </el-input>
@@ -70,6 +70,7 @@
                                     @click="showCode(lua)"
                                     v-for="(lua, i) in subitem"
                                     :key="i"
+                                    v-show="!search || lua.includes(search)"
                                 >
                                     <i class="el-icon-tickets"></i> {{ lua }}
                                 </div>
@@ -202,10 +203,11 @@ export default {
         },
         searchLua: function() {
             if (this.data) {
-                this.$notify.error({
-                    title: "错误",
-                    message: "请切至指定目录再进行搜索",
-                });
+                // this.$notify.error({
+                //     title: "错误",
+                //     message: "请切至指定目录再进行搜索",
+                // });
+                this.data = ''
             }
         },
     },
