@@ -18,7 +18,7 @@
         <el-tab-pane label="技能/Buff数据库" name="raw">
             <span slot="label">
                 <i class="el-icon-reading"></i>
-                <b>原始数据</b>
+                <b>技能数据</b>
                 <!-- <em class="u-hot">独家资料</em> -->
             </span>
         </el-tab-pane>
@@ -63,12 +63,12 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="背景故事" name="story">
+        <!-- <el-tab-pane label="背景故事" name="story">
             <span slot="label">
                 <i class="el-icon-film"></i>
                 <b>背景故事</b>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
     </el-tabs>
 </template>
 

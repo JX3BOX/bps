@@ -8,6 +8,7 @@
                 :key="kungfu"
             ></el-tab-pane>
             <el-tab-pane label="心法被动" name="pasv" key="pasv"></el-tab-pane>
+            <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
         </el-tabs>
 
         <!-- 搜索 -->
@@ -58,6 +59,7 @@ import { getLink } from "@jx3box/jx3box-common/js/utils";
 import kungfumap_std from "@/assets/data/kungfu_std.json";
 import kungfumap_origin from "@/assets/data/kungfu_origin.json";
 import pasvmap from "@/assets/data/pasv.json";
+import zhenfamap from "@/assets/data/zhenfa.json";
 import kungfus from "@/assets/data/kungfuid.json";
 export default {
     name: "Raw",
@@ -87,10 +89,15 @@ export default {
         pasv_skills: function () {
             return pasvmap[this.subtype][this.client];
         },
+        zhenfa_skills : function (){
+            return zhenfamap[this.mountid]
+        },
         ids: function () {
-            return this.kungfuid == "pasv"
-                ? this.pasv_skills.join(",")
-                : this.skill_ids.join(",");
+            let skills = {
+                pasv : this.pasv_skills,
+                zhenfa : this.zhenfa_skills
+            }
+            return skills[this.kungfuid] ? skills[this.kungfuid].join(',') : this.skill_ids.join(",");
         },
         client: function () {
             return this.$store.state.client || "std";
@@ -111,7 +118,11 @@ export default {
             getSkills(this.params)
                 .then((res) => {
                     let data = res.data || [];
-                    this.data = this.removeLowLevelSkills(data);
+                    if(this.kungfuid == 'zhenfa'){
+                        this.data = data
+                    }else{
+                        this.data = this.removeLowLevelSkills(data);
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
