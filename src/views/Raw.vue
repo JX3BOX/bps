@@ -97,7 +97,7 @@ export default {
                 pasv : this.pasv_skills,
                 zhenfa : this.zhenfa_skills
             }
-            return skills[this.kungfuid] ? skills[this.kungfuid].join(',') : this.skill_ids.join(",");
+            return skills[this.kungfuid] ? skills[this.kungfuid]?.join(',') : this.skill_ids?.join(",");
         },
         client: function () {
             return this.$store.state.client || "std";

@@ -218,7 +218,7 @@ export default {
             if (!this.subtype || this.subtype == "通用") {
                 return true;
             } else {
-                return this.relation[this.subtype].includes(item.meta_2);
+                return this.relation[this.subtype]?.includes(item.meta_2);
             }
         },
         changeTab: function (item) {
