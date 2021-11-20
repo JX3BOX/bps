@@ -1,6 +1,7 @@
 <template>
     <div class="v-raw" v-loading="loading">
         <el-tabs v-model="kungfuid" type="card" @tab-click="changeKungfu">
+            <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
             <el-tab-pane
                 :label="kungfu | showKungfuName"
                 :name="kungfu"
@@ -8,10 +9,9 @@
                 :key="kungfu"
             ></el-tab-pane>
             <template v-if="~~mountid">
-                <el-tab-pane label="心法被动" name="pasv" key="pasv"></el-tab-pane>
-                <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
                 <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
                 <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
+                <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
             </template>
         </el-tabs>
 
@@ -149,7 +149,7 @@ export default {
             data: [],
             loading: false,
 
-            kungfuid: "",
+            kungfuid: "pasv",
             search: "",
         };
     },
@@ -294,7 +294,9 @@ export default {
         subtype: {
             immediate: true,
             handler: function () {
-                this.kungfuid = this.kungfus[0];
+                // this.kungfuid = this.kungfus[0];
+                this.kungfuid = 'pasv'
+                this.loadSkills();
             },
         },
         kungfuid: {

@@ -2,7 +2,7 @@
     <div class="m-info">
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
-            <router-link to="/skill" v-if="client == 'std'"><i class="el-icon-key"></i></router-link>
+            <!-- <router-link to="/skill" v-if="client == 'std'"><i class="el-icon-key"></i></router-link> -->
             <router-link to="/raw"><i class="el-icon-reading"></i></router-link>
             <router-link to="/lua" v-if="client == 'std'"><i class="el-icon-cpu"></i></router-link>
             <router-link to="/collection"><i class="el-icon-notebook-1"></i></router-link>
