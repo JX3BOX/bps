@@ -7,10 +7,12 @@
                 v-for="kungfu in kungfus"
                 :key="kungfu"
             ></el-tab-pane>
-            <el-tab-pane label="心法被动" name="pasv" key="pasv"></el-tab-pane>
-            <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
-            <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
-            <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
+            <template v-if="~~mountid">
+                <el-tab-pane label="心法被动" name="pasv" key="pasv"></el-tab-pane>
+                <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
+                <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
+                <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
+            </template>
         </el-tabs>
 
         <!-- 搜索 -->
@@ -168,13 +170,13 @@ export default {
             return pasvmap[this.subtype][this.client];
         },
         zhenfa_skills: function () {
-            return zhenfamap[this.mountid];
+            return this.mountid && zhenfamap[this.mountid] || [];
         },
         talent_skills: function () {
-            return talent[this.mountid];
+            return this.mountid && talent[this.mountid] || [];
         },
         talent2_skills: function (){
-            return talent2[this.mountid]
+            return this.mountid && talent2[this.mountid] || []
         },
         ids: function () {
             let skills = {

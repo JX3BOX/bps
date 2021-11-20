@@ -8,7 +8,7 @@
             <router-link to="/collection"><i class="el-icon-notebook-1"></i></router-link>
             <router-link to="/recipe"><i class="el-icon-paperclip"></i></router-link>
             <router-link to="/ladder"><i class="el-icon-s-data"></i></router-link>
-            <router-link to="/story"><i class="el-icon-film"></i></router-link>
+            <!-- <router-link to="/story"><i class="el-icon-film"></i></router-link> -->
         </div>
     </div>
 </template>
