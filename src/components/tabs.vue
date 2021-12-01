@@ -35,7 +35,7 @@
             <span slot="label">
                 <i class="el-icon-paperclip"></i>
                 <b>秘籍大全</b>
-                <em class="u-new">全新上线</em>
+                <!-- <em class="u-new">全新上线</em> -->
             </span>
         </el-tab-pane>
 
