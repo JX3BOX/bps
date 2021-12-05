@@ -23,7 +23,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="源码解析" name="lua" v-if="client == 'std'">
+        <el-tab-pane label="源码解析" name="lua">
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>源码分析</b>

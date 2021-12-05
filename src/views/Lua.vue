@@ -33,6 +33,14 @@
                 ></el-button>
             </el-input>
         </div>
+        <el-alert
+            class="m-lua-warning"
+            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！"
+            type="warning"
+            effect="dark"
+            show-icon
+            :closable="false"
+        ></el-alert>
         <div class="m-lua-tree m-lua-box">
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
@@ -88,13 +96,6 @@
                 </div>
             </div>
         </div>
-        <el-alert
-            class="m-lua-warning"
-            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！"
-            type="error"
-            effect="dark"
-            show-icon
-        ></el-alert>
     </div>
     <div class="v-null" v-else>
         <el-alert type="warning" show-icon><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert>
@@ -142,6 +143,9 @@ export default {
                 return "";
             }
         },
+        client : function (){
+            return this.$store.state.client || 'std'
+        }
     },
     methods: {
         isDirectory: function(val) {
@@ -160,7 +164,7 @@ export default {
         },
         loadMap: function() {
             this.loading = true;
-            getMap()
+            getMap(this.client)
                 .then((data) => {
                     this.map = data;
                 })
@@ -170,7 +174,7 @@ export default {
         },
         loadLua: function(path) {
             this.loading = true;
-            getLua(path)
+            getLua(this.client,path)
                 .then((res) => {
                     this.data = res.data;
                 })
@@ -224,6 +228,9 @@ export default {
                 this.current = this.school_name;
                 this.loadMap();
             }
+
+            // TEST
+            // this.loadLua()
         })
     },
     components: {},
