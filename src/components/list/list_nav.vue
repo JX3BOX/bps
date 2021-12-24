@@ -2,20 +2,15 @@
     <div class="m-list-nav">
         <h5 class="u-title">
             心法导航
-            <router-link class="u-more" :to="{query:{subtype:''}}">全部心法 &raquo;</router-link>
+            <router-link class="u-more" :to="{ query: { subtype: '' } }">全部心法 &raquo;</router-link>
         </h5>
         <ul class="m-bps-nav u-list">
-            <li
-                class="u-item"
-                v-for="(item,i) in xfmap"
-                :key="i"
-                v-show="item.client.includes(client)"
-            >
-                <router-link class="u-link" :class="{'router-link-exact-active': activeName === item.name}" :to="{query : {subtype : item.name,tab : tab}}">
+            <li class="u-item" v-for="(item, i) in xfmap" :key="i" v-show="item.client.includes(client)">
+                <router-link class="u-link" :class="{ 'router-link-exact-active': activeName === item.name }" :to="{ query: { subtype: item.name, tab: tab } }">
                     <i class="u-pic">
                         <img :src="item.id | xficon" :alt="item.name" />
                     </i>
-                    <span class="u-txt">{{item.name}}</span>
+                    <span class="u-txt">{{ item.name }}</span>
                 </router-link>
             </li>
         </ul>
@@ -35,56 +30,47 @@
                 <i class="el-icon-stopwatch"></i>
                 <span>急速阈值</span>
             </a>
-            <a href="/collection" target="_blank">
-                <i class="el-icon-notebook-1"></i>
-                <span>文集小册</span>
-            </a>
         </div>
     </div>
 </template>
 
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import {
-    __ossMirror,
-    __imgPath,
-    __ossRoot,
-} from "@jx3box/jx3box-common/data/jx3box.json";
+import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "list_nav",
     props: [],
-    data: function () {
+    data: function() {
         return {
             xfmap,
         };
     },
     computed: {
-        client: function () {
+        client: function() {
             return this.$store.state.client;
         },
-        tab: function () {
+        tab: function() {
             return this.$route.query.tab;
         },
-        activeName: function (){
-            return this.$route?.query?.subtype
-        }
+        activeName: function() {
+            return this.$route?.query?.subtype;
+        },
     },
     methods: {
-        navLink: function (val) {
+        navLink: function(val) {
             return `./?subtype=${val}` + "#" + this.$route.path;
         },
     },
     filters: {
-        xficon: function (val) {
+        xficon: function(val) {
             return __imgPath + "image/xf/" + val + ".png";
         },
     },
-    mounted: function () {},
+    mounted: function() {},
     components: {},
 };
 </script>
 
 <style lang="less">
-@import "../assets/css/nav.less";
-@import "../assets/css/list_nav.less";
+@import "../../assets/css/nav.less";
 </style>

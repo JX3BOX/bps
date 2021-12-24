@@ -5,16 +5,7 @@
 </template>
 
 <script>
-import { getPosts } from "../service/post";
-import {
-    authorLink,
-    publishLink,
-    showAvatar,
-    resolveImagePath,
-} from "@jx3box/jx3box-common/js/utils";
-import { __ossMirror } from "@jx3box/jx3box-common/data/jx3box.json";
-import lodash from "lodash";
-import list from '@/components/list.vue'
+import list from '@/components/list/list.vue'
 
 export default {
     name: "Index",

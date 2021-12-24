@@ -4,7 +4,7 @@
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
             <!-- <router-link to="/skill" v-if="client == 'std'"><i class="el-icon-key"></i></router-link> -->
             <router-link to="/raw"><i class="el-icon-reading"></i></router-link>
-            <router-link to="/lua" v-if="client == 'std'"><i class="el-icon-cpu"></i></router-link>
+            <router-link to="/lua" v-if="isSuperAuthor"><i class="el-icon-cpu"></i></router-link>
             <router-link to="/collection"><i class="el-icon-notebook-1"></i></router-link>
             <router-link to="/recipe"><i class="el-icon-paperclip"></i></router-link>
             <router-link to="/ladder"><i class="el-icon-s-data"></i></router-link>
@@ -14,25 +14,25 @@
 </template>
 
 <script>
-import User from '@jx3box/jx3box-common/js/user.js'
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "Info",
     props: [],
     data: function() {
         return {
-            isSuperAuthor : User.isSuperAuthor()
+            isSuperAuthor: User.isSuperAuthor(),
         };
     },
     computed: {
-        client: function () {
+        client: function() {
             return this.$store.state.client;
         },
     },
     methods: {},
-    mounted: function() {}
+    mounted: function() {},
 };
 </script>
 
 <style lang="less">
-@import '../assets/css/info.less';
+@import "../assets/css/info.less";
 </style>
