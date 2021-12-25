@@ -70,8 +70,8 @@ import { getSkill, getTalent, getAll } from "../service/skill";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import levels from "../assets/data/levels.json";
 import _ from "lodash";
-import skill_item from "@/components/skill_item.vue";
-import talent_item from "@/components/talent_item.vue";
+import skill_item from "@/components/skill/skill_item.vue";
+import talent_item from "@/components/skill/talent_item.vue";
 const TALENT_TOTAL_LEVELS = 12;
 export default {
     name: "Skill",

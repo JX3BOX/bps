@@ -10,14 +10,14 @@ export default {
     name: "Group",
     props: [],
     components: { group },
-    data: function () {
+    data: function() {
         return {};
     },
     computed: {},
     watch: {},
     methods: {},
     filters: {},
-    created: function () {},
-    mounted: function () {},
+    created: function() {},
+    mounted: function() {},
 };
 </script>
