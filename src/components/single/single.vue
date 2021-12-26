@@ -1,5 +1,5 @@
 <template>
-    <singlebox :post="post" :stat="stat" v-loading="loading" @extendUpdate="updateExtend" :postType="appKey">
+    <singlebox :post="post" :stat="stat" v-loading="loading" @extendUpdate="updateExtend">
         <!-- 子类别 -->
         <div class="u-meta u-sub-block" slot="single-header">
             <em class="u-label">心法</em>
