@@ -12,7 +12,7 @@
         <!-- 筛选 -->
         <div class="m-archive-filter">
             <!-- 版本过滤 -->
-            <clientBy @filter="filterMeta" :type="client"></clientBy>
+            <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
             <!-- 角标过滤 -->
             <markBy @filter="filterMeta"></markBy>
             <!-- 排序过滤 -->
@@ -155,6 +155,10 @@ export default {
         // 条件过滤
         filterMeta: function(o) {
             this.replaceRoute({ [o["type"]]: o["val"], page: 1 });
+        },
+        // 条件过滤（不附加路由）
+        filterImperceptibly: function(o) {
+            this[o["type"]] = o["val"];
         },
         // 翻页加载
         changePage: function(i) {
