@@ -2,7 +2,7 @@
     <div class="m-recipe" v-loading="loading">
         <!-- 搜索 -->
         <div class="m-recipe-search">
-            <el-input v-model="search" placeholder="请输入关键词..">
+            <el-input v-model.trim.lazy="search" placeholder="请输入关键词..">
                 <template slot="prepend">
                     <i class="el-icon-search"></i> 搜索
                 </template>
