@@ -8,17 +8,17 @@
             </span>
         </el-tab-pane>
 
-        <!-- <el-tab-pane label="职业数据" name="skill" v-if="client == 'std'">
+        <el-tab-pane label="技能系数" name="skill" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-key"></i>
-                <b>技能简介</b>
+                <b>技能系数</b>
             </span>
-        </el-tab-pane> -->
+        </el-tab-pane>
 
         <el-tab-pane label="技能/Buff数据库" name="raw">
             <span slot="label">
                 <i class="el-icon-reading"></i>
-                <b>技能数据</b>
+                <b>原始数据</b>
                 <!-- <em class="u-hot">独家资料</em> -->
             </span>
         </el-tab-pane>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import User from "@jx3box/jx3box-common/js/user";
+// import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "tabs",
     props: [],

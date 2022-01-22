@@ -6,11 +6,7 @@
                     <div class="m-skill-kungfu" v-for="(kungfu, i) in skill" :key="i">
                         <h4 class="u-title">{{ kungfu.remark }}</h4>
                         <div class="u-list">
-                            <skill_item
-                                :item="item"
-                                v-for="(item, i) in kungfu.forceSkills"
-                                :key="i"
-                            />
+                            <skill_item :item="item" v-for="(item, i) in kungfu.forceSkills" :key="i" />
                         </div>
                     </div>
                 </div>
@@ -19,22 +15,11 @@
                 <div class="m-skill-box" v-if="talent && xf != '通用'">
                     <div class="m-skill-talent" v-for="(talent, i) in talent" :key="i">
                         <el-divider class="u-title" content-position="left">
-                            {{
-                            talent.level_name
-                            }}
+                            {{ talent.level_name }}
                         </el-divider>
                         <div class="u-list">
-                            <talent_item
-                                :item="item"
-                                v-for="(item, i) in talent.kungfuSkills"
-                                :key="'kungfu-' + i"
-                            />
-                            <talent_item
-                                :item="item"
-                                v-for="(item, i) in talent.forceSkills"
-                                :key="'force-' + i"
-                                :force="true"
-                            />
+                            <talent_item :item="item" v-for="(item, i) in talent.kungfuSkills" :key="'kungfu-' + i" />
+                            <talent_item :item="item" v-for="(item, i) in talent.forceSkills" :key="'force-' + i" :force="true" />
                         </div>
                     </div>
                 </div>
@@ -66,7 +51,7 @@
 </template>
 
 <script>
-import { getSkill, getTalent, getAll } from "../service/skill";
+import { getSkill, getTalent } from "@/service/skill";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import levels from "../assets/data/levels.json";
 import _ from "lodash";
@@ -76,7 +61,7 @@ const TALENT_TOTAL_LEVELS = 12;
 export default {
     name: "Skill",
     props: [],
-    data: function () {
+    data: function() {
         return {
             loading: false,
             skill: "",
@@ -86,25 +71,21 @@ export default {
         };
     },
     computed: {
-        xf: function () {
+        xf: function() {
             return this.$route.query.subtype || "通用";
         },
-        kfid: function () {
+        kfid: function() {
             return xfmap[this.xf]["kungfuId"];
         },
     },
     methods: {
-        changeType: function () {},
-        loadData: function () {
+        changeType: function() {},
+        loadData: function() {
             this.loading = true;
-            getAll(this.xf)
+            getSkill(this.xf)
                 .then((data) => {
-                    let skillGroup = _.get(data, "skill.data");
-                    if (
-                        skillGroup &&
-                        Array.isArray(skillGroup) &&
-                        skillGroup.length
-                    ) {
+                    let skillGroup = data
+                    if (skillGroup && Array.isArray(skillGroup) && skillGroup.length) {
                         skillGroup.forEach((group) => {
                             if (group.kungfuId == this.kfid) {
                                 this.skill = group.remarks;
@@ -112,12 +93,15 @@ export default {
                             }
                         });
                     }
-                    let talentGroup = _.get(data, "talent.data");
-                    if (
-                        talentGroup &&
-                        Array.isArray(talentGroup) &&
-                        talentGroup.length
-                    ) {
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+
+            getTalent(this.xf)
+                .then((data) => {
+                    let talentGroup = data
+                    if (talentGroup && Array.isArray(talentGroup) && talentGroup.length) {
                         talentGroup.forEach((group) => {
                             if (group.kungfuId == this.kfid) {
                                 let _talent = group.kungfuLevel;
@@ -136,14 +120,14 @@ export default {
                 });
         },
     },
-    created: function () {},
+    created: function() {},
     watch: {
         xf: {
-            immediate : true,
-            handler : function (){
+            immediate: true,
+            handler: function() {
                 this.loadData();
-            }
-        }
+            },
+        },
     },
     components: {
         skill_item,
