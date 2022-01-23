@@ -2,13 +2,16 @@
     <div class="v-skill" v-loading="loading">
         <el-tabs v-model="active" type="card" @tab-click="changeType">
             <el-tab-pane label="技能" name="skill">
-                <div class="m-skill-box" v-if="skill">
+                <div class="m-skill-box" v-if="skill && xf != '通用'">
                     <div class="m-skill-kungfu" v-for="(kungfu, i) in skill" :key="i">
                         <h4 class="u-title">{{ kungfu.remark }}</h4>
                         <div class="u-list">
                             <skill_item :item="item" v-for="(item, i) in kungfu.forceSkills" :key="i" />
                         </div>
                     </div>
+                </div>
+                <div class="m-skill-null" v-else>
+                    <el-alert title="无通用技能，请通过侧边栏切换心法" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="奇穴" name="talent">
