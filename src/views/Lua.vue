@@ -35,7 +35,7 @@
         </div>
         <el-alert
             class="m-lua-warning"
-            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！"
+            title="本功能仅内部作者可见，仅作为攻略写作的参考资料。禁止外传，违者后果自负！(本功能需要额外独立申请授权)"
             type="warning"
             effect="dark"
             show-icon
