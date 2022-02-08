@@ -25,7 +25,7 @@
 
         <el-tab-pane label="源码解析" name="lua">
             <span slot="label">
-                <i class="el-icon-cpu"></i>
+                <i class="el-icon-full-screen"></i>
                 <b>源码分析</b>
                 <!-- <em class="u-ready">签约作者</em> -->
             </span>
@@ -47,11 +47,25 @@
             </span>
         </el-tab-pane>
 
+        <el-tab-pane label="急速阈值" name="haste">
+            <span slot="label">
+                <i class="el-icon-stopwatch"></i>
+                <b>急速阈值</b>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="DPS计算器" name="dps">
+            <span slot="label">
+                <i class="el-icon-cpu"></i>
+                <b>DPS计算器</b>
+                <em class="u-new">全新上线</em>
+            </span>
+        </el-tab-pane>
+
         <el-tab-pane label="门派天梯" name="ladder" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-s-data"></i>
                 <b>门派天梯</b>
-                <!-- <em class="u-new">全新上线</em> -->
             </span>
         </el-tab-pane>
 
@@ -69,6 +83,7 @@
                 <b>背景故事</b>
             </span>
         </el-tab-pane> -->
+
     </el-tabs>
 </template>
 

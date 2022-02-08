@@ -26,10 +26,14 @@
                 <i class="el-icon-shopping-bag-1"></i>
                 <span>在线配装</span>
             </a>
-            <a href="/app/haste" target="_blank">
+            <router-link to="/haste">
                 <i class="el-icon-stopwatch"></i>
                 <span>急速阈值</span>
-            </a>
+            </router-link>
+            <router-link to="/dps">
+                <i class="el-icon-cpu"></i>
+                <span>DPS计算器</span>
+            </router-link>
         </div>
     </div>
 </template>
