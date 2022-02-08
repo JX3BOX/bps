@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+Vue.use(VueRouter);
 
 const Index = () => import("../views/Index.vue");
 const Skill = () => import("../views/Skill.vue");
@@ -10,8 +11,8 @@ const Lua = () => import("../views/Lua.vue");
 const Story = () => import("../views/Story.vue");
 const Recipe = () => import("../views/Recipe.vue");
 const Group = () => import("../views/Group.vue");
-
-Vue.use(VueRouter);
+const Haste = () => import("../views/Haste.vue");
+const Dps = () => import("../views/Dps.vue");
 
 const routes = [
     { name: "index", path: "/", component: Index },
@@ -23,6 +24,8 @@ const routes = [
     { name: "lua", path: "/lua", component: Lua },
     { name: "recipe", path: "/recipe", component: Recipe },
     { name: "group", path: "/group", component: Group },
+    { name: "haste", path: "/haste", component: Haste },
+    { name: "dps", path: "/dps", component: Dps },
 ];
 
 const router = new VueRouter({
