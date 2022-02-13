@@ -15,7 +15,8 @@ let store = {
         extend : {
             collection_data : '',
             directory : false,
-        }
+        },
+        isSuperAuthor : false,
     },
     mutations: {
         switchClient: function(state, val) {

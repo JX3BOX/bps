@@ -121,7 +121,6 @@ export default {
             current: "",
             data: "",
             file: "",
-            isSuperAuthor: false,
             search: "",
         };
     },
@@ -145,6 +144,9 @@ export default {
         },
         client : function (){
             return this.$store.state.client || 'std'
+        },
+        isSuperAuthor : function (){
+            return this.$store.state.isSuperAuthor || false
         }
     },
     methods: {

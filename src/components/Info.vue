@@ -22,13 +22,15 @@ export default {
     props: [],
     data: function() {
         return {
-            isSuperAuthor: User.isSuperAuthor(),
         };
     },
     computed: {
         client: function() {
             return this.$store.state.client;
         },
+        isSuperAuthor : function (){
+            return this.$store.state.isSuperAuthor
+        }
     },
     methods: {},
     mounted: function() {},
