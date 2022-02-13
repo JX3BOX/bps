@@ -166,7 +166,11 @@ export default {
             this.loading = true;
             getMap(this.client)
                 .then((data) => {
+                    this.$store.state.isSuperAuthor = true
                     this.map = data;
+                })
+                .catch((err) => {
+                    this.$store.state.isSuperAuthor = false
                 })
                 .finally(() => {
                     this.loading = false;
