@@ -11,27 +11,29 @@
 		</div>
 		<!-- 表格 -->
 		<div class="m-dps-list">
-			<el-table :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索">
-				<el-table-column label="心法" :filters="xfList" :filter-method="filterXf">
+			<el-table :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink" @filter-change="filterChange">
+				<el-table-column label="心法" :filters="xfList" column-key="xf" :filter-multiple="false">
 					<template slot-scope="scope">
 						<div class="u-xf" :style="xfImg(scope.row.xfImg)">{{ scope.row.xfName }}</div>
 					</template>
 				</el-table-column>
+				<el-table-column label="名称">
+					<template slot-scope="scope">
+						<span v-if="scope.row.star" class="u-mark">编辑精选</span>
+						<a :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
+					</template>
+				</el-table-column>
 				<el-table-column label="作者">
 					<template slot-scope="scope">
-						<a :href="userLink(scope.row.user.ID)" target="_blank" class="u-user">
+						<a :href="userLink(scope.row.user.ID)" target="_blank" class="u-user" @click.stop="">
 							<img class="u-img" :src="userAvatar(scope.row.user.user_avatar)" alt="" srcset="" />
-							<span>{{ scope.row.user.display_name }}</span>
+							<span class="u-name">{{ scope.row.user.display_name }}</span>
 						</a>
 					</template>
 				</el-table-column>
-				<el-table-column label="名称">
-					<template slot-scope="scope">
-						<a class="u-name" :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
-					</template>
-				</el-table-column>
-				<el-table-column prop="client" label="客户端" :filters="client" :filter-method="filterClient"></el-table-column>
-				<el-table-column prop="type" label="计算器类型" :filters="type" :filter-method="filterType"></el-table-column>
+
+				<el-table-column prop="client" label="客户端" :filters="client" :filter-multiple="false" column-key="client"></el-table-column>
+				<el-table-column prop="type" label="计算器类型" :filters="type" :filter-multiple="false" column-key="type"></el-table-column>
 			</el-table>
 		</div>
 
@@ -46,12 +48,10 @@
 <script>
 import { getDpsCompute } from "@/service/helper.js";
 import _xf from "@jx3box/jx3box-data/data/xf/xfid.json";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box";
+import { __imgPath, __Domain, __Origin } from "@jx3box/jx3box-common/data/jx3box";
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 export default {
 	name: "Dps",
-	props: [],
-	components: {},
 	data: function () {
 		return {
 			loading: false, //加载状态
@@ -60,21 +60,21 @@ export default {
 			list: [],
 			xfList: [],
 			client: [
-				{ key: "std", value: "正式服", text: "正式服" },
-				{ key: "origin", value: "怀旧服", text: "怀旧服" },
-				{ key: "all", value: "双端", text: "双端" },
+				{ value: "std", text: "正式服" },
+				{ value: "origin", text: "怀旧服" },
+				{ value: "all", text: "双端" },
 			],
 			type: [
-				{ key: "jx3box", value: "魔盒DPS计算器", text: "魔盒DPS计算器" },
-				{ key: "excel", value: "xls表格", text: "xls表格" },
-				{ key: "other", value: "其他客户端或web", text: "其他客户端或web" },
+				{ value: "jx3box", text: "魔盒DPS计算器" },
+				{ value: "excel", text: "xls表格" },
+				{ value: "other", text: "其他客户端或web" },
 			],
 
-			page: 1, //当前页数
+			page: 1,
 			per: 20, //每页条目
 			total: 1, //总条目数
 
-			append: false,
+			filterParams: {},
 		};
 	},
 	computed: {
@@ -84,16 +84,11 @@ export default {
 		},
 		//提交查询参数
 		params: function () {
-			return this.search == ""
-				? {
-						page: this.page,
-						limit: this.per,
-				  }
-				: {
-						page: this.page,
-						limit: this.per,
-						name: this.search,
-				  };
+			return {
+				page: this.page,
+				limit: this.per,
+				name: this.search,
+			};
 		},
 		//总页数
 		pages: function () {
@@ -102,27 +97,23 @@ export default {
 	},
 	methods: {
 		//获取数据
-		getData() {
+		getData(params = this.params) {
 			this.loading = true;
-			getDpsCompute(this.params).then((res) => {
+			if (this.search == "") delete params.name;
+			if (JSON.stringify(this.filterParams) !== "{}") params = { ...this.filterParams, ...params };
+			getDpsCompute(params).then((res) => {
 				this.total = res.data.data.total;
 				let list = this.convertList(res.data.data.list);
 				this.append ? (this.list = this.list.concat(list)) : (this.list = list);
 				this.loading = false;
+				this.append = false;
 			});
-
-			for (const key in _xf) {
-				this.xfList.push({
-					text: _xf[key],
-					value: _xf[key],
-				});
-			}
 		},
 		//转换list数据
 		convertList(list) {
 			list.map((l) => {
-				let client = this.client.find((k) => k.key == l.client);
-				let type = this.type.find((k) => k.key == l.type);
+				let client = this.client.find((k) => k.value == l.client);
+				let type = this.type.find((k) => k.value == l.type);
 				let xfName = _xf[l.mount];
 				let xfImg = __imgPath + "image/xf/" + l.mount + ".png";
 				l.client = client.text;
@@ -144,22 +135,22 @@ export default {
 		userLink(id) {
 			return authorLink(id);
 		},
-		//过滤心法
-		filterXf(value, row) {
-			return row.xfName === value;
-		},
-		//过滤客户端
-		filterClient(value, row) {
-			return row.client === value;
-		},
-		//过滤类型
-		filterType(value, row) {
-			return row.type === value;
+		//选择 -心法 -客户端 -类型
+		filterChange(object) {
+			for (const key in object) {
+				if (key == "xf") {
+					object[key].length !== 0 ? (this.filterParams.mount = object[key][0]) : delete this.filterParams.mount;
+				} else if (key == "client") {
+					object[key].length !== 0 ? (this.filterParams.client = object[key][0]) : delete this.filterParams.client;
+				} else {
+					object[key].length !== 0 ? (this.filterParams.type = object[key][0]) : delete this.filterParams.type;
+				}
+			}
+			this.getData();
 		},
 		// 翻页加载
 		changePage: function (i) {
 			this.page = i;
-			this.append = false;
 			this.getData();
 		},
 		// 追加加载
@@ -168,15 +159,29 @@ export default {
 			this.page += 1;
 			this.getData();
 		},
+		// 打开链接
+		openLink(row) {
+			window.open(row.url);
+		},
+		getXfList() {
+			for (const key in _xf) {
+				this.xfList.push({
+					text: _xf[key],
+					value: key,
+				});
+			}
+		},
 	},
 	watch: {
-		search(val) {
-			this.page = 1;
-			this.list = [];
+		search(val, old) {
+			if (val !== old) {
+				this.page = 1;
+			}
 			this.getData();
 		},
 	},
 	created: function () {
+		this.getXfList();
 		this.getData();
 	},
 };
