@@ -88,7 +88,7 @@
 </template>
 
 <script>
-// import User from "@jx3box/jx3box-common/js/user";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "tabs",
     props: [],
@@ -120,7 +120,11 @@ export default {
             });
         },
     },
-    mounted: function () {},
+    mounted : function (){
+        User.isSuperAuthor().then((data) => {
+            this.isSuperAuthor = data;
+        });
+    }
 };
 </script>
 
