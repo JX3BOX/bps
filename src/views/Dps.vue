@@ -27,8 +27,8 @@
                 </el-table-column>
                 <el-table-column label="作者">
                     <template slot-scope="scope">
-                        <a :href="userLink(scope.row.user.ID)" target="_blank" class="u-user" @click.stop="">
-                            <img class="u-img" :src="userAvatar(scope.row.user.user_avatar)" alt="" srcset="" />
+                        <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop="">
+                            <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)"/>
                             <span class="u-author">{{ scope.row.user.display_name }}</span>
                         </a>
                     </template>
@@ -99,12 +99,17 @@ export default {
                 page: this.page,
                 limit: this.per,
                 name: this.search,
+				client : this.client
             };
         },
         //总页数
         pages: function() {
             return Math.ceil(this.total / this.per);
         },
+		// 客户端
+		current_client : function (){
+			return this.$store.state.client
+		}
     },
     methods: {
         //获取数据
@@ -137,14 +142,6 @@ export default {
         //心法图标
         xfImg(link) {
             return { backgroundImage: `url(" ` + link + `")` };
-        },
-        //用户头像
-        userAvatar(id) {
-            return showAvatar(id);
-        },
-        //用户链接
-        userLink(id) {
-            return authorLink(id);
         },
         //选择 -心法 -客户端 -类型
         filterChange(object) {
@@ -183,6 +180,8 @@ export default {
             }
         },
         showMountIcon,
+		showAvatar,
+		authorLink,
     },
     watch: {
         search(val, old) {
