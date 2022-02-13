@@ -23,7 +23,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="源码解析" name="lua">
+        <el-tab-pane label="源码解析" name="lua" v-if="isSuperAuthor">
             <span slot="label">
                 <i class="el-icon-full-screen"></i>
                 <b>源码分析</b>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-// import User from "@jx3box/jx3box-common/js/user";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "tabs",
     props: [],
@@ -106,6 +106,9 @@ export default {
         client: function () {
             return this.$store.state.client || "std";
         },
+        isSuperAuthor : function (){
+            return this.$store.state.isSuperAuthor || false
+        }
     },
     methods: {
         changeView: function () {
@@ -117,7 +120,11 @@ export default {
             });
         },
     },
-    mounted: function () {},
+    mounted : function (){
+        User.isSuperAuthor().then((data) => {
+            this.$store.state.isSuperAuthor = data;
+        });
+    }
 };
 </script>
 

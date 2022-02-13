@@ -5,32 +5,15 @@
                 <i class="el-icon-collection-tag"></i>
                 <span class="u-title-list" @click="showList">文件夹</span>
             </div>
-            <div
-                class="u-type"
-                :class="{ on: current == type }"
-                v-for="(icon, type) in schoolmap"
-                :key="type"
-                @click="changeType(type)"
-            >
-                <img class="u-typeicon" :src="type | iconURL" /><span>{{
-                    type == "item" ? "物品" : type
-                }}</span>
+            <div class="u-type" :class="{ on: current == type }" v-for="(icon, type) in schoolmap" :key="type" @click="changeType(type)">
+                <img class="u-typeicon" :src="type | iconURL" /><span>{{ type == "item" ? "物品" : type }}</span>
             </div>
         </div>
         <!-- 搜索 -->
         <div class="m-lua-search">
-            <el-input
-                placeholder="请输入关键词"
-                v-model="search"
-                class="input-with-select"
-                @change="searchLua"
-            >
+            <el-input placeholder="请输入关键词" v-model="search" class="input-with-select" @change="searchLua">
                 <span slot="prepend"><i class="el-icon-search"></i> 搜索</span>
-                <el-button
-                    slot="append"
-                    icon="el-icon-position"
-                    @change="searchLua"
-                ></el-button>
+                <el-button slot="append" icon="el-icon-position" @change="searchLua"></el-button>
             </el-input>
         </div>
         <el-alert
@@ -45,48 +28,19 @@
             <div class="u-title">
                 <i class="el-icon-collection-tag"></i>
                 <span class="u-title-list" @click="showList">文件列表</span>
-                <span class="u-title-file"
-                    ><i class="el-icon-arrow-right"></i> {{ file }}</span
-                >
-                <div class="u-back" @click="showList" v-if="data">
-                    <i class="el-icon-caret-left"></i> 返 回
-                </div>
+                <span class="u-title-file"><i class="el-icon-arrow-right"></i> {{ file }}</span>
+                <div class="u-back" @click="showList" v-if="data"><i class="el-icon-caret-left"></i> 返 回</div>
             </div>
-            <div
-                class="u-item"
-                v-show="group == current && !data"
-                v-for="(item, group) in map"
-                :key="group"
-            >
-                <div
-                    class="u-subitem"
-                    v-for="(subitem, subgroup) in item"
-                    :key="subgroup"
-                    :class="{ isHidden: search && !hasResult(subitem) }"
-                >
+            <div class="u-item" v-show="group == current && !data" v-for="(item, group) in map" :key="group">
+                <div class="u-subitem" v-for="(subitem, subgroup) in item" :key="subgroup" :class="{ isHidden: search && !hasResult(subitem) }">
                     <div class="u-wrapper">
                         <div class="u-container" v-if="isDirectory(subitem)">
-                            <div
-                                class="u-folder"
-                                @click="showSubtree($event, group + subgroup)"
-                            >
-                                <i class="el-icon-folder"></i> {{ subgroup }}
-                            </div>
+                            <div class="u-folder" @click="showSubtree($event, group + subgroup)"><i class="el-icon-folder"></i> {{ subgroup }}</div>
                             <div class="u-subtree" :ref="group + subgroup">
-                                <div
-                                    class="u-leaf"
-                                    @click="showCode(lua)"
-                                    v-for="(lua, i) in subitem"
-                                    :key="i"
-                                    v-show="!search || lua.includes(search)"
-                                >
-                                    <i class="el-icon-tickets"></i> {{ lua }}
-                                </div>
+                                <div class="u-leaf" @click="showCode(lua)" v-for="(lua, i) in subitem" :key="i" v-show="!search || lua.includes(search)"><i class="el-icon-tickets"></i> {{ lua }}</div>
                             </div>
                         </div>
-                        <div class="u-leaf" @click="showCode(subitem)" v-else>
-                            <i class="el-icon-tickets"></i> {{ subgroup }}
-                        </div>
+                        <div class="u-leaf" @click="showCode(subitem)" v-else><i class="el-icon-tickets"></i> {{ subgroup }}</div>
                     </div>
                 </div>
             </div>
@@ -98,7 +52,9 @@
         </div>
     </div>
     <div class="v-null" v-else>
-        <el-alert type="warning" show-icon><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert>
+        <el-alert type="warning" show-icon
+            ><span slot="title">没有查看权限，仅<a href="/dashboard/#cooperation" target="_blank">【签约作者】</a>可见。</span></el-alert
+        >
     </div>
 </template>
 
@@ -121,7 +77,6 @@ export default {
             current: "",
             data: "",
             file: "",
-            isSuperAuthor: false,
             search: "",
         };
     },
@@ -143,9 +98,12 @@ export default {
                 return "";
             }
         },
-        client : function (){
-            return this.$store.state.client || 'std'
-        }
+        client: function() {
+            return this.$store.state.client || "std";
+        },
+        isSuperAuthor: function() {
+            return this.$store.state.isSuperAuthor || false;
+        },
     },
     methods: {
         isDirectory: function(val) {
@@ -166,7 +124,11 @@ export default {
             this.loading = true;
             getMap(this.client)
                 .then((data) => {
+                    this.$store.state.isSuperAuthor = true;
                     this.map = data;
+                })
+                .catch((err) => {
+                    this.$store.state.isSuperAuthor = false;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -174,7 +136,7 @@ export default {
         },
         loadLua: function(path) {
             this.loading = true;
-            getLua(this.client,path)
+            getLua(this.client, path)
                 .then((res) => {
                     this.data = res.data;
                 })
@@ -211,7 +173,7 @@ export default {
                 //     title: "错误",
                 //     message: "请切至指定目录再进行搜索",
                 // });
-                this.data = ''
+                this.data = "";
             }
         },
     },
@@ -220,20 +182,17 @@ export default {
             return __imgPath + "image/school/" + schoolmap[val] + ".png";
         },
     },
-    mounted: function() {
-        User.isSuperAuthor().then((data) => {
-            this.isSuperAuthor = data
-
-            if (this.isSuperAuthor) {
-                this.current = this.school_name;
-                this.loadMap();
-            }
-
-            // TEST
-            // this.loadLua()
-        })
+    watch: {
+        isSuperAuthor: {
+            immediate: true,
+            handler: function(val) {
+                if (val) {
+                    this.current = this.school_name;
+                    this.loadMap();
+                }
+            },
+        },
     },
-    components: {},
 };
 </script>
 

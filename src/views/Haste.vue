@@ -45,7 +45,7 @@
                         <el-form-item label="选择可以额外提供加速的奇穴">
                             <!-- <p>选择可以额外提供加速的奇穴</p> -->
                             <el-radio-group v-model="hasteInfo.extra">
-                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.value">{{ item.name }}</el-radio>
+                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.name">{{ item.name }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-form>
@@ -76,7 +76,7 @@ export default {
             hasteInfo: {
                 skillTime: 1.5,
                 hitTimes: 1,
-                extra: 0,
+                extra: '无',
             },
 
             extraHasteList,
@@ -128,7 +128,11 @@ export default {
         },
         renderHaste: function() {
             const results = [];
-            const { skillTime, hitTimes, extra } = this.hasteInfo;
+            let { skillTime, hitTimes, extra: name } = this.hasteInfo;
+
+            let _extraHaste = this.extraHasteList.find(item => item.name === name)
+
+            const extra = _extraHaste.value
 
             const skillFrame = Math.ceil(skillTime / 0.0625);
             const surplusFrame = Math.ceil(2 / 0.0625);
@@ -149,8 +153,42 @@ export default {
                 hastePercent = i / hasteCof;
                 hastePercentLimit = i / hasteCof + extra / 10.24;
 
-                const nowTime = (nowFrame * 0.0625 * Number(hitTimes)).toFixed(2);
-                const nowSurplusTime = (surplusNowFrame * 0.0625 * 5).toFixed(2);
+                const nowTime = (nowFrame * 0.0625 * Number(hitTimes)) * 10000;
+                if(Math.floor(nowTime % 100 / 10) != 5){
+                    nowTime = (nowTime / 10000).toFixed(2);
+                }
+                else{
+                    if(nowTime % 10 != 0){
+                        nowTime = Math.floor(nowTime / 100 + 1) / 100;
+                    }
+                    else{
+                        nowTime = Math.floor(nowTime / 100);
+                        if(nowTime % 2 == 0){
+                            nowTime = Math.floor(nowTime) / 100;
+                        }
+                        else{
+                            nowTime = (Math.floor(nowTime) + 1) / 100;
+                        }
+                    }
+                }
+                const nowSurplusTime = (surplusNowFrame * 0.0625 * 5) * 10000;
+                if(Math.floor(nowSurplusTime % 100 / 10) != 5){
+                    nowSurplusTime = (nowSurplusTime / 10000).toFixed(2);
+                }
+                else{
+                    if(nowSurplusTime % 10 != 0){
+                        nowSurplusTime = Math.floor(nowSurplusTime / 100 + 1) / 100;
+                    }
+                    else{
+                        nowSurplusTime = Math.floor(nowSurplusTime / 100);
+                        if(nowSurplusTime % 2 == 0){
+                            nowSurplusTime = Math.floor(nowSurplusTime) / 100;
+                        }
+                        else{
+                            nowSurplusTime = (Math.floor(nowSurplusTime) + 1) / 100;
+                        }
+                    }
+                }
 
                 const result = {
                     duration: "",
