@@ -149,8 +149,42 @@ export default {
                 hastePercent = i / hasteCof;
                 hastePercentLimit = i / hasteCof + extra / 10.24;
 
-                const nowTime = (nowFrame * 0.0625 * Number(hitTimes)).toFixed(2);
-                const nowSurplusTime = (surplusNowFrame * 0.0625 * 5).toFixed(2);
+                const nowTime = (nowFrame * 0.0625 * Number(hitTimes)) * 10000;
+                if(Math.floor(nowTime % 100 / 10) != 5){
+                    nowTime = (nowTime / 10000).toFixed(2);
+                }
+                else{
+                    if(nowTime % 10 != 0){
+                        nowTime = Math.floor(nowTime / 100 + 1) / 100;
+                    }
+                    else{
+                        nowTime = Math.floor(nowTime / 100);
+                        if(nowTime % 2 == 0){
+                            nowTime = Math.floor(nowTime) / 100;
+                        }
+                        else{
+                            nowTime = (Math.floor(nowTime) + 1) / 100;
+                        }
+                    }
+                }
+                const nowSurplusTime = (surplusNowFrame * 0.0625 * 5) * 10000;
+                if(Math.floor(nowSurplusTime % 100 / 10) != 5){
+                    nowSurplusTime = (nowSurplusTime / 10000).toFixed(2);
+                }
+                else{
+                    if(nowSurplusTime % 10 != 0){
+                        nowSurplusTime = Math.floor(nowSurplusTime / 100 + 1) / 100;
+                    }
+                    else{
+                        nowSurplusTime = Math.floor(nowSurplusTime / 100);
+                        if(nowSurplusTime % 2 == 0){
+                            nowSurplusTime = Math.floor(nowSurplusTime) / 100;
+                        }
+                        else{
+                            nowSurplusTime = (Math.floor(nowSurplusTime) + 1) / 100;
+                        }
+                    }
+                }
 
                 const result = {
                     duration: "",
