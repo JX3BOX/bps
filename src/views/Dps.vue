@@ -11,36 +11,42 @@
         </div>
         <!-- 表格 -->
         <div class="m-dps-list">
-            <el-table :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink" @filter-change="filterChange">
-                <el-table-column label="心法" :filters="xfList" column-key="xf" :filter-multiple="false">
+            <el-table :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink">
+                <el-table-column label="心法" :filters="options.mount_filters" :filter-method="filterMatchValue" column-key="xf" :filter-multiple="true">
                     <template slot-scope="scope">
                         <div class="u-xf">
-                            <img class="u-xf-icon" :src="showMountIcon(scope.row.mount)" /><span class="u-xf-name">{{ scope.row.xfName }}</span>
+                            <img class="u-xf-icon" :src="showMountIcon(scope.row.mount)" /><span class="u-xf-name">{{ showMountName(scope.row.mount) }}</span>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="名称">
+
+                <el-table-column label="名称" sortable>
                     <template slot-scope="scope">
-						<i class="u-star" v-if="scope.row.star">★ 编辑推荐</i>
-						<a class="u-name" :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
+                        <span class="u-client" :class="'i-client-' + scope.row.client">{{ showClientLabel(scope.row.client) }}</span>
+                        <i class="u-star" v-if="scope.row.star">★ 编辑推荐</i>
+                        <a class="u-name" :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
                     </template>
                 </el-table-column>
-                <el-table-column label="作者">
+
+                <el-table-column label="作者" sortable>
                     <template slot-scope="scope">
                         <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop="">
-                            <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)"/>
+                            <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)" />
                             <span class="u-author">{{ scope.row.user.display_name }}</span>
                         </a>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="client" label="客户端" :filters="client" :filter-multiple="false" column-key="client"></el-table-column>
-                <el-table-column prop="type" label="计算器类型" :filters="type" :filter-multiple="false" column-key="type"></el-table-column>
+                <el-table-column label="计算器类型" :filters="options.type_filters" :filter-method="filterMatchValue" :filter-multiple="true" column-key="type">
+                    <template slot-scope="scope">
+                        <span class="u-type">
+                            <img :src="getTypeIcon(scope.row.type)" :alt="scope.row.type" />
+                            {{ showTypeLabel(scope.row.type) }}
+                        </span>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
-
-        <!-- 下一页 -->
-        <el-button class="m-dps-more" v-show="hasNextPage" type="primary" @click="appendPage" :loading="loading" icon="el-icon-arrow-down">加载更多</el-button>
 
         <!-- 分页 -->
         <el-pagination
@@ -57,10 +63,13 @@
 </template>
 
 <script>
-import { getDpsCompute } from "@/service/helper.js";
-import _xf from "@jx3box/jx3box-data/data/xf/xfid.json";
+import { getDpsList } from "@/service/helper.js";
+import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
+import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { __imgPath, __Domain, __Origin } from "@jx3box/jx3box-common/data/jx3box";
-import { showAvatar, authorLink, showMountIcon } from "@jx3box/jx3box-common/js/utils";
+import { showAvatar, authorLink, showMountIcon, showClientLabel } from "@jx3box/jx3box-common/js/utils";
+import { map as each } from "lodash";
+import types from "@/assets/data/dps_types.json";
 export default {
     name: "Dps",
     data: function() {
@@ -68,19 +77,25 @@ export default {
             loading: false, //加载状态
 
             search: "",
-            list: [],
-            xfList: [],
-            client: [
-                { value: "std", text: "正式服" },
-                { value: "origin", text: "怀旧服" },
-                { value: "all", text: "双端" },
-            ],
-            type: [
-                { value: "jx3box", text: "jx3box" },
-                { value: "excel", text: "xls" },
-                { value: "other", text: "其它" },
-            ],
 
+            options: {
+                mount_filters: each(xfmap, (item, label) => {
+                    return {
+                        text: label,
+                        value: item.id,
+                    };
+                }),
+                client_filters: [
+                    { value: "std", text: "正式服" },
+                    { value: "origin", text: "怀旧服" },
+                    { value: "all", text: "双端" },
+                ],
+                type_filters: each(types, (label, key) => {
+                    return { value: key, text: label };
+                }),
+            },
+
+            list: [],
             page: 1,
             per: 50, //每页条目
             total: 1, //总条目数
@@ -89,110 +104,71 @@ export default {
         };
     },
     computed: {
-        // 是否显示加载更多
-        hasNextPage: function() {
-            return this.pages > 1 && this.page < this.pages;
-        },
         //提交查询参数
         params: function() {
             return {
                 page: this.page,
                 limit: this.per,
                 name: this.search,
-				client : this.client
+                client: this.$store.state.client,
             };
         },
-        //总页数
-        pages: function() {
-            return Math.ceil(this.total / this.per);
-        },
-		// 客户端
-		current_client : function (){
-			return this.$store.state.client
-		}
     },
     methods: {
-        //获取数据
-        getData(params = this.params) {
+        // 数据模块
+        // ==========================
+        // 获取数据
+        getData() {
             this.loading = true;
-            if (this.search == "") delete params.name;
-            if (JSON.stringify(this.filterParams) !== "{}") params = { ...this.filterParams, ...params };
-            getDpsCompute(params).then((res) => {
-                this.total = res.data.data.total;
-                let list = this.convertList(res.data.data.list);
-                this.append ? (this.list = this.list.concat(list)) : (this.list = list);
-                this.loading = false;
-                this.append = false;
-            });
+            getDpsList(this.params)
+                .then((res) => {
+                    this.total = res?.data?.data?.total || 0;
+                    this.list = res?.data?.data?.list || [];
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        //转换list数据
-        convertList(list) {
-            list.map((l) => {
-                let client = this.client.find((k) => k.value == l.client);
-                let type = this.type.find((k) => k.value == l.type);
-                let xfName = _xf[l.mount];
-                let xfImg = __imgPath + "image/xf/" + l.mount + ".png";
-                l.client = client.text;
-                l.type = type.text;
-                l.xfName = xfName;
-                l.xfImg = xfImg;
-            });
-            return list;
+
+        // 过滤模块
+        // ==========================
+        filterMatchValue: function(value, row, column) {
+            return value == row[column.columnKey];
         },
-        //心法图标
-        xfImg(link) {
-            return { backgroundImage: `url(" ` + link + `")` };
-        },
-        //选择 -心法 -客户端 -类型
-        filterChange(object) {
-            for (const key in object) {
-                if (key == "xf") {
-                    object[key].length !== 0 ? (this.filterParams.mount = object[key][0]) : delete this.filterParams.mount;
-                } else if (key == "client") {
-                    object[key].length !== 0 ? (this.filterParams.client = object[key][0]) : delete this.filterParams.client;
-                } else {
-                    object[key].length !== 0 ? (this.filterParams.type = object[key][0]) : delete this.filterParams.type;
-                }
-            }
-            this.getData();
-        },
+
+        // 分页模块
+        // ==========================
         // 翻页加载
         changePage: function(i) {
-            this.page = i;
             this.getData();
         },
-        // 追加加载
-        appendPage: function() {
-            this.append = true;
-            this.page += 1;
-            this.getData();
+
+        // 其它
+        // ==========================
+        showMountName: function(mount_id) {
+            return xfids[mount_id];
         },
-        // 打开链接
         openLink(row) {
             window.open(row.url);
         },
-        getXfList() {
-            for (const key in _xf) {
-                this.xfList.push({
-                    text: _xf[key],
-                    value: key,
-                });
-            }
-        },
         showMountIcon,
-		showAvatar,
-		authorLink,
+        showAvatar,
+        authorLink,
+        showClientLabel,
+        showTypeLabel: function(val) {
+            return types[val];
+        },
+        getTypeIcon: function(val) {
+            return require(`@/assets/img/dps/${val}.svg`);
+        },
     },
     watch: {
-        search(val, old) {
-            if (val !== old) {
-                this.page = 1;
-            }
+        search(val) {
+            this.page = 1;
             this.getData();
         },
     },
     created: function() {
-        this.getXfList();
         this.getData();
     },
 };

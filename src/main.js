@@ -11,6 +11,7 @@ Vue.use(VueClipboard)
 import JX3BOX_UI from '@jx3box/jx3box-common-ui'
 import "@jx3box/jx3box-common/css/element.css";
 import "@jx3box/jx3box-common/css/normalize.css";
+import "@jx3box/jx3box-common/css/preset.css";
 Vue.use(JX3BOX_UI);
 
 

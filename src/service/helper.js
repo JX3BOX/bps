@@ -1,31 +1,31 @@
 import { $helper } from "@jx3box/jx3box-common/js/https";
 
 function getCollection($collection_id, params = {}) {
-	return $helper()({
-		method: "GET",
-		url: `/api/post/collection/${$collection_id}`,
-		params: params,
-	});
+    return $helper()({
+        method: "GET",
+        url: `/api/post/collection/${$collection_id}`,
+        params: params,
+    });
 }
 
 function getSkillGroups(keys, client) {
-	return $helper({
-		headers: {
-			"JX3-Client-Type": client,
-		},
-	}).get(`/api/skill_groups`, {
-		params: {
-			keys,
-		},
-	});
+    return $helper({
+        headers: {
+            "JX3-Client-Type": client,
+        },
+    }).get(`/api/skill_groups`, {
+        params: {
+            keys,
+        },
+    });
 }
 
 function getSkillGroup(key) {
-	return $helper().get(`/api/skill_group/${key}`);
+    return $helper().get(`/api/skill_group/${key}`);
 }
 
-function getDpsCompute(params) {
-	return $helper().get(`/api/dps_registry`, { params: params });
+function getDpsList(params) {
+    return $helper().get(`/api/dps_registry`, { params: params });
 }
 
-export { getCollection, getSkillGroups, getSkillGroup, getDpsCompute };
+export { getCollection, getSkillGroups, getSkillGroup, getDpsList };
