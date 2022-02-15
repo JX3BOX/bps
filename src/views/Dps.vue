@@ -12,7 +12,7 @@
         <!-- 表格 -->
         <div class="m-dps-list">
             <el-table :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink">
-                <el-table-column label="心法" :filters="options.mount_filters" :filter-method="filterMatchValue" column-key="xf" :filter-multiple="true">
+                <el-table-column label="心法" :filters="options.mount_filters" :filter-method="filterMatchValue" column-key="mount" :filter-multiple="true">
                     <template slot-scope="scope">
                         <div class="u-xf">
                             <img class="u-xf-icon" :src="showMountIcon(scope.row.mount)" /><span class="u-xf-name">{{ showMountName(scope.row.mount) }}</span>
@@ -20,7 +20,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="名称" sortable>
+                <el-table-column label="名称" prop="name" sortable>
                     <template slot-scope="scope">
                         <span class="u-client" :class="'i-client-' + scope.row.client">{{ showClientLabel(scope.row.client) }}</span>
                         <i class="u-star" v-if="scope.row.star">★ 编辑推荐</i>
@@ -28,7 +28,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="作者" sortable>
+                <el-table-column label="作者" prop="user" sortable>
                     <template slot-scope="scope">
                         <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop="">
                             <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)" />
@@ -160,7 +160,7 @@ export default {
         },
         getTypeIcon: function(val) {
             return require(`@/assets/img/dps/${val}.svg`);
-        },
+        }
     },
     watch: {
         search(val) {

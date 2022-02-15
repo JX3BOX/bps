@@ -33,7 +33,7 @@
                 <el-collapse>
                     <el-collapse-item
                         v-for="(item, index) in data"
-                        :key="item.SkillID"
+                        :key="item.SkillID || index"
                         :title="num2zh(index)"
                         :name="index"
                     >
