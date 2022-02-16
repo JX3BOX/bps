@@ -99,8 +99,6 @@ export default {
             page: 1,
             per: 50, //每页条目
             total: 1, //总条目数
-
-            filterParams: {},
         };
     },
     computed: {
