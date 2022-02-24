@@ -34,6 +34,10 @@
                             <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)" />
                             <span class="u-author">{{ scope.row.user.display_name }}</span>
                         </a>
+                        <a class="u-user" :href="authorLink(contributor.ID)" target="_blank" @click.stop="" v-for="contributor in scope.row.contributors" :key="contributor.ID">
+                            <img class="u-img" :src="showAvatar(contributor.user_avatar)" />
+                            <span class="u-author">{{ contributor.display_name }}</span>
+                        </a>
                     </template>
                 </el-table-column>
 

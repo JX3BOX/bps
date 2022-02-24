@@ -38,6 +38,14 @@
 			.r(6px);
 			vertical-align: middle;
 		}
+		&:after{
+			content : '、';
+			color:#999;
+			.ml(5px);
+		}
+		&:last-child::after{
+			content : ''
+		}
 	}
 
 	.u-client{
