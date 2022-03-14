@@ -2,7 +2,6 @@
     <div id="app">
         <Header></Header>
         <Breadcrumb name="职业专栏" slug="bps" root="/bps" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
-            <img slot="logo" svg-inline :src="getAppIcon('bps')" />
         </Breadcrumb>
         <LeftSidebar>
             <Nav :id="id" class="m-nav" />
@@ -21,7 +20,7 @@
 import Nav from "@/components/single/single_nav.vue";
 import Side from "@/components/single/single_side.vue";
 import single from "@/components/single/single.vue";
-import { getAppIcon, getAppID } from "@jx3box/jx3box-common/js/utils";
+import { getAppID } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     props: [],
@@ -30,7 +29,6 @@ export default {
             id: getAppID(),
         };
     },
-    methods: { getAppIcon },
     components: {
         Nav,
         Side,

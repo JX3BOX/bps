@@ -11,8 +11,8 @@
     "kungfu": "node ./tools/kungfu.js"
   },
   "dependencies": {
-    "@jx3box/jx3box-common": "^7.0.19",
-    "@jx3box/jx3box-common-ui": "^5.5.22",
+    "@jx3box/jx3box-common": "^7.0.20",
+    "@jx3box/jx3box-common-ui": "^5.5.23",
     "@jx3box/jx3box-data": "^1.8.3",
     "ant-design-vue": "^1.6.2",
     "axios": "^0.21.1",
