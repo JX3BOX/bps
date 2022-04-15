@@ -90,8 +90,8 @@ export default {
                     };
                 }),
                 client_filters: [
-                    { value: "std", text: "正式服" },
-                    { value: "origin", text: "怀旧服" },
+                    { value: "std", text: "重制" },
+                    { value: "origin", text: "缘起" },
                     { value: "all", text: "双端" },
                 ],
                 type_filters: each(types, (label, key) => {

@@ -20,8 +20,8 @@ function getLua(client, path) {
     let _path = encodeURIComponent(path);
 
     // TEST
-    // _path = encodeURIComponent('七秀/10层剑舞加攻击.lua')    //正式服
-    // _path = encodeURIComponent('七秀/七秀_七诀剑气.lua')    //怀旧服
+    // _path = encodeURIComponent('七秀/10层剑舞加攻击.lua')    //重制
+    // _path = encodeURIComponent('七秀/七秀_七诀剑气.lua')    //缘起
 
     let url = _root + _path;
     return $lua()
