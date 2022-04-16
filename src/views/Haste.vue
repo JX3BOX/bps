@@ -14,7 +14,7 @@
                             <el-input-number
                                 v-model="hasteInfo.skillTime"
                                 :min="0.5"
-                                :step="0.1"
+                                :step="0.01"
                                 step-strictly
                                 controls-position="right"
                                 style="width: 100%"
@@ -90,6 +90,10 @@ export default {
                     label: "破招伤害时间(秒)",
                     value: "surplus",
                 },
+                //{
+                    //label: "帧数（调试用）",
+                    //value: "nowFrame",
+                //},
                 {
                     label: "所需加速率",
                     value: "percentage",
@@ -120,40 +124,44 @@ export default {
             if (!currentVal) {
                 this.skillTime = 0.5;
             }
+            //技能时间
         },
         handleHitTimesChange: function(currentVal, OldVal) {
             if (!currentVal) {
                 this.hitTimes = 1;
             }
+            //技能频率
         },
         renderHaste: function() {
             const results = [];
             let { skillTime, hitTimes, extra: name } = this.hasteInfo;
-
             let _extraHaste = this.extraHasteList.find(item => item.name === name)
 
             const extra = _extraHaste.value
-
-            const skillFrame = Math.ceil(skillTime / 0.0625);
+            const skillFrame = Math.round(skillTime / 0.0625);
+            //console.log(skillFrame)
+            //当前读条帧数 上一条记得注释掉
             const surplusFrame = Math.ceil(2 / 0.0625);
-
+            //破招固定2秒/段的帧数
             let hastePercent = 0;
             let hastePercentLimit = 0;
             let lastTime = (Number(skillTime) + 0.1).toFixed(2);
             let lastSurplusTime = "2.10";
+            //这两行没看懂 不敢动
             const hasteCof = 438.5625;
-
+            //等级改系数
             for (let i = 0; hastePercentLimit < 25; i += 1) {
                 const baseHaste = (i / hasteCof) * 10.24;
                 const totalHaste = Math.floor(baseHaste) + Math.floor(extra);
-
+                //基础加速加奇穴加速
                 const nowFrame = Math.floor((skillFrame * 1024) / (totalHaste + 1024));
                 const surplusNowFrame = Math.floor((surplusFrame * 1024) / (totalHaste + 1024));
-
+                //帧数
                 hastePercent = i / hasteCof;
                 hastePercentLimit = i / hasteCof + extra / 10.24;
 
                 const nowTime = (nowFrame * 0.0625 * Number(hitTimes)) * 10000;
+                //基础加速读条时间
                 if(Math.floor(nowTime % 100 / 10) != 5){
                     nowTime = (nowTime / 10000).toFixed(2);
                 }
@@ -172,6 +180,7 @@ export default {
                     }
                 }
                 const nowSurplusTime = (surplusNowFrame * 0.0625 * 5) * 10000;
+                //破招时间 2s/段总5段
                 if(Math.floor(nowSurplusTime % 100 / 10) != 5){
                     nowSurplusTime = (nowSurplusTime / 10000).toFixed(2);
                 }
@@ -193,6 +202,7 @@ export default {
                 const result = {
                     duration: "",
                     percentage: hastePercent.toFixed(2),
+                    nowFrame:nowFrame,
                     surplus: "",
                     level: i,
                 };
