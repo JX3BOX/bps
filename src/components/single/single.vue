@@ -30,7 +30,7 @@ export default {
     },
     computed: {
         post_subtype: function() {
-            return this.post?.post_subtype || '其它';
+            return this?.post?.post_subtype || '其它';
         },
     },
     methods: {
