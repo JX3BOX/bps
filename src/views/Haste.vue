@@ -14,7 +14,8 @@
                             <el-input-number
                                 v-model="hasteInfo.skillTime"
                                 :min="0.5"
-                                :step="0.01"
+                                :step="0.0625"
+                                precision="2"
                                 step-strictly
                                 controls-position="right"
                                 style="width: 100%"
@@ -136,7 +137,7 @@ export default {
             const results = [];
             let { skillTime, hitTimes, extra: name } = this.hasteInfo;
             let _extraHaste = this.extraHasteList.find(item => item.name === name)
-
+            
             const extra = _extraHaste.value
             const skillFrame = Math.round(skillTime / 0.0625);
             //console.log(skillFrame)
