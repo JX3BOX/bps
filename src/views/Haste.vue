@@ -128,7 +128,8 @@ export default {
         },
         handleHitTimesChange: function(currentVal, OldVal) {
             if (!currentVal) {
-                this.hasteInfo.hitTimes = 1;
+                this.hasteInfo.hitTimes = 0;
+                //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值
             }
             //技能频率
         },
@@ -228,13 +229,14 @@ export default {
             this.tableData = results;
         },
         ToEven:function(inputNumber,outputNumber){
+            //回调帧数避免出现奇怪的不存在的技能时长 每帧间隔0.0625 限制上下键的step即可，剩下的交给四舍六入
             let number = Math.round(inputNumber/0.0625)
             if(isNaN(number)){
-                outputNumber = 1.5;
+                outputNumber = 0;
             }
-            //回调帧数避免出现奇怪的不存在的技能时长 每帧间隔0.0625 限制上下键的step即可，剩下的交给四舍六入
+            //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值 这里由于没有对步数宽度强制限制单独处理一次
             else{
-                number = number*0.0625*10000
+                number = number * 0.0625 * 10000
                 if(Math.floor(number % 100 / 10) != 5){
                     outputNumber = (number / 10000).toFixed(2);
                 }
