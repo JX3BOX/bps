@@ -58,7 +58,7 @@
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>DPS计算器</b>
-                <em class="u-new">全新上线</em>
+                <!-- <em class="u-new">全新上线</em> -->
             </span>
         </el-tab-pane>
 
