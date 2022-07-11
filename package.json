@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@jx3box/jx3box-common": "^7.3.9",
-    "@jx3box/jx3box-common-ui": "^6.0.6",
+    "@jx3box/jx3box-common-ui": "^6.0.9",
     "@jx3box/jx3box-data": "^1.10.3",
     "ant-design-vue": "^1.6.2",
     "axios": "^0.21.1",
