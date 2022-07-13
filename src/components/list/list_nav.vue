@@ -44,11 +44,6 @@ import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx
 export default {
     name: "list_nav",
     props: [],
-    data: function() {
-        return {
-            xfmap,
-        };
-    },
     computed: {
         client: function() {
             return this.$store.state.client;
@@ -59,6 +54,10 @@ export default {
         activeName: function() {
             return this.$route?.query?.subtype;
         },
+        xfmap() {
+            delete xfmap['山居剑意']
+            return xfmap
+        }
     },
     methods: {
         navLink: function(val) {
