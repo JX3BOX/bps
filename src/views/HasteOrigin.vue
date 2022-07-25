@@ -6,7 +6,7 @@
                     <div slot="header">技能设定</div>
                     <el-form>
                         <div>
-                            <span>读条时间</span>
+                            <span style="line-height:3;">技能时间</span>
                             <el-tooltip
                                 content="表示技能正读条时间，或持续性伤害技能的每跳时间，或引导读条的每跳时间"
                                 placement="top"
@@ -23,7 +23,7 @@
                         >
                         </el-input-number>
                         <div>
-                            <span>跳数</span>
+                            <span style="line-height:3;">跳数</span>
                             <el-tooltip
                                 content="表示相应技能跳数，正读条为 1 跳，引导读条为造成伤害的次数"
                                 placement="top"
@@ -53,6 +53,7 @@
                                 :key="header.value"
                                 :label="header.label"
                                 :prop="header.value"
+                                :align="header.align"
                             ></el-table-column>
                         </template>
                     </el-table>
@@ -88,7 +89,8 @@ export default {
                 },
                 {
                     label: "所需加速点数",
-                    value: "hasteBase"
+                    value: "hasteBase",
+                    align:"right"
                 }
             ],
             tableData: [],
