@@ -76,15 +76,15 @@ export default {
             },
             tableHeader: [
                 {
-                    label: "读条时间",
+                    label: "读条时间（s）",
                     value: "duration"
                 },
                 {
-                    label: "基础加速率",
+                    label: "基础加速率（%）",
                     value: "hasteBasePercent"
                 },
                 {
-                    label: "最终加速率",
+                    label: "最终加速率（%）",
                     value: "hastePercent"
                 },
                 {
