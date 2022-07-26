@@ -51,6 +51,7 @@
             <span slot="label">
                 <i class="el-icon-stopwatch"></i>
                 <b>急速阈值</b>
+                <em class="u-new">全新上线</em>
             </span>
         </el-tab-pane>
 
