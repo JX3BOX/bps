@@ -158,8 +158,11 @@ export default {
                 hastePercent = Math.max(hasteCurrentPercent, hasteBasePercent * 100 + hasteRate / 1024)
                 //最终加速百分比（百分数）
                 //const hasteCalePercent = 100 - 100 / (1 + Math.max(Math.floor(i * currentCof) / 1024, hasteBasePercent + hasteRate / 1024))
-                const hasteCalePercent = 100 - 100 / (1 + Math.floor(i * currentCof) / 1024)
-                //计算用百分比(百分数) 此数值面板和实际计算有出入 注释为面板算法
+                //巴蜀风云版本面板减读条原始算法（百分数）
+                //const hasteCalePercent = 100 - 100 / (1 + Math.floor(i * currentCof) / 1024)
+                //巴蜀风云版本体服减读条实际算法（百分数）
+                const hasteCalePercent = 100 - 100 / (1 + Math.floor(hasteBasePercent * 1024) / 1024)
+                //巴蜀风云版本正式服减读条算法（正式服改，真不错）,只算了基础，实装额外加速之后这行记得改
                 const skillNowFPS = Math.floor((1 - hasteCalePercent / 100) * skillFPS)
                 //实际作用帧数
                 const result = {
