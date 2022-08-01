@@ -81,9 +81,13 @@ export default {
                     label: "基础加速率（%）",
                     value: "hasteBasePercent",
                 },
+                //{
+                //    label: "最终加速率（%）",
+                //    value: "hastePercent",
+                //},
                 {
-                    label: "最终加速率（%）",
-                    value: "hastePercent",
+                    label: "运功时间减少（%）",
+                    value: "hasteCaleUIPercent",
                 },
                 {
                     label: "所需加速点数",
@@ -143,37 +147,42 @@ export default {
             //预留额外加速，暂时用不到，写0
             const hasteCof = 14.983 * 245;
             //基础加速系数
-            const currentCof = 0.325;
-            //特殊加速百分比系数(可能误差)
+            //const currentCof = 0.325;
+            //特殊加速百分比系数(可能误差),1.0.0.2531版本删除
             let hastePercent = 0;
             let hasteCaleResult = [];
             for (let i = 0; hastePercent < 25; i++) {
                 //加速值
                 const hasteBasePercent = i / hasteCof;
                 //基础加速率（小数）=加速值/加速系数
-                const hasteCurrentPercent = (Math.floor(i * currentCof) * 100) / 1024;
-                //特殊加速率（百分数）=加速值*特殊系数
-                hastePercent = Math.max(hasteCurrentPercent, hasteBasePercent * 100 + hasteRate / 1024);
+                //const hasteCurrentPercent = (Math.floor(i * currentCof) * 100) / 1024;
+                //特殊加速率（百分数）=加速值*特殊系数,1.0.0.2538版本删除
+                hastePercent = hasteBasePercent * 100 + hasteRate / 1024;
                 //最终加速百分比（百分数）
                 //const hasteCalePercent = 100 - 100 / (1 + Math.max(Math.floor(i * currentCof) / 1024, hasteBasePercent + hasteRate / 1024));
                 //巴蜀风云版本面板减读条原始算法（百分数）
+                const hasteCaleUIPercent = 100 - 100 / (1 + hasteBasePercent);
+                //巴蜀风云版本面板减读条算法（百分数），1.0.0.2538正式服修复bug版本
                 //const hasteCalePercent = 100 - 100 / (1 + Math.floor(i * currentCof) / 1024);
                 //巴蜀风云版本体服减读条实际算法（百分数）
                 const hasteCalePercent = 100 - 100 / (1 + Math.floor(hasteBasePercent * 1024) / 1024);
                 //巴蜀风云版本正式服减读条算法,只算了基础，实装额外加速之后这行记得改
                 const skillNowFPS = Math.floor((1 - hasteCalePercent / 100) * skillFPS);
                 //实际作用帧数
+                console.log(i,hasteBasePercent,hastePercent,hasteCaleUIPercent)
                 const result = {
                     duration: "",
                     hasteBasePercent: "",
-                    hastePercent: "",
+                    //hastePercent: "",
+                    hasteCaleUIPercent:"",
                     skillNowFPS,
                     hasteBase: i,
                 };
                 if (skillNowFPS > 0 && !hasteCaleResult.some((r) => r.skillNowFPS == skillNowFPS)) {
                     result.duration = this.ToFixed((skillNowFPS * hitTimes) / 16);
                     result.hasteBasePercent = this.ToFixed(hasteBasePercent * 100);
-                    result.hastePercent = this.ToFixed(hastePercent);
+                    //result.hastePercent = this.ToFixed(hastePercent);
+                    result.hasteCaleUIPercent = this.ToFixed(hasteCaleUIPercent);
                     hasteCaleResult.push(result);
                 }
             }
