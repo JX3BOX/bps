@@ -113,6 +113,7 @@ export default {
                 limit: this.per,
                 name: this.search,
                 client: this.$store.state.client,
+                usePage: 0
             };
         },
     },
