@@ -3,9 +3,7 @@
         <!-- 搜索 -->
         <div class="m-recipe-search">
             <el-input v-model.trim.lazy="search" placeholder="请输入关键词..">
-                <template slot="prepend">
-                    <i class="el-icon-search"></i> 搜索
-                </template>
+                <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
                 <template slot="append">
                     <i class="el-icon-position"></i>
                 </template>
@@ -15,7 +13,7 @@
         <div class="m-recipe-list" v-if="data && data.length">
             <el-table
                 :data="data"
-                :default-sort="{prop:'name'}"
+                :default-sort="{ prop: 'name' }"
                 size="small"
                 :loading="loading"
                 @row-click="expandRow"
@@ -26,7 +24,7 @@
                         <el-form label-position="left" inline class="u-expand">
                             <el-form-item
                                 :label="key"
-                                v-for="(val,key) in props.row"
+                                v-for="(val, key) in props.row"
                                 :key="key"
                                 v-show="isNotHidden(key) && hasValidValue(val)"
                             >
@@ -46,57 +44,82 @@
                     <template slot-scope="scope">
                         <span :href="scope.row.RecipeName | getItemLink" class="u-link">
                             <img :src="scope.row.IconID | iconLink" class="u-icon" />
-                            <span
-                                class="u-name"
-                                :class="'isQuality-' + scope.row.Quality"
-                            >{{scope.row.RecipeName}}</span>
+                            <span class="u-name" :class="'isQuality-' + scope.row.Quality">{{
+                                scope.row.RecipeName
+                            }}</span>
                         </span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="Desc" label="秘籍描述" sortable>
                     <template slot-scope="scope">
-                        <span class="u-desc">{{scope.row.Desc}}</span>
+                        <span class="u-desc">{{ scope.row.Desc }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="exam_print" label="监本" width="100" sortable>
+                <el-table-column prop="exam_print" label="消耗" width="100" sortable>
                     <template slot-scope="scope">
                         <template v-if="scope.row.ExamPrint">
                             <span class="u-points">
                                 <img src="../assets/img/recipe/exam_points.png" alt />
-                                {{scope.row.ExamPrint}}
+                                {{ scope.row.ExamPrint }}
+                            </span>
+                        </template>
+                        <template v-if="scope.row.TrainCost">
+                            <span class="u-points u-train">
+                                <img src="../assets/img/recipe/train_points.png" alt />
+                                {{ scope.row.TrainCost }}
                             </span>
                         </template>
                     </template>
                 </el-table-column>
                 <el-table-column prop="tasks" label="任务来源">
                     <template slot-scope="scope">
-                        <a v-for="task in scope.row.tasks" :key="task.name" :href="task.name | getTaskLink" target="_blank" @click.stop>
-                            [{{task.name}}]
+                        <a
+                            v-for="task in scope.row.tasks"
+                            :key="task.name"
+                            :href="task.id | getTaskLink"
+                            target="_blank"
+                            @click.stop
+                        >
+                            [{{ task.name }}]
                         </a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="books" label="书籍来源">
                     <template slot-scope="scope">
-                        <a v-for="book in scope.row.books" :key="book.name" :href="book.name | getItemLink" target="_blank" @click.stop>
-                            [{{book.name}}]
+                        <a
+                            v-for="book in scope.row.books"
+                            :key="book.name"
+                            :href="book.id | getItemLink"
+                            target="_blank"
+                            @click.stop
+                        >
+                            [{{ book.name }}]
                         </a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="doodad_template_id" label="碑铭来源">
                     <template slot-scope="scope">
-                        <a v-for="doodad in scope.row.doodad_template_id" :key="doodad.name" :href="doodad.name | getDoodadLink" target="_blank" @click.stop>
-                            [{{doodad.name}}]
+                        <a
+                            v-for="doodad in scope.row.doodad_template_id"
+                            :key="doodad.name"
+                            :href="doodad.id | getDoodadLink"
+                            target="_blank"
+                            @click.stop
+                        >
+                            [{{ doodad.name }}]
                         </a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="_remark" label="备注">
                     <template slot-scope="scope">
-                        <span>{{scope.row._remark}}</span>
+                        <span>{{ scope.row._remark }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="RecipeName" label="百科">
                     <template slot-scope="scope">
-                        <a :href="scope.row.RecipeName | getItemLink" class="u-link" target="_blank" @click.stop>查看百科&raquo;</a>
+                        <a :href="scope.row.RecipeName | getItemLink" class="u-link" target="_blank" @click.stop
+                            >查看百科&raquo;</a
+                        >
                     </template>
                 </el-table-column>
             </el-table>
@@ -117,7 +140,7 @@ export default {
             search: "",
             raw: [],
             loading: false,
-            hidden_fields: ["idkey",'tasks','books','doodad_template_id','_remark'],
+            hidden_fields: ["idkey", "tasks", "books", "doodad_template_id", "_remark"],
 
             isInit: true,
         };
@@ -137,6 +160,7 @@ export default {
             return {
                 school: this.school_name,
                 search: this.search,
+                client: this.client,
             };
         },
         skills: function () {
@@ -181,6 +205,9 @@ export default {
             });
             return clean_list;
         },
+        client: function () {
+            return this.$store.state.client || "std";
+        },
     },
     watch: {
         params: {
@@ -200,33 +227,13 @@ export default {
     methods: {
         // 加载秘籍
         loadData: function () {
-            // this.loading = true;
-            // let cache = sessionStorage.getItem(
-            //     `bps-recipe-${this.school_name}`
-            // );
-            // if (cache) {
-            //     try {
-            //         this.raw = JSON.parse(cache);
-            //         this.loading = false;
-            //     } catch (e) {
-            //         this.getRecipe();
-            //     }
-            // } else {
             this.getRecipe();
-            // }
         },
         getRecipe: function () {
             this.loading = true;
             getRecipe(this.params)
                 .then((res) => {
                     this.raw = res.data;
-                    // if (this.isInit) {
-                    //     sessionStorage.setItem(
-                    //         `bps-recipe-${this.school_name}`,
-                    //         JSON.stringify(this.raw)
-                    //     );
-                    //     this.isInit = false
-                    // }
                 })
                 .finally(() => {
                     this.loading = false;
@@ -247,15 +254,15 @@ export default {
     },
     filters: {
         iconLink,
-        getItemLink: function (name) {
-            return `/item/#/search/${name}?page=1`;
+        getItemLink: function (id) {
+            return `/item/#/view/${id}`;
         },
-        getTaskLink : function (name){
-            return `/quest/#/search/${name}?page=1`
+        getTaskLink: function (id) {
+            return `/quest/view/${id}`;
         },
-        getDoodadLink : function (name){
-            return `/app/database/?type=doodad&query=${name}`
-        }
+        getDoodadLink: function (id) {
+            return `/app/database/?type=doodad&query=${id}`;
+        },
     },
     created: function () {},
     mounted: function () {},

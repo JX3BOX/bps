@@ -80,6 +80,9 @@ export default {
         kfid: function() {
             return xfmap[this.xf]["kungfuId"];
         },
+        client: function() {
+            return this.$store.state.client || "std";
+        },
     },
     methods: {
         changeType: function() {},
