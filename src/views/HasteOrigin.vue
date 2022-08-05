@@ -2,7 +2,7 @@
     <div class="m-haste">
         <el-row :gutter="24">
             <el-col :lg="8" :md="12" :sm="24" class="m-haste-input">
-                <el-card header="skill_settings" shadow="hover">
+                <el-card header="skill_settings">
                     <div slot="header">技能设定</div>
                     <el-form>
                         <div>

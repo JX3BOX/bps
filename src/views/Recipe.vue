@@ -117,7 +117,7 @@
                 </el-table-column>
                 <el-table-column prop="RecipeName" label="百科">
                     <template slot-scope="scope">
-                        <a :href="scope.row.RecipeName | getItemLink" class="u-link" target="_blank" @click.stop
+                        <a :href="scope.row.RecipeName | getItemWiki" class="u-link" target="_blank" @click.stop
                             >查看百科&raquo;</a
                         >
                     </template>
@@ -131,6 +131,7 @@
 import { getRecipe } from "@/service/node.js";
 import { mount_belong_school } from "@jx3box/jx3box-data/data/xf/relation.json";
 import { iconLink, extractTextContent } from "@jx3box/jx3box-common/js/utils";
+import { getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Recipe",
     props: [],
@@ -255,14 +256,17 @@ export default {
     filters: {
         iconLink,
         getItemLink: function (id) {
-            return `/item/#/view/${id}`;
+            return getLink("item", id);
         },
         getTaskLink: function (id) {
-            return `/quest/view/${id}`;
+            return getLink("quest", id);
         },
         getDoodadLink: function (id) {
-            return `/app/database/?type=doodad&query=${id}`;
+            return getLink("doodad", id);
         },
+        getItemWiki : function (str){
+            return `/item/search/${str}`
+        }
     },
     created: function () {},
     mounted: function () {},
