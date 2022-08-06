@@ -8,7 +8,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能系数" name="skill" v-if="client == 'std'">
+        <el-tab-pane label="技能系数" name="skill">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>技能系数</b>

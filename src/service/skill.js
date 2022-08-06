@@ -9,22 +9,31 @@ const $ = axios.create({
 });
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 
-function getSkill(xf) {
+function getSkill(xf, client = 'std') {
     // return $.get("/bps/skill/" + xfmap[xf]["force"]).then((res) => {
     //     return res.data;
     // });
-    return $.get(`/bps/v1/${xfmap[xf]["force"]}/skill.json`).then((res) => {
-        return res.data?.data;
-    });
+    if (client == 'std') {
+        return $.get(`/bps/v1/${xfmap[xf]["force"]}/skill.json`).then((res) => {
+            return res.data?.data;
+        });
+    } else {
+        return $.get(`/bps/origin/${xf}/skill.json`).then(res => res.data);
+    }
+
 }
 
-function getTalent(xf) {
+function getTalent(xf, client = 'std') {
     // return $.get("/bps/talent/" + xfmap[xf]["force"]).then((res) => {
     //     return res.data;
     // });
-    return $.get(`/bps/v1/${xfmap[xf]["force"]}/talent.json`).then((res) => {
-        return res.data?.data;
-    });
+    if (client == 'std') {
+        return $.get(`/bps/v1/${xfmap[xf]["force"]}/talent.json`).then((res) => {
+            return res.data?.data;
+        });
+    } else {
+        return $.get(`/bps/origin/${xf}/talent.json`).then(res => res.data);
+    }
 }
 
 function getAll(xf) {
