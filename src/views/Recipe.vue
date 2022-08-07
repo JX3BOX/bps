@@ -57,7 +57,7 @@
                 </el-table-column>
                 <el-table-column prop="exam_print" label="消耗" width="100" sortable>
                     <template slot-scope="scope">
-                        <template v-if="scope.row.ExamPrint">
+                        <template v-if="scope.row.ExamPrint && !scope.row.TrainValue">
                             <span class="u-points">
                                 <img src="../assets/img/recipe/exam_points.png" alt />
                                 {{ scope.row.ExamPrint }}
@@ -67,6 +67,12 @@
                             <span class="u-points u-train">
                                 <img src="../assets/img/recipe/train_points.png" alt />
                                 {{ scope.row.TrainCost }}
+                            </span>
+                        </template>
+                        <template v-if="scope.row.TrainValue">
+                            <span class="u-points u-train">
+                                <img src="../assets/img/recipe/train_points.png" alt />
+                                {{ scope.row.TrainValue }}
                             </span>
                         </template>
                     </template>
