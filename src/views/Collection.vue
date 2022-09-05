@@ -12,7 +12,7 @@
                 <ul class="m-collection-list" v-if="origin && data[item.key].length">
                     <li class="u-item" v-for="(item, j) in data[item.key]" :key="j" v-show="filterSchool(item)">
                         <a :href="getItemLink(item)" target="_blank">
-                            <img class="u-icon" :src="item.icon | iconLink" />
+                            <img class="u-icon" :src="iconLink(item.icon, c)" />
                             <span class="u-name">{{ item.label }}</span>
                             <span class="u-xf">
                                 <!-- <img :src="item.meta_2 | showXfIcon" :alt="item.meta_2" /> -->
@@ -196,11 +196,11 @@ export default {
                 query: { tab: item.name, subtype: this.subtype },
             });
         },
+        iconLink
     },
     filters: {
-        iconLink,
         showXfIcon: function(xf) {
-            return xfmap[xf] && iconLink(xfmap[xf]["icon"]);
+            return xfmap[xf] && iconLink(xfmap[xf]["icon"], this.c);
         },
         authorLink,
         showAvatar,

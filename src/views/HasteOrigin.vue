@@ -169,7 +169,6 @@ export default {
                 //巴蜀风云版本正式服减读条算法,只算了基础，实装额外加速之后这行记得改
                 const skillNowFPS = Math.floor((1 - hasteCalePercent / 100) * skillFPS);
                 //实际作用帧数
-                console.log(i,hasteBasePercent,hastePercent,hasteCaleUIPercent)
                 const result = {
                     duration: "",
                     hasteBasePercent: "",
