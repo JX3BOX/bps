@@ -66,6 +66,7 @@
 
 <script>
 import extraHasteList from "@/assets/data/haste_extra.json";
+import { duration } from "moment";
 export default {
     name: "HasteStd",
     props: [],
@@ -136,9 +137,9 @@ export default {
         renderHaste: function() {
             const results = [];
             let { skillTime, hitTimes, extra: name } = this.hasteInfo;
-            let _extraHaste = this.extraHasteList.find(item => item.name === name)
-
-            const extra = _extraHaste.value
+            let _extraHaste = this.extraHasteList.find(item => item.name === name);
+            let hasteCalcResult = [];
+            const extra = _extraHaste.value;
             const skillFrame = Math.round(skillTime / 0.0625);
             //console.log(skillFrame)
             //当前读条帧数 上一条记得注释掉
@@ -146,11 +147,10 @@ export default {
             //破招固定2秒/段的帧数
             let hastePercent = 0;
             let hastePercentLimit = 0;
-            let lastTime = (Number(skillTime) + 0.1).toFixed(2);
-            let lastSurplusTime = "2.10";
-            //这两行没看懂 不敢动
+
             const hasteCof = 438.5625;
             //等级改系数
+
             for (let i = 0; hastePercentLimit < 25; i += 1) {
                 const baseHaste = (i / hasteCof) * 10.24;
                 const totalHaste = Math.floor(baseHaste) + Math.floor(extra);
@@ -161,102 +161,64 @@ export default {
                 hastePercent = i / hasteCof;
                 hastePercentLimit = i / hasteCof + extra / 10.24;
 
-                let nowTime = (nowFrame * 0.0625 * Number(hitTimes)) * 10000;
+                let nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes)) ;
                 //基础加速读条时间
-                if(Math.floor(nowTime % 100 / 10) != 5){
-                    nowTime = (nowTime / 10000).toFixed(2);
-                }
-                else{
-                    if(nowTime % 10 != 0){
-                        nowTime = Math.floor(nowTime / 100 + 1) / 100;
-                    }
-                    else{
-                        nowTime = Math.floor(nowTime / 100);
-                        if(nowTime % 2 == 0){
-                            nowTime = Math.floor(nowTime) / 100;
-                        }
-                        else{
-                            nowTime = (Math.floor(nowTime) + 1) / 100;
-                        }
-                    }
-                }
-                let nowSurplusTime = (surplusNowFrame * 0.0625 * 5) * 10000;
+                let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5) ;
                 //破招时间 2s/段总5段
-                if(Math.floor(nowSurplusTime % 100 / 10) != 5){
-                    nowSurplusTime = (nowSurplusTime / 10000).toFixed(2);
-                }
-                else{
-                    if(nowSurplusTime % 10 != 0){
-                        nowSurplusTime = Math.floor(nowSurplusTime / 100 + 1) / 100;
-                    }
-                    else{
-                        nowSurplusTime = Math.floor(nowSurplusTime / 100);
-                        if(nowSurplusTime % 2 == 0){
-                            nowSurplusTime = Math.floor(nowSurplusTime) / 100;
-                        }
-                        else{
-                            nowSurplusTime = (Math.floor(nowSurplusTime) + 1) / 100;
-                        }
-                    }
-                }
 
                 const result = {
                     duration: "",
-                    percentage: hastePercent.toFixed(2),
+                    percentage: this.ToFixed(hastePercent),
                     nowFrame:nowFrame,
                     surplus: "",
+                    surplusNowFrame:surplusNowFrame,
                     level: i,
                 };
 
-                let shouldAdd = false;
-                if (nowTime !== lastTime) {
-                    lastTime = nowTime;
+                if(nowFrame > 0 && !hasteCalcResult.some((r) => r.nowFrame ==nowFrame)){
                     result.duration = nowTime;
-                    shouldAdd = true;
-                }
-
-                if (nowSurplusTime !== lastSurplusTime) {
-                    lastSurplusTime = nowSurplusTime;
                     result.surplus = nowSurplusTime;
-                    shouldAdd = true;
+                    hasteCalcResult.push(result);
                 }
-
-                if (shouldAdd) {
-                    results.push(result);
+                if(surplusNowFrame > 0 && !hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)){
+                    result.surplus = nowSurplusTime;
+                    hasteCalcResult.push(result);
                 }
+                this.tableData = hasteCalcResult;
             }
-
-            this.tableData = results;
         },
-        ToEven:function(inputNumber,outputNumber){
+        ToEven:function(inputNumber){
             //回调帧数避免出现奇怪的不存在的技能时长 每帧间隔0.0625 限制上下键的step即可，剩下的交给四舍六入
-            let number = Math.round(inputNumber/0.0625)
-            if(isNaN(number)){
+            let outputNumber = Math.round(inputNumber/0.0625)
+            if(isNaN(inputNumber)){
                 outputNumber = 0;
             }
             //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值 这里由于没有对步数宽度强制限制单独处理一次
             else{
-                number = number * 0.0625 * 10000
-                if(Math.floor(number % 100 / 10) != 5){
-                    outputNumber = (number / 10000).toFixed(2);
-                }
-                else{
-                    if(number % 10 != 0){
-                        outputNumber = Math.floor(number / 100 + 1) / 100;
-                    }
-                    else{
-                        number = Math.floor(number / 100);
-                        if(number % 2 == 0){
-                            outputNumber = Math.floor(number) / 100;
-                        }
-                        else{
-                            outputNumber = (Math.floor(number) + 1) / 100;
-                        }
+                outputNumber = this.ToFixed(outputNumber * 0.0625);
+            }
+            return outputNumber
+        },
+        ToFixed: function (number) {
+            //取整模块
+            let outputNumber = 0;
+            number = number * 10000;
+            if (Math.floor((number % 100) / 10) != 5) {
+                outputNumber = (number / 10000).toFixed(2);
+            } else {
+                if (number % 10 != 0) {
+                    outputNumber = Math.floor(number / 100 + 1) / 100;
+                } else {
+                    number = Math.floor(number / 100);
+                    if (number % 2 == 0) {
+                        outputNumber = Math.floor(number) / 100;
+                    } else {
+                        outputNumber = (Math.floor(number) + 1) / 100;
                     }
                 }
             }
-            return outputNumber
-        }
+            return outputNumber;
+        },
     },
 };
 </script>
