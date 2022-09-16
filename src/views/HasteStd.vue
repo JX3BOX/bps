@@ -53,8 +53,8 @@
             <el-col :lg="16" :md="12" :sm="24">
                 <el-card header="计算结果">
                     <el-table :data="tableData">
-                        <template v-for="header in tableHeader">
-                            <el-table-column :key="header.value" :label="header.label" :prop="header.value" :align="header.align || 'left'"></el-table-column>
+                        <template>
+                            <el-table-column v-for="header in tableHeader" :key="header.value" :label="header.label" :prop="header.value" :align="header.align || 'left'"></el-table-column>
                         </template>
                     </el-table>
                 </el-card>
@@ -148,7 +148,7 @@ export default {
             let hastePercent = 0;
             let hastePercentLimit = 0;
 
-            const hasteCof = 438.5625;
+            const hasteCof = 11.695 * (450 * 120 - 45750)/100;
             //等级改系数
 
             for (let i = 0; hastePercentLimit < 25; i += 1) {
