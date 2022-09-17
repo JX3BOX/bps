@@ -11,14 +11,9 @@
                                     <i class="el-icon-info m-info-icon"></i>
                                 </el-tooltip>
                             </div>
-                            <el-input-number
-                                v-model="hasteInfo.skillTime"
-                                :min="0.5"
-                                :step="0.0625"
-                                controls-position="right"
-                                style="width: 100%"
-                                @change="handleSkillTimeChange"
-                            ></el-input-number>
+                            <el-input-number v-model="hasteInfo.skillTime" :min="0.5" :step="0.0625"
+                                controls-position="right" style="width: 100%" @change="handleSkillTimeChange">
+                            </el-input-number>
                         </el-form-item>
                         <el-form-item>
                             <div slot="label">
@@ -27,15 +22,9 @@
                                     <i class="el-icon-info m-info-icon"></i>
                                 </el-tooltip>
                             </div>
-                            <el-input-number
-                                v-model="hasteInfo.hitTimes"
-                                :min="1"
-                                :step="1"
-                                step-strictly
-                                controls-position="right"
-                                style="width: 100%"
-                                @change="handleHitTimesChange"
-                            ></el-input-number>
+                            <el-input-number v-model="hasteInfo.hitTimes" :min="1" :step="1" step-strictly
+                                controls-position="right" style="width: 100%" @change="handleHitTimesChange">
+                            </el-input-number>
                         </el-form-item>
                     </el-form>
                 </el-card>
@@ -44,7 +33,8 @@
                         <el-form-item label="选择可以额外提供加速的奇穴">
                             <!-- <p>选择可以额外提供加速的奇穴</p> -->
                             <el-radio-group v-model="hasteInfo.extra">
-                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.name">{{ item.name }}</el-radio>
+                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.name">{{
+                                item.name }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-form>
@@ -54,7 +44,8 @@
                 <el-card header="计算结果">
                     <el-table :data="tableData">
                         <template>
-                            <el-table-column v-for="header in tableHeader" :key="header.value" :label="header.label" :prop="header.value" :align="header.align || 'left'"></el-table-column>
+                            <el-table-column v-for="header in tableHeader" :key="header.value" :label="header.label"
+                                :prop="header.value" :align="header.align || 'left'"></el-table-column>
                         </template>
                     </el-table>
                 </el-card>
@@ -66,12 +57,11 @@
 
 <script>
 import extraHasteList from "@/assets/data/haste_extra.json";
-import { duration } from "moment";
 export default {
     name: "HasteStd",
     props: [],
     components: {},
-    data: function() {
+    data: function () {
         return {
             hasteInfo: {
                 skillTime: 1.5,
@@ -91,8 +81,8 @@ export default {
                     value: "surplus",
                 },
                 //{
-                    //label: "帧数（调试用）",
-                    //value: "nowFrame",
+                //label: "帧数（调试用）",
+                //value: "nowFrame",
                 //},
                 {
                     label: "所需加速率",
@@ -120,22 +110,21 @@ export default {
         this.renderHaste();
     },
     methods: {
-        handleSkillTimeChange: function(currentVal, OldVal) {
+        handleSkillTimeChange: function (currentVal, OldVal) {
             if (!currentVal) {
                 this.hasteInfo.skillTime = 0.5;
             }
             this.hasteInfo.skillTime = this.ToEven(currentVal);
             //技能时间
         },
-        handleHitTimesChange: function(currentVal, OldVal) {
+        handleHitTimesChange: function (currentVal, OldVal) {
             if (!currentVal) {
                 this.hasteInfo.hitTimes = 0;
                 //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值
             }
             //技能频率
         },
-        renderHaste: function() {
-            const results = [];
+        renderHaste: function () {
             let { skillTime, hitTimes, extra: name } = this.hasteInfo;
             let _extraHaste = this.extraHasteList.find(item => item.name === name);
             let hasteCalcResult = [];
@@ -148,10 +137,11 @@ export default {
             let hastePercent = 0;
             let hastePercentLimit = 0;
 
-            const hasteCof = 11.695 * (450 * 120 - 45750)/100;
+            const hasteCof = 11.695 * (450 * 120 - 45750) / 100;
             //等级改系数
 
-            for (let i = 0; hastePercentLimit < 25; i += 1) {
+            //TODO: 这个 for 会被计算 24120 次，在数值扩展后更多需要优化
+            for (let i = 0; hastePercentLimit < 25; i++) {
                 const baseHaste = (i / hasteCof) * 10.24;
                 const totalHaste = Math.floor(baseHaste) + Math.floor(extra);
                 //基础加速加奇穴加速
@@ -161,40 +151,41 @@ export default {
                 hastePercent = i / hasteCof;
                 hastePercentLimit = i / hasteCof + extra / 10.24;
 
-                let nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes)) ;
+                let nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes));
                 //基础加速读条时间
-                let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5) ;
+                let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5);
                 //破招时间 2s/段总5段
 
                 const result = {
                     duration: "",
                     percentage: this.ToFixed(hastePercent),
-                    nowFrame:nowFrame,
+                    nowFrame: nowFrame,
                     surplus: "",
-                    surplusNowFrame:surplusNowFrame,
+                    surplusNowFrame: surplusNowFrame,
                     level: i,
                 };
 
-                if(nowFrame > 0 && !hasteCalcResult.some((r) => r.nowFrame ==nowFrame)){
-                    result.duration = nowTime;
-                    result.surplus = nowSurplusTime;
-                    hasteCalcResult.push(result);
+                // 这里决定在最终的表中是否显示重复的数据
+                // 乱动概率卡死浏览器
+                if (nowFrame > 0 && surplusNowFrame > 0) {
+                    if (!hasteCalcResult.some((r) => r.nowFrame == nowFrame)) // nowFrame无重复
+                        result.duration = nowTime;
+                    if (!hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)) // surplusNowFrame无重复
+                        result.surplus = nowSurplusTime;
+                    if (result.duration || result.surplus)
+                        hasteCalcResult.push(result);
                 }
-                if(surplusNowFrame > 0 && !hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)){
-                    result.surplus = nowSurplusTime;
-                    hasteCalcResult.push(result);
-                }
-                this.tableData = hasteCalcResult;
             }
+            this.tableData = hasteCalcResult;
         },
-        ToEven:function(inputNumber){
+        ToEven: function (inputNumber) {
             //回调帧数避免出现奇怪的不存在的技能时长 每帧间隔0.0625 限制上下键的step即可，剩下的交给四舍六入
-            let outputNumber = Math.round(inputNumber/0.0625)
-            if(isNaN(inputNumber)){
+            let outputNumber = Math.round(inputNumber / 0.0625)
+            if (isNaN(inputNumber)) {
                 outputNumber = 0;
             }
             //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值 这里由于没有对步数宽度强制限制单独处理一次
-            else{
+            else {
                 outputNumber = this.ToFixed(outputNumber * 0.0625);
             }
             return outputNumber
