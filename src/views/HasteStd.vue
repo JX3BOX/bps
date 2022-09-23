@@ -2,7 +2,10 @@
     <div class="m-haste">
         <el-row :gutter="24">
             <el-col :lg="8" :md="12" :sm="24">
-                <el-card header="技能设定">
+                <el-card>
+                    <template #header>
+                        技能设<span @click="setCof">定</span>
+                    </template>
                     <el-form label-position="top">
                         <el-form-item>
                             <div slot="label">
@@ -68,7 +71,8 @@ export default {
                 hitTimes: 1,
                 extra: '无',
             },
-
+            hasteCof: 11.695 * (450 * 120 - 45750) / 100,
+            //等级改系数
             extraHasteList,
             // result
             tableHeader: [
@@ -94,37 +98,10 @@ export default {
                     align: "right",
                 },
             ],
-            tableData: [],
         };
     },
-    watch: {
-        hasteInfo: {
-            deep: true,
-            immediate: true,
-            handler() {
-                this.renderHaste();
-            },
-        },
-    },
-    mounted() {
-        this.renderHaste();
-    },
-    methods: {
-        handleSkillTimeChange: function (currentVal, OldVal) {
-            if (!currentVal) {
-                this.hasteInfo.skillTime = 0.5;
-            }
-            this.hasteInfo.skillTime = this.ToEven(currentVal);
-            //技能时间
-        },
-        handleHitTimesChange: function (currentVal, OldVal) {
-            if (!currentVal) {
-                this.hasteInfo.hitTimes = 0;
-                //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值
-            }
-            //技能频率
-        },
-        renderHaste: function () {
+    computed: {
+        tableData: function () {
             let { skillTime, hitTimes, extra: name } = this.hasteInfo;
             let _extraHaste = this.extraHasteList.find(item => item.name === name);
             let hasteCalcResult = [];
@@ -137,19 +114,16 @@ export default {
             let hastePercent = 0;
             let hastePercentLimit = 0;
 
-            const hasteCof = 11.695 * (450 * 120 - 45750) / 100;
-            //等级改系数
-
             //TODO: 这个 for 会被计算 24120 次，在数值扩展后更多需要优化
             for (let i = 0; hastePercentLimit < 25; i++) {
-                const baseHaste = (i / hasteCof) * 10.24;
+                const baseHaste = (i / this.hasteCof) * 10.24;
                 const totalHaste = Math.floor(baseHaste) + Math.floor(extra);
                 //基础加速加奇穴加速
                 const nowFrame = Math.floor((skillFrame * 1024) / (totalHaste + 1024));
                 const surplusNowFrame = Math.floor((surplusFrame * 1024) / (totalHaste + 1024));
                 //帧数
-                hastePercent = i / hasteCof;
-                hastePercentLimit = i / hasteCof + extra / 10.24;
+                hastePercent = i / this.hasteCof;
+                hastePercentLimit = i / this.hasteCof + extra / 10.24;
 
                 let nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes));
                 //基础加速读条时间
@@ -176,7 +150,26 @@ export default {
                         hasteCalcResult.push(result);
                 }
             }
-            this.tableData = hasteCalcResult;
+            return hasteCalcResult;
+        },
+    },
+    methods: {
+        handleSkillTimeChange: function (currentVal, OldVal) {
+            if (!currentVal) {
+                this.hasteInfo.skillTime = 0.5;
+            }
+            this.hasteInfo.skillTime = this.ToEven(currentVal);
+            //技能时间
+        },
+        handleHitTimesChange: function (currentVal, OldVal) {
+            if (!currentVal) {
+                this.hasteInfo.hitTimes = 0;
+                //极端情况下使其返回小于最小值的值，根据组件特性再返回最小值
+            }
+            //技能频率
+        },
+        setCof: function () {
+            this.hasteCof = prompt("加速系数更新为？（看不懂请不要乱动）", this.hasteCof) ?? this.hasteCof;
         },
         ToEven: function (inputNumber) {
             //回调帧数避免出现奇怪的不存在的技能时长 每帧间隔0.0625 限制上下键的step即可，剩下的交给四舍六入
