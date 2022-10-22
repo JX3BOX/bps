@@ -71,8 +71,7 @@ export default {
                 hitTimes: 1,
                 extra: '无',
             },
-            hasteCof: 438.5625,
-            //hasteCof: 11.695 * (450 * 120 - 45750) / 100,
+            hasteCof: 11.695 * (450 * 120 - 45750) / 100,
             //等级改系数
             extraHasteList,
             // result
