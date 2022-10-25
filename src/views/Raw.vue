@@ -37,7 +37,8 @@
                         :title="num2zh(index)"
                         :name="index"
                     >
-                        <li v-for="(o, i) in item" class="u-item" :key="i">
+                    <template v-for="(o, i) in item">
+                        <li v-if="o" class="u-item" :key="i">
                             <span class="u-id">ID:{{ o.SkillID }}</span>
                             <img
                                 class="u-pic"
@@ -77,12 +78,13 @@
                                 </div>
                             </div>
                         </li>
+                    </template>
                     </el-collapse-item>
                 </el-collapse>
             </template>
             <template v-else>
                 <li v-for="(o, i) in data" class="u-item" :key="i">
-                    <span class="u-id">ID:{{ o.SkillID }}</span>
+                    <span class="u-id" v-if="o">ID:{{ o.SkillID }}</span>
                     <img
                         class="u-pic"
                         :title="'IconID:' + o.IconID"
@@ -247,7 +249,7 @@ export default {
             return talentSkills.map((item) => {
 
                 return item.map((SkillID) => {
-                    
+
                     const currentTalent = data.find((d) => d.SkillID == SkillID);
 
                     return currentTalent;
