@@ -19,7 +19,7 @@
             </span>
         </template>
         <template v-if="item.cd || item.skill_id">
-            <span class="u-id" v-if="!force">CD : {{ item.cd }}</span>
+            <span class="u-id" v-if="force">CD : {{ item.cd }}</span>
             <span class="u-id" v-else>ID : {{ item.skill_id }}</span>
         </template>
     </div>
