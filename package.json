@@ -14,6 +14,8 @@
     "@jx3box/jx3box-common": "^7.4.9",
     "@jx3box/jx3box-common-ui": "^6.3.9",
     "@jx3box/jx3box-data": "^1.11.5",
+    "@jx3box/jx3box-talent": "^1.1.5",
+    "@jx3box/jx3box-talent2": "^1.4.3",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",

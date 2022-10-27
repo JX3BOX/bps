@@ -141,8 +141,8 @@ import kungfumap_origin from "@/assets/data/kungfu_origin.json";
 import pasvmap from "@/assets/data/pasv.json";
 import zhenfamap from "@/assets/data/zhenfa.json";
 import kungfus from "@/assets/data/kungfuid.json";
-import talent from "@/assets/data/talent.json";
-import talent2 from "@/assets/data/talent2.json";
+import talent from "@jx3box/jx3box-talent/dist/talents.json";
+import talent2 from "@jx3box/jx3box-talent2/src/data/talent2.json";
 export default {
     name: "Raw",
     props: [],
