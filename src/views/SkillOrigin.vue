@@ -2,7 +2,7 @@
     <div class="v-skill" v-loading="loading">
         <el-tabs v-model="active" type="card" @tab-click="changeType">
             <el-tab-pane label="技能" name="skill">
-                <div class="m-skill-box" v-if="skill && xf != '通用'">
+                <div class="m-skill-box" v-if="skill && schoolName != '通用'">
                     <div class="m-skill-kungfu" v-for="(skills, kungfu) in skill" :key="kungfu">
                         <h4 class="u-title">{{ kungfu }}</h4>
                         <div class="u-list">
@@ -11,11 +11,11 @@
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用技能，请通过侧边栏切换心法" type="info" show-icon></el-alert>
+                    <el-alert title="该心法数据暂缺，请通过侧边栏切换心法" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="奇穴" name="talent">
-                <div class="m-skill-box" v-if="talent && xf != '通用'">
+            <el-tab-pane label="镇派" name="talent">
+                <div class="m-skill-box" v-if="talent && schoolName != '通用'">
                     <div class="m-skill-talent" v-for="(talents, talent_group) in talent" :key="talent_group">
                         <el-divider class="u-title" content-position="left">
                             {{ talent_group }}
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用奇穴，请通过侧边栏切换心法" type="info" show-icon></el-alert>
+                    <el-alert title="该心法数据暂缺，请通过侧边栏切换心法" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
         </el-tabs>
@@ -53,8 +53,10 @@ export default {
     },
     computed: {
         schoolName: function () {
-            let xf = this.$route.query.subtype;
-            return relation_map.mount_belong_school[xf];
+            return relation_map.mount_belong_school[this.xf];
+        },
+        xf: function () {
+            return this.$route.query.subtype;
         },
     },
     methods: {
@@ -65,12 +67,18 @@ export default {
                 .then((res) => {
                     this.skill = res;
                 })
+                .catch(() => {
+                    this.skill = null;
+                })
                 .finally(() => {
                     this.loading = false;
                 });
             getTalent(this.schoolName, "origin")
                 .then((res) => {
                     this.talent = res;
+                })
+                .catch(() => {
+                    this.talent = null;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -92,5 +100,4 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
