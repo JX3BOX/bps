@@ -91,8 +91,8 @@ export default {
         loadData: function () {
             this.loading = true;
             getSkill(this.xf)
-                .then((data) => {
-                    let skillGroup = data;
+                .then((res) => {
+                    let skillGroup = res;
                     if (skillGroup && Array.isArray(skillGroup) && skillGroup.length) {
                         skillGroup.forEach((group) => {
                             if (group.kungfuId == this.kfid) {
@@ -107,8 +107,8 @@ export default {
                 });
 
             getTalent(this.xf)
-                .then((data) => {
-                    let talentGroup = data;
+                .then((res) => {
+                    let talentGroup = res;
                     if (talentGroup && Array.isArray(talentGroup) && talentGroup.length) {
                         talentGroup.forEach((group) => {
                             if (group.kungfuId == this.kfid) {
