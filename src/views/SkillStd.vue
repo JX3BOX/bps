@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用技能，请通过侧边栏切换心法" type="info" show-icon></el-alert>
+                    <el-alert title="该心法技能数据暂缺，请通过侧边栏切换心法" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="奇穴" name="talent">
@@ -22,17 +22,13 @@
                         </el-divider>
                         <div class="u-list">
                             <talent_item :item="item" v-for="(item, i) in talent.kungfuSkills" :key="'kungfu-' + i" />
-                            <talent_item
-                                :item="item"
-                                v-for="(item, i) in talent.forceSkills"
-                                :key="'force-' + i"
-                                :force="true"
-                            />
+                            <talent_item :item="item" v-for="(item, i) in talent.forceSkills" :key="'force-' + i"
+                                :force="true" />
                         </div>
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用奇穴，请通过侧边栏切换心法" type="info" show-icon></el-alert>
+                    <el-alert title="该心法奇穴数据暂缺，请通过侧边栏切换心法" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="阵法" name="zhenfa">
@@ -51,7 +47,7 @@
                     </div>
                 </div>
                 <div class="m-skill-null" v-else>
-                    <el-alert title="无通用阵法，请通过侧边栏切换心法" type="info" show-icon></el-alert>
+                    <el-alert title="该心法阵法数据暂缺，请通过侧边栏切换心法" type="info" show-icon></el-alert>
                 </div>
             </el-tab-pane>
         </el-tabs>
@@ -87,7 +83,7 @@ export default {
         },
     },
     methods: {
-        changeType: function () {},
+        changeType: function () { },
         loadData: function () {
             this.loading = true;
             getSkill(this.xf)
@@ -99,8 +95,11 @@ export default {
                                 this.skill = group.remarks;
                                 this.zhenfa = group.zhenFa;
                             }
-                        });
+                        })
                     }
+                }).catch(() => {
+                    this.skill = null;
+                    this.zhenfa = null;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -122,13 +121,15 @@ export default {
                             }
                         });
                     }
+                }).catch(() => {
+                    this.talent = null;
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
     },
-    created: function () {},
+    created: function () { },
     watch: {
         xf: {
             immediate: true,
