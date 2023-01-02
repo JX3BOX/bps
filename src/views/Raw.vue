@@ -30,10 +30,10 @@
 
         <ul class="m-resource-list" v-if="data && data.length">
             <template v-if="kungfuid === 'talent'">
-                <el-collapse>
+                <el-collapse v-model="collapses">
                     <el-collapse-item
                         v-for="(item, index) in data"
-                        :key="item.SkillID || index"
+                        :key="kungfuid + index"
                         :title="num2zh(index)"
                         :name="index"
                     >
@@ -77,6 +77,9 @@
                                     >
                                 </div>
                             </div>
+
+                            <skill-wiki :skill="o" :key="kungfuid + o.SkillID" />
+
                         </li>
                     </template>
                     </el-collapse-item>
@@ -116,6 +119,8 @@
                             >
                         </div>
                     </div>
+
+                    <skill-wiki v-if="o" :skill="o" :key="kungfuid + o.SkillID + o.Level" />
                 </li>
             </template>
         </ul>
@@ -143,13 +148,21 @@ import zhenfamap from "@/assets/data/zhenfa.json";
 import kungfus from "@/assets/data/kungfuid.json";
 import talent from "@jx3box/jx3box-talent/dist/talents.json";
 import talent2 from "@jx3box/jx3box-talent2/src/data/talent2.json";
+
+// components
+import skillWiki from "@/components/skill/skill_wiki.vue"
 export default {
     name: "Raw",
+    components: {
+        skillWiki
+    },
     props: [],
     data: function () {
         return {
             data: [],
             loading: false,
+            // 默认展开全部
+            collapses: Array.from({ length: 12 }, (v, k) => k),
 
             kungfuid: "pasv",
             search: "",
@@ -272,7 +285,7 @@ export default {
                 "十一",
                 "十二",
             ];
-            return `第${zh[num]}层`;
+            return `第${zh[num]}重`;
         },
     },
     filters: {
@@ -308,7 +321,6 @@ export default {
             },
         },
     },
-    components: {},
 };
 </script>
 
