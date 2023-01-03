@@ -1,6 +1,6 @@
 <template>
     <div class="m-skill-wiki" v-loading="loading">
-        <div class="u-trigger" @click="loadWiki" v-show="!wiki_post">查看百科</div>
+        <div class="u-trigger" @click="loadWiki" v-show="!wiki_post"><i class="el-icon-document"></i>查看百科</div>
 
         <div class="m-wiki-post-panel" v-if="wiki_post && wiki_post.post">
             <WikiPanel :wiki-post="wiki_post" :showQR="false">
@@ -116,6 +116,11 @@ export default {
         .pointer;
         .x;
         font-size: 12px;
+        border-top:1px dashed #eee;
+        padding-top:8px;
+        i{
+            .mr(3px);
+        }
     }
 }
 .m-wiki-post-empty {
