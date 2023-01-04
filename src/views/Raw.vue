@@ -1,6 +1,6 @@
 <template>
     <div class="v-raw" v-loading="loading">
-        <el-tabs v-model="kungfuid" type="card" @tab-click="changeKungfu">
+        <el-tabs v-model="kungfuid" type="card">
             <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
             <el-tab-pane
                 :label="kungfu | showKungfuName"
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <skill-wiki :skill="o" :key="kungfuid + o.SkillID" />
+                            <skill-wiki :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID" />
 
                         </li>
                     </template>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <skill-wiki v-if="o" :skill="o" :key="kungfuid + o.SkillID + o.Level" />
+                    <skill-wiki v-if="o" :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID + o.Level" />
                 </li>
             </template>
         </ul>
@@ -148,6 +148,8 @@ import zhenfamap from "@/assets/data/zhenfa.json";
 import kungfus from "@/assets/data/kungfuid.json";
 import talent from "@jx3box/jx3box-talent/dist/talents.json";
 import talent2 from "@jx3box/jx3box-talent2/src/data/talent2.json";
+import {getSkillWiki} from "@/service/helper";
+import { flattenDeep } from "lodash";
 
 // components
 import skillWiki from "@/components/skill/skill_wiki.vue"
@@ -162,10 +164,12 @@ export default {
             data: [],
             loading: false,
             // 默认展开全部
-            collapses: Array.from({ length: 12 }, (v, k) => k),
+            collapses: Array.from({ length: 12 }, (_, k) => k),
 
             kungfuid: "pasv",
             search: "",
+
+            wikis: {}
         };
     },
     computed: {
@@ -235,7 +239,6 @@ export default {
                     this.loading = false;
                 });
         },
-        changeKungfu: function () {},
         removeLowLevelSkills: function (data) {
             let arr = [];
             let _data = [];
@@ -287,6 +290,14 @@ export default {
             ];
             return `第${zh[num]}重`;
         },
+        loadWiki: function (skills){
+            getSkillWiki('skill', { source_id: skills }).then(res => {
+                if (!Array.isArray(res.data.data)) {
+                    // 后端为空返回空数组，右值返回对象
+                    this.wikis = res.data.data
+                }
+            })
+        }
     },
     filters: {
         filterRaw: function (str) {
@@ -307,7 +318,7 @@ export default {
     },
     watch: {
         subtype: {
-            immediate: true,
+            // immediate: true,
             handler: function () {
                 // this.kungfuid = this.kungfus[0];
                 this.kungfuid = 'pasv'
@@ -320,6 +331,15 @@ export default {
                 this.loadSkills();
             },
         },
+        data: {
+            deep: true,
+            handler(val) {
+                const _skillIds = flattenDeep(val).map((item) => item.SkillID);
+                const skills = _skillIds.join(',');
+
+                this.loadWiki(skills)
+            }
+        }
     },
 };
 </script>

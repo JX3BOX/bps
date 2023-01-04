@@ -33,14 +33,16 @@
                 <span class="u-cheast-desc">{{ cheast.desc }}</span>
             </div>
         </div>
+        <skillWiki :wiki="wiki" />
         <el-button class="u-panel" size="mini" icon="el-icon-connection" @click="toggleCheasts(item)" v-if="item.cheasts.length">秘籍</el-button>
     </div>
 </template>
 
 <script>
+import skillWiki from "@/components/skill/skill_wiki.vue";
 export default {
     name: "skill_item",
-    props: ["item"],
+    props: ["item", "wiki"],
     data: function() {
         return {};
     },
@@ -57,7 +59,9 @@ export default {
     filters : {
     },
     mounted: function() {},
-    components: {},
+    components: {
+        skillWiki,
+    },
 };
 </script>
 

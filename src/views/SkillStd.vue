@@ -6,7 +6,7 @@
                     <div class="m-skill-kungfu" v-for="(kungfu, i) in skill" :key="i">
                         <h4 class="u-title">{{ kungfu.remark }}</h4>
                         <div class="u-list">
-                            <skill_item :item="item" v-for="(item, i) in kungfu.forceSkills" :key="i" />
+                            <skill_item :item="item" :wiki="wikis[item._id]" v-for="(item, i) in kungfu.forceSkills" :key="i" />
                         </div>
                     </div>
                 </div>
@@ -22,8 +22,12 @@
                         </el-divider>
                         <div class="u-list">
                             <talent_item :item="item" v-for="(item, i) in talent.kungfuSkills" :key="'kungfu-' + i" />
-                            <talent_item :item="item" v-for="(item, i) in talent.forceSkills" :key="'force-' + i"
-                                :force="true" />
+                            <talent_item
+                                :item="item"
+                                v-for="(item, i) in talent.forceSkills"
+                                :key="'force-' + i"
+                                :force="true"
+                            />
                         </div>
                     </div>
                 </div>
@@ -58,9 +62,11 @@
 import { getSkill, getTalent } from "@/service/skill";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import levels from "../assets/data/levels.json";
+import { getSkillWiki } from "@/service/helper";
 import _ from "lodash";
 import skill_item from "@/components/skill/skill_item.vue";
 import talent_item from "@/components/skill/talent_item.vue";
+
 const TALENT_TOTAL_LEVELS = 12;
 export default {
     name: "Skill",
@@ -72,6 +78,8 @@ export default {
             talent: "",
             zhenfa: "",
             active: "skill",
+
+            wikis: {}
         };
     },
     computed: {
@@ -83,7 +91,7 @@ export default {
         },
     },
     methods: {
-        changeType: function () { },
+        changeType: function () {},
         loadData: function () {
             this.loading = true;
             getSkill(this.xf)
@@ -95,9 +103,12 @@ export default {
                                 this.skill = group.remarks;
                                 this.zhenfa = group.zhenFa;
                             }
-                        })
+                        });
                     }
-                }).catch(() => {
+                    const _skillIds = _.flattenDeep(this.skill.map(item => item.forceSkills)).map(item => item._id);
+                    this.loadWiki(_skillIds);
+                })
+                .catch(() => {
                     this.skill = null;
                     this.zhenfa = null;
                 })
@@ -121,15 +132,23 @@ export default {
                             }
                         });
                     }
-                }).catch(() => {
+                })
+                .catch(() => {
                     this.talent = null;
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
+        loadWiki: function (skills){
+            getSkillWiki('skill', { source_id: skills }).then(res => {
+                if (!Array.isArray(res.data.data)) {
+                    // 后端为空返回空数组，右值返回对象
+                    this.wikis = res.data.data
+                }
+            })
+        }
     },
-    created: function () { },
     watch: {
         xf: {
             immediate: true,
@@ -141,6 +160,7 @@ export default {
     components: {
         skill_item,
         talent_item,
+
     },
 };
 </script>

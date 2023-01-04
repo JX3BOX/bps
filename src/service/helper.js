@@ -28,4 +28,11 @@ function getDpsList(params) {
     return $helper().get(`/api/dps_registry`, { params: params });
 }
 
-export { getCollection, getSkillGroups, getSkillGroup, getDpsList };
+// 获取技能百科
+function getSkillWiki(type, params) {
+    return $helper().get(`/api/wiki/posts/${type}`, {
+        params
+    });
+}
+
+export { getCollection, getSkillGroups, getSkillGroup, getDpsList, getSkillWiki };

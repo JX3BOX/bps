@@ -1,9 +1,7 @@
 <template>
-    <div class="m-skill-wiki" v-loading="loading">
-        <div class="u-trigger" @click="loadWiki" v-show="!wiki_post"><i class="el-icon-document"></i>查看百科</div>
-
-        <div class="m-wiki-post-panel" v-if="wiki_post && wiki_post.post">
-            <WikiPanel :wiki-post="wiki_post" :showQR="false">
+    <div class="m-skill-wiki">
+        <div class="m-wiki-post-panel" v-if="wiki && wiki">
+            <WikiPanel :wiki-post="wiki" :showQR="false">
                 <template slot="head-title">
                     <span class="u-txt">技能百科</span>
                 </template>
@@ -14,14 +12,7 @@
                     </a>
                 </template>
                 <template slot="body">
-                    <div class="m-wiki-compatible" v-if="compatible">
-                        <i class="el-icon-warning-outline"></i> 暂无缘起技能百科，以下为重制版百科，仅作参考，<a
-                            class="s-link"
-                            :href="publish_url(`skill/${id}`)"
-                            >参与修订</a
-                        >。
-                    </div>
-                    <Article :content="wiki_post.post.content" />
+                    <Article :content="wiki.content" />
                     <div class="m-wiki-signature">
                         <i class="el-icon-edit"></i>
                         本次修订由 <b>{{ user_name }}</b> 提交于{{ updated_at }}
@@ -29,11 +20,16 @@
                 </template>
             </WikiPanel>
 
-            <!-- 历史版本 -->
-            <WikiRevisions type="skill" :source-id="id" />
+            <el-collapse>
+                <el-collapse-item>
+                    <template slot="title">&emsp;<i class="el-icon-info"></i>&nbsp;更多内容</template>
+                    <!-- 历史版本 -->
+                    <WikiRevisions type="skill" :source-id="id" />
 
-            <!-- 百科评论 -->
-            <WikiComments type="skill" :source-id="id" />
+                    <!-- 百科评论 -->
+                    <WikiComments type="skill" :source-id="id" />
+                </el-collapse-item>
+            </el-collapse>
         </div>
         <div class="m-wiki-post-empty" v-if="is_empty">
             <i class="el-icon-s-opportunity"></i>
@@ -50,7 +46,6 @@ import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
 import WikiComments from "@jx3box/jx3box-common-ui/src/wiki/WikiComments";
 
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
-import { wiki } from "@jx3box/jx3box-common/js/wiki";
 import { ts2str } from "@jx3box/jx3box-common/js/utils.js";
 export default {
     name: "skill_wiki",
@@ -60,51 +55,37 @@ export default {
         WikiRevisions,
         WikiComments,
     },
-    props: ['skill'],
+    props: {
+        wiki: {
+            type: Object,
+            default: () => {},
+        },
+    },
     data() {
-        return {
-            wiki_post: "",
-            is_empty: false,
-            compatible: false,
-            loading: false,
-        };
+        return {};
     },
     computed: {
         id: function () {
-            return this.skill.SkillID;
+            return this.wiki?.source_id;
         },
         client: function () {
             return this.$store.state.client || "std";
         },
         user_name: function () {
-            return this.wiki_post?.post?.user_nickname;
+            return this.wiki?.user_nickname;
         },
         updated_at: function () {
-            return ts2str(this.wiki_post?.post?.updated);
+            return ts2str(this.wiki?.updated);
         },
         author_id: function () {
-            return ~~this.wiki_post.post.user_id;
+            return ~~this.wiki?.user_id;
+        },
+        is_empty: function () {
+            return !this.wiki;
         },
     },
     methods: {
         publish_url: publishLink,
-        loadWiki() {
-            // 获取最新攻略
-            if (this.id) {
-                this.loading = true;
-                wiki.mix({ type: "skill", id: this.id, client: this.client }, { supply: 1 }).then((res) => {
-                    const { post, source, compatible, isEmpty, users } = res;
-                    this.wiki_post = {
-                        post: post,
-                        source: source,
-                        users,
-                    };
-                    this.is_empty = isEmpty;
-                    this.compatible = compatible;
-                    this.loading = false;
-                });
-            }
-        },
     },
 };
 </script>
@@ -116,9 +97,9 @@ export default {
         .pointer;
         .x;
         font-size: 12px;
-        border-top:1px dashed #eee;
-        padding-top:8px;
-        i{
+        border-top: 1px dashed #eee;
+        padding-top: 8px;
+        i {
             .mr(3px);
         }
     }
