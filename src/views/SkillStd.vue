@@ -106,7 +106,7 @@ export default {
                         });
                     }
                     const _skillIds = _.flattenDeep(this.skill.map(item => item.forceSkills)).map(item => item._id);
-                    this.loadWiki(_skillIds);
+                    this.loadWiki(_skillIds.join(','));
                 })
                 .catch(() => {
                     this.skill = null;

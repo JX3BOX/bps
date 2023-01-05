@@ -20,16 +20,14 @@
                 </template>
             </WikiPanel>
 
-            <el-collapse>
-                <el-collapse-item>
-                    <template slot="title">&emsp;<i class="el-icon-info"></i>&nbsp;更多内容</template>
-                    <!-- 历史版本 -->
-                    <WikiRevisions type="skill" :source-id="id" />
+            <details class="m-wiki-detail">
+                <summary class="u-wiki__title"><i class="el-icon-info"></i>更多信息</summary>
+                <!-- 历史版本 -->
+                <WikiRevisions type="skill" :source-id="id" />
 
-                    <!-- 百科评论 -->
-                    <WikiComments type="skill" :source-id="id" />
-                </el-collapse-item>
-            </el-collapse>
+                <!-- 百科评论 -->
+                <WikiComments type="skill" :source-id="id" />
+            </details>
         </div>
         <div class="m-wiki-post-empty" v-if="is_empty">
             <i class="el-icon-s-opportunity"></i>
@@ -129,5 +127,33 @@ export default {
     .fz(12px,2);
     border-top: 1px dashed #ddd;
     padding: 5px 0;
+}
+
+details {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 10px 10px 0;
+}
+
+.u-wiki__title {
+    font-size: 17px;
+    font-weight: 300;
+    color: #6c645c;
+    margin: -10px -10px 0;
+    padding: 10px;
+    .pointer;
+    .pr;
+    i {
+        margin-right: 5px;
+    }
+}
+
+details[open] {
+    padding: 10px;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
 }
 </style>
