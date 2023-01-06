@@ -1,6 +1,6 @@
 <template>
     <div class="m-skill-wiki">
-        <div class="m-wiki-post-panel" v-if="wiki && wiki">
+        <div class="m-wiki-post-panel" v-if="wiki && wiki.post">
             <WikiPanel :wiki-post="wiki" :showQR="false">
                 <template slot="head-title">
                     <span class="u-txt">技能百科</span>
@@ -12,7 +12,7 @@
                     </a>
                 </template>
                 <template slot="body">
-                    <Article :content="wiki.content" />
+                    <Article :content="wiki.post.content" />
                     <div class="m-wiki-signature">
                         <i class="el-icon-edit"></i>
                         本次修订由 <b>{{ user_name }}</b> 提交于{{ updated_at }}
@@ -70,16 +70,16 @@ export default {
             return this.$store.state.client || "std";
         },
         user_name: function () {
-            return this.wiki?.user_nickname;
+            return this.wiki?.post.user_nickname;
         },
         updated_at: function () {
-            return ts2str(this.wiki?.updated);
+            return ts2str(this.wiki?.post.updated);
         },
         author_id: function () {
-            return ~~this.wiki?.user_id;
+            return ~~this.wiki?.post.user_id;
         },
         is_empty: function () {
-            return !this.wiki;
+            return !this.wiki?.post;
         },
     },
     methods: {
