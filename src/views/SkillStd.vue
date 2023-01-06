@@ -141,7 +141,7 @@ export default {
                 });
         },
         loadWiki: function (skills){
-            getSkillWiki('skill', { source_id: skills }).then(res => {
+            getSkillWiki('skill', { source_id: skills, client: 'std' }).then(res => {
                 if (!Array.isArray(res.data.data)) {
                     // 后端为空返回空数组，右值返回对象
                     this.wikis = res.data.data

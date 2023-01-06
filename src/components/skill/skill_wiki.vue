@@ -58,13 +58,17 @@ export default {
             type: Object,
             default: () => {},
         },
+        sourceId: {
+            type: [Number, String],
+            default: 0,
+        }
     },
     data() {
         return {};
     },
     computed: {
         id: function () {
-            return this.wiki?.source_id;
+            return this.wiki?.source_id || this.sourceId;
         },
         client: function () {
             return this.$store.state.client || "std";

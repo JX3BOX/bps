@@ -37,6 +37,7 @@
 import _ from "lodash";
 import relation_map from "@jx3box/jx3box-data/data/xf/relation.json";
 import { getSkill, getTalent } from "@/service/skill";
+import { getSkillWiki } from "@/service/helper";
 import skill_item from "@/components/skill/skill_item.vue";
 import talent_item from "@/components/skill/talent_item.vue";
 
@@ -49,6 +50,8 @@ export default {
             skill: "",
             talent: "",
             active: "skill",
+
+            wikis: {}
         };
     },
     computed: {
@@ -83,7 +86,18 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+
+            // const _skillIds = _.flattenDeep(this.skill.map(item => item.forceSkills)).map(item => item._id);
+            // this.loadWiki(_skillIds.join(','));
         },
+        loadWiki: function (skills){
+            getSkillWiki('skill', { source_id: skills, client: 'origin' }).then(res => {
+                if (!Array.isArray(res.data.data)) {
+                    // 后端为空返回空数组，右值返回对象
+                    this.wikis = res.data.data
+                }
+            })
+        }
     },
     watch: {
         schoolName: {

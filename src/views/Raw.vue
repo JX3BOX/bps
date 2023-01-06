@@ -78,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <skill-wiki :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID" />
+                            <skill-wiki :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID" :sourceId="o.SkillID" />
 
                         </li>
                     </template>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <skill-wiki v-if="o" :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID + o.Level" />
+                    <skill-wiki v-if="o" :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID + o.Level" :sourceId="o.SkillID" />
                 </li>
             </template>
         </ul>
@@ -291,7 +291,7 @@ export default {
             return `第${zh[num]}重`;
         },
         loadWiki: function (skills){
-            getSkillWiki('skill', { source_id: skills }).then(res => {
+            getSkillWiki('skill', { source_id: skills, client: this.client }).then(res => {
                 if (!Array.isArray(res.data.data)) {
                     // 后端为空返回空数组，右值返回对象
                     this.wikis = res.data.data

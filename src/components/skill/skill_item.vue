@@ -33,7 +33,7 @@
                 <span class="u-cheast-desc">{{ cheast.desc }}</span>
             </div>
         </div>
-        <skillWiki :wiki="wiki" />
+        <skillWiki :wiki="wiki" :source-id="item._id" v-if="wiki || item._id" />
         <el-button class="u-panel" size="mini" icon="el-icon-connection" @click="toggleCheasts(item)" v-if="item.cheasts.length">秘籍</el-button>
     </div>
 </template>
