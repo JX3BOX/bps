@@ -12,7 +12,7 @@
 
 <script>
 // 依赖模块
-import singlebox from "@jx3box/jx3box-common-ui/src/single/cms-single";
+import singlebox from "@/components/cms-single";
 
 // 本地数据
 import { getPost } from "../../service/post.js";
