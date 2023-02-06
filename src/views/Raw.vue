@@ -37,126 +37,91 @@
                         :title="num2zh(index)"
                         :name="index"
                     >
-                    <template v-for="(o, i) in item">
-                        <li v-if="o" class="u-item" :key="i">
-                            <span class="u-id">ID:{{ o.SkillID }}</span>
-                            <img
-                                class="u-pic"
-                                :title="'IconID:' + o.IconID"
-                                :src="o.IconID | iconURL"
-                            />
-                            <div class="u-primary">
-                                <a
-                                    class="u-name"
-                                    :href="o.SkillID | skillLink"
-                                    target="_blank"
-                                >
-                                    {{ o.Name }}
-                                    <em v-if="o.SkillName"
-                                        >({{ o.SkillName }})</em
-                                    >
-                                </a>
-                                <span class="u-content">{{
-                                    o.Desc | filterRaw
-                                }}</span>
-                                <div class="u-remarks">
-                                    <span class="u-remark"
-                                        >Level : {{ o.Level }}</span
-                                    >
-                                    <span class="u-remark"
-                                        >Remark : {{ o.Remark }}</span
-                                    >
-                                    <span v-if="o.HelpDesc" class="u-remark"
-                                        >HelpDesc : {{ o.HelpDesc }}</span
-                                    >
-                                    <span v-if="o.SimpleDesc" class="u-remark"
-                                        >SimpleDesc : {{ o.SimpleDesc }}</span
-                                    >
-                                    <span v-if="o.SpecialDesc" class="u-remark"
-                                        >SpecialDesc : {{ o.SpecialDesc }}</span
-                                    >
+                        <template v-for="(o, i) in item">
+                            <li v-if="o" class="u-item" :key="i">
+                                <span class="u-id">ID:{{ o.SkillID }}</span>
+                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
+                                <div class="u-primary">
+                                    <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
+                                        {{ o.Name }}
+                                        <em v-if="o.SkillName">({{ o.SkillName }})</em>
+                                    </a>
+                                    <span class="u-content">{{ o.Desc | filterRaw }}</span>
+                                    <div class="u-remarks">
+                                        <span class="u-remark">Level : {{ o.Level }}</span>
+                                        <span class="u-remark">Remark : {{ o.Remark }}</span>
+                                        <span v-if="o.HelpDesc" class="u-remark">HelpDesc : {{ o.HelpDesc }}</span>
+                                        <span v-if="o.SimpleDesc" class="u-remark"
+                                            >SimpleDesc : {{ o.SimpleDesc }}</span
+                                        >
+                                        <span v-if="o.SpecialDesc" class="u-remark"
+                                            >SpecialDesc : {{ o.SpecialDesc }}</span
+                                        >
+                                    </div>
                                 </div>
-                            </div>
 
-                            <skill-wiki :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID" :sourceId="o.SkillID" />
-
-                        </li>
-                    </template>
+                                <skill-wiki
+                                    :wiki="wikis[o.SkillID]"
+                                    :key="kungfuid + o.SkillID"
+                                    :sourceId="o.SkillID"
+                                />
+                            </li>
+                        </template>
                     </el-collapse-item>
                 </el-collapse>
             </template>
             <template v-else>
                 <li v-for="(o, i) in data" class="u-item" :key="i">
                     <span class="u-id" v-if="o">ID:{{ o.SkillID }}</span>
-                    <img
-                        class="u-pic"
-                        :title="'IconID:' + o.IconID"
-                        :src="o.IconID | iconURL"
-                    />
+                    <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
                     <div class="u-primary">
-                        <a
-                            class="u-name"
-                            :href="o.SkillID | skillLink"
-                            target="_blank"
-                        >
+                        <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
                             {{ o.Name }}
                             <em v-if="o.SkillName">({{ o.SkillName }})</em>
                         </a>
                         <span class="u-content">{{ o.Desc | filterRaw }}</span>
                         <div class="u-remarks">
                             <span class="u-remark">Level : {{ o.Level }}</span>
-                            <span class="u-remark"
-                                >Remark : {{ o.Remark }}</span
-                            >
-                            <span v-if="o.HelpDesc" class="u-remark"
-                                >HelpDesc : {{ o.HelpDesc }}</span
-                            >
-                            <span v-if="o.SimpleDesc" class="u-remark"
-                                >SimpleDesc : {{ o.SimpleDesc }}</span
-                            >
-                            <span v-if="o.SpecialDesc" class="u-remark"
-                                >SpecialDesc : {{ o.SpecialDesc }}</span
-                            >
+                            <span class="u-remark">Remark : {{ o.Remark }}</span>
+                            <span v-if="o.HelpDesc" class="u-remark">HelpDesc : {{ o.HelpDesc }}</span>
+                            <span v-if="o.SimpleDesc" class="u-remark">SimpleDesc : {{ o.SimpleDesc }}</span>
+                            <span v-if="o.SpecialDesc" class="u-remark">SpecialDesc : {{ o.SpecialDesc }}</span>
                         </div>
                     </div>
 
-                    <skill-wiki v-if="o" :wiki="wikis[o.SkillID]" :key="kungfuid + o.SkillID + o.Level" :sourceId="o.SkillID" />
+                    <skill-wiki
+                        v-if="o"
+                        :wiki="wikis[o.SkillID]"
+                        :key="kungfuid + o.SkillID + o.Level"
+                        :sourceId="o.SkillID"
+                    />
                 </li>
             </template>
         </ul>
-        <el-alert
-            v-else
-            class="m-archive-null"
-            title="没有找到相关条目"
-            type="info"
-            center
-            show-icon
-        ></el-alert>
+        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
     </div>
 </template>
 
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import { getSkills } from "../service/raw";
+import { getSkills, getTalents, getTalents2 } from "../service/raw";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from "lodash/cloneDeep";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
 import kungfumap_std from "@/assets/data/kungfu_std.json";
 import kungfumap_origin from "@/assets/data/kungfu_origin.json";
 import pasvmap from "@/assets/data/pasv.json";
 import zhenfamap from "@/assets/data/zhenfa.json";
 import kungfus from "@/assets/data/kungfuid.json";
-import talent from "@jx3box/jx3box-talent/dist/talents.json";
-import talent2 from "@jx3box/jx3box-talent2/src/data/talent2.json";
-import {getSkillWiki} from "@/service/helper";
+import { getSkillWiki } from "@/service/helper";
 import { flattenDeep } from "lodash";
 
 // components
-import skillWiki from "@/components/skill/skill_wiki.vue"
+import skillWiki from "@/components/skill/skill_wiki.vue";
 export default {
     name: "Raw",
     components: {
-        skillWiki
+        skillWiki,
     },
     props: [],
     data: function () {
@@ -169,7 +134,9 @@ export default {
             kungfuid: "pasv",
             search: "",
 
-            wikis: {}
+            wikis: {},
+            talents: null,
+            talents2: null,
         };
     },
     computed: {
@@ -189,13 +156,13 @@ export default {
             return pasvmap[this.subtype][this.client];
         },
         zhenfa_skills: function () {
-            return this.mountid && zhenfamap[this.mountid] || [];
+            return (this.mountid && zhenfamap[this.mountid]) || [];
         },
         talent_skills: function () {
-            return this.mountid && talent[this.mountid] || [];
+            return (this.mountid && this.talents?.[this.mountid]) || [];
         },
-        talent2_skills: function (){
-            return this.mountid && talent2[this.mountid] || []
+        talent2_skills: function () {
+            return (this.mountid && this.talents2?.[this.mountid]) || [];
         },
         ids: function () {
             let skills = {
@@ -204,9 +171,7 @@ export default {
                 talent: this.talent_skills.flat(),
                 talent2: this.talent2_skills.flat(),
             };
-            return skills[this.kungfuid]
-                ? skills[this.kungfuid]?.join(",")
-                : this.skill_ids?.join(",");
+            return skills[this.kungfuid] ? skills[this.kungfuid]?.join(",") : this.skill_ids?.join(",");
         },
         client: function () {
             return this.$store.state.client || "std";
@@ -260,44 +225,28 @@ export default {
             const skills = {
                 talent: this.talent_skills,
                 // talent2: this.talent2_skills
-            }
-            const talentSkills = cloneDeep(skills[this.kungfuid])
+            };
+            const talentSkills = cloneDeep(skills[this.kungfuid]);
             return talentSkills.map((item) => {
-
                 return item.map((SkillID) => {
-
                     const currentTalent = data.find((d) => d.SkillID == SkillID);
 
                     return currentTalent;
                 });
             });
-
         },
         num2zh: function (num) {
-            const zh = [
-                "一",
-                "二",
-                "三",
-                "四",
-                "五",
-                "六",
-                "七",
-                "八",
-                "九",
-                "十",
-                "十一",
-                "十二",
-            ];
+            const zh = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
             return `第${zh[num]}重`;
         },
-        loadWiki: function (skills){
-            getSkillWiki('skill', { source_id: skills, client: this.client }).then(res => {
+        loadWiki: function (skills) {
+            getSkillWiki("skill", { source_id: skills, client: this.client }).then((res) => {
                 if (!Array.isArray(res.data.data)) {
                     // 后端为空返回空数组，右值返回对象
-                    this.wikis = res.data.data
+                    this.wikis = res.data.data;
                 }
-            })
-        }
+            });
+        },
     },
     filters: {
         filterRaw: function (str) {
@@ -321,7 +270,7 @@ export default {
             // immediate: true,
             handler: function () {
                 // this.kungfuid = this.kungfus[0];
-                this.kungfuid = 'pasv'
+                this.kungfuid = "pasv";
                 this.loadSkills();
             },
         },
@@ -335,11 +284,15 @@ export default {
             deep: true,
             handler(val) {
                 const _skillIds = flattenDeep(val).map((item) => item.SkillID);
-                const skills = _skillIds.join(',');
+                const skills = _skillIds.join(",");
 
-                this.loadWiki(skills)
-            }
-        }
+                this.loadWiki(skills);
+            },
+        },
+    },
+    mounted: async function () {
+        this.talents = await getTalents();
+        this.talents2 = await getTalents2();
     },
 };
 </script>

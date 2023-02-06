@@ -1,19 +1,13 @@
-import { $node } from "@jx3box/jx3box-common/js/https";
-// const __node = "http://localhost:7002/";
-// const API = __node + 'skill/school/'
-// function getSchoolSkills(school,query) {
-//     return axios
-//         .get(API + school,{
-//             params : query
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// }
+import { $node, axios } from "@jx3box/jx3box-common/js/https";
+import { __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+
+const $oss = axios.create({
+    baseURL: __ossRoot,
+});
 
 function getSkills(params) {
     return $node().get("/skills", {
-        params: params
+        params: params,
     });
 }
 
@@ -21,4 +15,14 @@ function getSkill(id) {
     return $node().get(`/skill/id/${id}`);
 }
 
-export { getSkills, getSkill };
+async function getTalents() {
+    let res = await $oss.get("/data/qixue/talents.json");
+    return res.data;
+}
+
+async function getTalents2() {
+    let res = await $oss.get("/data/talent2/talent2.json");
+    return res.data;
+}
+
+export { getSkills, getSkill, getTalents, getTalents2 };
