@@ -69,13 +69,12 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="门派群组" name="group" v-if="client == 'std'">
+        <!-- <el-tab-pane label="门派群组" name="group" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-headset"></i>
                 <b>门派群组</b>
-                <!-- <em class="u-new">全新上线</em> -->
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- <el-tab-pane label="背景故事" name="story">
             <span slot="label">
@@ -98,8 +97,12 @@ export default {
         };
     },
     watch: {
-        $route: function (_route) {
-            this.view = _route.name;
+        '$route': {
+            handler: function (_route) {
+                this.view = _route.name;
+            },
+            immediate: true,
+            deep: true,
         },
     },
     computed: {
@@ -129,5 +132,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/tabs.less";
+@import "~@/assets/css/tabs.less";
 </style>

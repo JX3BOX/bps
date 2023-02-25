@@ -8,34 +8,25 @@ VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch((err) => err);
 };
 
-const Index = () => import("../views/Index.vue");
-const Skill = () => import("../views/Skill.vue");
-const Raw = () => import("../views/Raw.vue");
-const Collection = () => import("../views/Collection.vue");
-const Ladder = () => import("../views/Ladder.vue");
-const Lua = () => import("../views/Lua.vue");
-const Story = () => import("../views/Story.vue");
-const Recipe = () => import("../views/Recipe.vue");
-const Group = () => import("../views/Group.vue");
-const Haste = () => import("../views/Haste.vue");
-const Dps = () => import("../views/Dps.vue");
-
 const routes = [
-    { name: "index", path: "/", component: Index },
-    { name: "skill", path: "/skill", component: Skill },
-    { name: "raw", path: "/raw", component: Raw },
-    { name: "collection", path: "/collection", component: Collection },
-    { name: "ladder", path: "/ladder", component: Ladder },
-    { name: "story", path: "/story", component: Story },
-    { name: "lua", path: "/lua", component: Lua },
-    { name: "recipe", path: "/recipe", component: Recipe },
-    { name: "group", path: "/group", component: Group },
-    { name: "haste", path: "/haste", component: Haste },
-    { name: "dps", path: "/dps", component: Dps },
+    { name: "index", path: "/", component: () => import("@/views/Index.vue") },
+    // { name: "post", path: "/:id(\\d+)", component: () => import("@/views/Index.vue") },
+    // { name: "skill", path: "/skill", component: () => import("@/views/Skill.vue") },
+    // { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
+    // { name: "collection", path: "/collection", component: () => import("@/views/Collection.vue") },
+    { name: "ladder", path: "/ladder", component: () => import("@/views/Ladder.vue") },
+    // { name: "story", path: "/story", component: () => import("@/views/Story.vue") },
+    // { name: "lua", path: "/lua", component: () => import("@/views/Lua.vue") },
+    // { name: "recipe", path: "/recipe", component: () => import("@/views/Recipe.vue") },
+    // { name: "group", path: "/group", component: () => import("@/views/Group.vue") },
+    // { name: "haste", path: "/haste", component: () => import("@/views/Haste.vue") },
+    // { name: "dps", path: "/dps", component: () => import("@/views/Dps.vue") },
 ];
 
 const router = new VueRouter({
     routes,
+    mode: 'history',
+    base: '/bps'
 });
 
 export default router;

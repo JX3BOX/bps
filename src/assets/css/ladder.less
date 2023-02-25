@@ -4,16 +4,16 @@
         .y(-5px);
         .size(24px);
     }
-    .u-dot{
-        margin:0 8px 0 5px;
+    .u-dot {
+        margin: 0 8px 0 5px;
     }
 }
-@media screen and (max-width:@phone){
-    .m-ladder-title{
-        .u-dot{
+@media screen and (max-width: @phone) {
+    .m-ladder-title {
+        .u-dot {
             .none;
         }
-        .u-title{
+        .u-title {
             .db;
             .mb(10px);
         }
@@ -72,8 +72,8 @@
         color: #fff;
         .pr;
         .r(2px);
-        a{
-            color:#fff;
+        a {
+            color: #fff;
         }
     }
     .u-pic {
@@ -88,64 +88,74 @@
         .db;
         .bold;
     }
-    .u-desc{
+    .u-desc {
         // .fr;
-        color:#eee;
+        color: #eee;
         .ml(5px);
         font-weight: normal;
     }
     .pr;
-    .u-dps{
-        .pa;.rb(5px,0);
+    .u-dps {
+        .pa;
+        .rb(5px,0);
         .fz(13px,2);
         .bold;
     }
 }
 
-.m-ladder-pop{
+.m-ladder-pop {
     .fz(14px,2);
-    .el-popover__title{
+    .el-popover__title {
         .bold;
-        color:@color-link;
+        color: @color-link;
     }
 }
-.m-ladder-header{
+.m-ladder-header {
     .mb(20px);
 }
 
-.m-ladder-filter{
-    .u-filter-rank{
+.m-ladder-filter {
+    .u-filter-rank {
         .fl;
     }
-    .u-filter-school{
+    .u-filter-school {
         .fr;
 
-        .el-radio__input{
+        .el-radio__input {
             .none;
         }
-        .is-checked{
+        .is-checked {
             .bold;
         }
 
-        img{
+        img {
             .size(24px);
             .y;
         }
 
-        .el-radio__label{
-            padding-left:0;
+        .el-radio__label {
+            padding-left: 0;
         }
 
-        .el-radio{
+        .el-radio {
             .mr(5px);
         }
     }
     .clearfix;
 }
 
-@media screen and (max-width:@phone){
-    .m-ladder-filter .u-filter-school{
-        float:none;
+@media screen and (max-width: @phone) {
+    .m-ladder-filter .u-filter-school {
+        float: none;
         .mt(10px);
     }
+}
+
+.u-school-icon {
+    .size(24px);
+    .y;
+    .mr(5px);
+}
+.u-school-name {
+    .fz(14px);
 }

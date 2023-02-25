@@ -7,26 +7,14 @@
                 <a href="https://jq.qq.com/?_wv=1027&k=mEl1e2hL">297985102</a>
             </strong>
         </RightSideMsg>
-        <router-link class="u-link-rank" to="/ladder"><img src="../assets/img/rank.png" /></router-link>
-        <!-- Q群 -->
-        <h2 class="c-sidebar-right-title m-title">
-            <img class="u-icon" svg-inline src="../assets/img/puzzle.svg" />
-            <span class="u-text">各职业门派群</span>
-            <a class="u-show-message" target="_blank" href="/tool/13659/">申请展示</a>
-        </h2>
-        <group />
+
     </div>
 </template>
 
 <script>
-
-import ladder from "../assets/data/ladder.json";
+import ladder from "@/assets/data/ladder.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import {
-    __ossMirror,
-    __imgPath,
-    __ossRoot,
-} from "@jx3box/jx3box-common/data/jx3box.json";
+import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "list_side",
     props: [],
@@ -52,21 +40,10 @@ export default {
         },
     },
     mounted: function () {},
-    components: {
-        group,
-    },
+    components: {},
 };
 </script>
 
-<style scoped lang="less">
-@import "../assets/css/side.less";
-@import "../assets/css/list_side.less";
-.u-link-rank{
-    .db;
-    .x;
-    img{
-        .r(3px);
-    }
-    .mt(10px);
-}
+<style lang="less">
+@import "~@/assets/css/side.less";
 </style>

@@ -1,116 +1,105 @@
 <template>
-    <div class="v-ladder">
-        <div class="m-ladder-header">
-            <h3 class="m-ladder-title">
-                <span class="u-title">
-                    <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜
-                    <span class="u-dot">·</span>
-                </span>
-                <el-select v-model="zlp" placeholder="请选择">
-                    <el-option
-                        v-for="item in zlps"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-            </h3>
-            <div class="m-ladder-desc">本榜单仅作参考，以无团队增益下对单体静止114目标伤害作为参考。</div>
-            <div class="m-ladder-filter">
-                <el-radio-group class="u-filter-rank" v-model="filter" size="medium">
-                    <el-radio-button label="全部"></el-radio-button>
-                    <el-radio-button label="只显示最低"></el-radio-button>
-                    <el-radio-button label="只显示最高"></el-radio-button>
-                </el-radio-group>
-                <el-select class="u-filter-school" v-model="school" placeholder="只看门派">
-                    <el-option
-                        v-for="(school_name,school_id) in schoolmap"
-                        :key="school_id"
-                        :label="~~school_id ? school_name : '全部'"
-                        :value="school_id"
-                    >
-                        <img :src="school_id | showSchoolIcon" class="u-school-icon" />
-                        <span class="u-school-name">{{~~school_id ? school_name : '全部'}}</span>
-                        <!-- <span class="u-school-name">{{school_name}}</span> -->
-                    </el-option>
-                </el-select>
+    <AppLayout>
+        <div class="v-ladder">
+            <div class="m-ladder-header">
+                <h3 class="m-ladder-title">
+                    <span class="u-title">
+                        <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" /> 门派天梯榜
+                        <span class="u-dot">·</span>
+                    </span>
+                    <el-select v-model="zlp" placeholder="请选择">
+                        <el-option
+                            v-for="item in zlps"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        ></el-option>
+                    </el-select>
+                </h3>
+                <div class="m-ladder-desc">本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。</div>
+                <div class="m-ladder-filter">
+                    <el-radio-group class="u-filter-rank" v-model="filter" size="medium">
+                        <el-radio-button label="全部"></el-radio-button>
+                        <el-radio-button label="只显示最低"></el-radio-button>
+                        <el-radio-button label="只显示最高"></el-radio-button>
+                    </el-radio-group>
+                    <el-select class="u-filter-school" v-model="school" placeholder="只看门派">
+                        <el-option
+                            v-for="(school_name, school_id) in schoolmap"
+                            :key="school_id"
+                            :label="~~school_id ? school_name : '全部'"
+                            :value="school_id"
+                        >
+                            <img :src="showSchoolIcon(school_id)" class="u-school-icon" />
+                            <span class="u-school-name">{{ ~~school_id ? school_name : "全部" }}</span>
+                            <!-- <span class="u-school-name">{{school_name}}</span> -->
+                        </el-option>
+                    </el-select>
+                </div>
             </div>
-        </div>
-        <div class="m-ladder-rank" v-loading="loading">
-            <ul>
-                <li v-for="(item, i) in rank" :key="i" v-show="isVisible(item)">
-                    <el-popover
-                        v-if="item.remark"
-                        placement="bottom-start"
-                        :title="item.xf"
-                        width="500"
-                        trigger="hover"
-                        :content="item.remark"
-                        popper-class="m-ladder-pop"
-                    >
+            <div class="m-ladder-rank" v-loading="loading">
+                <ul>
+                    <li v-for="(item, i) in rank" :key="i" v-show="isVisible(item)">
+                        <el-popover
+                            v-if="item.remark"
+                            placement="bottom-start"
+                            :title="item.xf"
+                            width="500"
+                            trigger="hover"
+                            :content="item.remark"
+                            popper-class="m-ladder-pop"
+                        >
+                            <div
+                                slot="reference"
+                                class="u-item"
+                                :style="{
+                                    width: getRate(item.dps),
+                                    backgroundColor: xfcolor(item.xf),
+                                }"
+                            >
+                                <img :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
+                                <template v-if="!!item.link">
+                                    <a class="u-text" :href="item.link" target="_blank">
+                                        {{ item.xf }}
+                                        <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
+                                    </a>
+                                </template>
+                                <template v-else>
+                                    <span class="u-text">
+                                        {{ item.xf }}
+                                        <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
+                                    </span>
+                                </template>
+                                <span class="u-dps">{{ item.dps }}</span>
+                            </div>
+                        </el-popover>
                         <div
-                            slot="reference"
+                            v-else
                             class="u-item"
                             :style="{
-                            width: getRate(item.dps),
-                            backgroundColor: xfcolor(item.xf),
-                        }"
+                                width: getRate(item.dps),
+                                backgroundColor: xfcolor(item.xf),
+                            }"
                         >
-                            <img :src="item.xf | xficon" class="u-pic" />
+                            <img :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
                             <template v-if="!!item.link">
                                 <a class="u-text" :href="item.link" target="_blank">
                                     {{ item.xf }}
-                                    <span
-                                        class="u-desc"
-                                        v-if="item.label"
-                                    >&lt;{{item.label}}&gt;</span>
+                                    <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
                                 </a>
                             </template>
                             <template v-else>
                                 <span class="u-text">
                                     {{ item.xf }}
-                                    <span
-                                        class="u-desc"
-                                        v-if="item.label"
-                                    >&lt;{{item.label}}&gt;</span>
+                                    <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
                                 </span>
                             </template>
-                            <span class="u-dps">{{item.dps}}</span>
+                            <span class="u-dps">{{ item.dps }}</span>
                         </div>
-                    </el-popover>
-                    <div
-                        v-else
-                        class="u-item"
-                        :style="{
-                            width: getRate(item.dps),
-                            backgroundColor: xfcolor(item.xf),
-                        }"
-                    >
-                        <img :src="item.xf | xficon" class="u-pic" />
-                        <template v-if="!!item.link">
-                            <a class="u-text" :href="item.link" target="_blank">
-                                {{ item.xf }}
-                                <span
-                                    class="u-desc"
-                                    v-if="item.label"
-                                >&lt;{{item.label}}&gt;</span>
-                            </a>
-                        </template>
-                        <template v-else>
-                            <span class="u-text">
-                                {{ item.xf }}
-                                <span
-                                    class="u-desc"
-                                    v-if="item.label"
-                                >&lt;{{item.label}}&gt;</span>
-                            </span>
-                        </template>
-                        <span class="u-dps">{{item.dps}}</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="m-ladder-contributor">
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="m-ladder-contributor">
             <div class="u-label">❤️ 感谢以下人员的贡献</div>
             <div class="u-list" v-if="authors && authors.length">
                 <a
@@ -124,20 +113,24 @@
                     {{item.display_name}}
                 </a>
             </div>
+        </div> -->
         </div>
-    </div>
+    </AppLayout>
 </template>
 
 <script>
+import AppLayout from "@/layout/AppLayout.vue";
 import { authorLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { getUsers, getBread, getRank } from "@/service/ladder.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import {colors_by_mount_name} from "@jx3box/jx3box-data/data/xf/colors.json";
+import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import zlps from "@/assets/data/ladder.json";
+import { showSchoolIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Ladder",
+    components: { AppLayout },
     props: [],
     data: function () {
         return {
@@ -166,25 +159,25 @@ export default {
             });
             return ~~Math.max(...arr);
         },
-        rank : function (){
-            let data = this.data
-            data.sort((a,b) => {
-                return ~~(b.dps) - ~~(a.dps)
-            })
-            return data
+        rank: function () {
+            let data = this.data;
+            data.sort((a, b) => {
+                return ~~b.dps - ~~a.dps;
+            });
+            return data;
         },
-        client : function (){
-            return this.$store.state.client == 'std' ? 1 : 2
+        client: function () {
+            return this.$store.state.client == "std" ? 1 : 2;
         },
-        c : function (){
-            return this.$store.state.client
+        c: function () {
+            return this.$store.state.client;
         },
-        zlps : function (){
-            return zlps[this.c] || []
+        zlps: function () {
+            return zlps[this.c] || [];
         },
-        contributors : function (){
-            return this.$store.state.client == 'std' ? 'bps_ladder_authors' : 'bps_ladder_authors_origin'
-        }
+        contributors: function () {
+            return this.$store.state.client == "std" ? "bps_ladder_authors" : "bps_ladder_authors_origin";
+        },
     },
     methods: {
         xfcolor: function (val) {
@@ -213,11 +206,10 @@ export default {
             return filter_visible && school_visible;
         },
         loadRank: function () {
-
-            if(!this.zlp) return
+            if (!this.zlp) return;
 
             this.loading = true;
-            getRank(this.zlp,this.client)
+            getRank(this.zlp, this.client)
                 .then((data) => {
                     this.data = data;
                     this.$forceUpdate();
@@ -228,32 +220,22 @@ export default {
         },
         loadContributors: function () {
             getBread(this.contributors).then((ids) => {
-                if(!ids) return
+                if (!ids) return;
                 getUsers(ids).then((data) => {
                     this.authors = data || [];
                 });
             });
         },
         init: function () {
-            this.loadContributors();
+            // this.loadContributors();
         },
-    },
-    filters: {
         authorLink,
         showAvatar,
-        xficon: function (val) {
-            if (xfmap[val]) {
-                return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
-            } else {
-                return "";
-            }
-        },
-        showSchoolIcon: function (val) {
-            return __imgPath + "image/school/" + val + ".png";
-        },
+        showSchoolIcon,
+        showMountIcon,
     },
-    created : function (){
-        this.zlp = zlps[this.c][0]["value"]
+    created: function () {
+        this.zlp = zlps[this.c][0]["value"];
     },
     mounted: function () {
         this.init();
@@ -270,14 +252,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/ladder.less";
-
-.u-school-icon {
-    .size(24px);
-    .y;
-    .mr(5px);
-}
-.u-school-name {
-    .fz(14px);
-}
+@import "~@/assets/css/ladder.less";
 </style>
