@@ -9,6 +9,9 @@
             <!-- <img class="u-icon" svg-inline src="../../assets/img/list/post.svg" /> -->
             <img class="u-icon" :src="item.post_subtype | xficon" :alt="item.post_subtype" :title="item.post_subtype" />
 
+            <!-- 资料片 -->
+			<span class="u-label u-zlp" v-if="item.zlp">{{ item.zlp }}</span>
+
             <!-- 标题文字 -->
             <a class="u-title" :style="item.color | showHighlight" :href="item.ID | postLink" :target="target">{{ item.post_title || "无标题" }}</a>
 

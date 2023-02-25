@@ -18,13 +18,12 @@ import SingleLayout from "@/layout/SingleLayout.vue";
 import singlebox from "@/components/cms-single";
 
 // 本地数据
-import { getPost } from "../service/post.js";
+import { getPost } from "@/service/post.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
-import { appKey } from "../../../setting.json";
+import { appKey } from "@/../setting.json";
 
 export default {
     name: "single",
-    props: ["id"],
     data: function () {
         return {
             loading: false,
@@ -36,6 +35,9 @@ export default {
         post_subtype: function () {
             return this?.post?.post_subtype || "其它";
         },
+        id : function (){
+            return this.$route.params.id
+        }
     },
     methods: {
         updateExtend: function (val) {

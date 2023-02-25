@@ -5,19 +5,25 @@
             <div class="m-archive-search" slot="search-before">
                 <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
                 <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search">
-                    <span slot="prepend">关键词</span>
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <span slot="prepend"><i class="el-icon-search"></i> <span class="u-search">关键词</span></span>
+                    <el-button slot="append" icon="el-icon-position" class="u-btn"></el-button>
                 </el-input>
             </div>
 
             <!-- 筛选 -->
             <div class="m-archive-filter">
-                <!-- 版本过滤 -->
-                <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
-                <!-- 角标过滤 -->
-                <markBy @filter="filterMeta"></markBy>
-                <!-- 排序过滤 -->
-                <orderBy @filter="filterMeta"></orderBy>
+                <div class="m-filter--left">
+                    <!-- 版本过滤 -->
+                    <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
+                    <!-- 角标过滤 -->
+                    <markBy @filter="filterMeta"></markBy>
+                    <!-- 资料片过滤 -->
+                    <zlpBy @filter="filterMeta" type="zlp" :client="client"></zlpBy>
+                </div>
+                <div class="m-filter--right">
+                    <!-- 排序过滤 -->
+                    <orderBy @filter="filterMeta"></orderBy>
+                </div>
             </div>
 
             <!-- 列表 -->
@@ -80,6 +86,7 @@ export default {
             mark: "", //筛选模式
             client: this.$store.state.client, //版本选择
             search: "", //搜索字串
+            zlp: "", //资料片
         };
     },
     computed: {
@@ -99,6 +106,7 @@ export default {
                 mark: this.mark,
                 client: this.client,
                 search: this.search,
+                zlp: this.zlp,
             };
         },
         // 分页相关参数

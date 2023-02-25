@@ -1,7 +1,15 @@
 <template>
     <div>
         <Header></Header>
-        <Breadcrumb name="云端宏" slug="macro" root="/macro" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
+        <Breadcrumb
+            name="职业专栏"
+            slug="bps"
+            root="/bps"
+            :publishEnable="true"
+            :adminEnable="true"
+            :feedbackEnable="true"
+            :crumbEnable="true"
+        >
         </Breadcrumb>
         <LeftSidebar :uid="user_id">
             <Nav :id="id" class="m-nav" />
