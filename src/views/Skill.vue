@@ -1,9 +1,12 @@
 <template>
-    <SkillStd v-if="client == 'std'"></SkillStd>
-    <SkillOrigin v-else></SkillOrigin>
+    <AppLayout>
+        <SkillStd v-if="client == 'std'"></SkillStd>
+        <SkillOrigin v-else></SkillOrigin>
+    </AppLayout>
 </template>
 
 <script>
+import AppLayout from "@/layout/AppLayout.vue";
 import SkillStd from "./SkillStd.vue";
 import SkillOrigin from "./SkillOrigin.vue";
 export default {
@@ -12,6 +15,7 @@ export default {
     components: {
         SkillStd,
         SkillOrigin,
+        AppLayout,
     },
     data: function () {
         return {};

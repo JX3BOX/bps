@@ -1,22 +1,23 @@
 <template>
-    <div class="v-raw" v-loading="loading">
-        <el-tabs v-model="kungfuid" type="card">
-            <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
-            <el-tab-pane
-                :label="kungfu | showKungfuName"
-                :name="kungfu"
-                v-for="kungfu in kungfus"
-                :key="kungfu"
-            ></el-tab-pane>
-            <template v-if="~~mountid">
-                <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
-                <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
-                <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
-            </template>
-        </el-tabs>
+    <AppLayout>
+        <div class="v-raw" v-loading="loading">
+            <el-tabs v-model="kungfuid" type="card">
+                <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
+                <el-tab-pane
+                    :label="kungfu | showKungfuName"
+                    :name="kungfu"
+                    v-for="kungfu in kungfus"
+                    :key="kungfu"
+                ></el-tab-pane>
+                <template v-if="~~mountid">
+                    <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
+                    <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
+                    <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
+                </template>
+            </el-tabs>
 
-        <!-- 搜索 -->
-        <!-- <div class="m-raw-search m-archive-search">
+            <!-- 搜索 -->
+            <!-- <div class="m-raw-search m-archive-search">
             <el-input
                 placeholder="搜索关键词"
                 v-model="search"
@@ -28,81 +29,83 @@
             </el-input>
         </div>-->
 
-        <ul class="m-resource-list" v-if="data && data.length">
-            <template v-if="kungfuid === 'talent'">
-                <el-collapse v-model="collapses">
-                    <el-collapse-item
-                        v-for="(item, index) in data"
-                        :key="kungfuid + index"
-                        :title="num2zh(index)"
-                        :name="index"
-                    >
-                        <template v-for="(o, i) in item">
-                            <li v-if="o" class="u-item" :key="i">
-                                <span class="u-id">ID:{{ o.SkillID }}</span>
-                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
-                                <div class="u-primary">
-                                    <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
-                                        {{ o.Name }}
-                                        <em v-if="o.SkillName">({{ o.SkillName }})</em>
-                                    </a>
-                                    <span class="u-content">{{ o.Desc | filterRaw }}</span>
-                                    <div class="u-remarks">
-                                        <span class="u-remark">Level : {{ o.Level }}</span>
-                                        <span class="u-remark">Remark : {{ o.Remark }}</span>
-                                        <span v-if="o.HelpDesc" class="u-remark">HelpDesc : {{ o.HelpDesc }}</span>
-                                        <span v-if="o.SimpleDesc" class="u-remark"
-                                            >SimpleDesc : {{ o.SimpleDesc }}</span
-                                        >
-                                        <span v-if="o.SpecialDesc" class="u-remark"
-                                            >SpecialDesc : {{ o.SpecialDesc }}</span
-                                        >
+            <ul class="m-resource-list" v-if="data && data.length">
+                <template v-if="kungfuid === 'talent'">
+                    <el-collapse v-model="collapses">
+                        <el-collapse-item
+                            v-for="(item, index) in data"
+                            :key="kungfuid + index"
+                            :title="num2zh(index)"
+                            :name="index"
+                        >
+                            <template v-for="(o, i) in item">
+                                <li v-if="o" class="u-item" :key="i">
+                                    <span class="u-id">ID:{{ o.SkillID }}</span>
+                                    <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
+                                    <div class="u-primary">
+                                        <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
+                                            {{ o.Name }}
+                                            <em v-if="o.SkillName">({{ o.SkillName }})</em>
+                                        </a>
+                                        <span class="u-content">{{ o.Desc | filterRaw }}</span>
+                                        <div class="u-remarks">
+                                            <span class="u-remark">Level : {{ o.Level }}</span>
+                                            <span class="u-remark">Remark : {{ o.Remark }}</span>
+                                            <span v-if="o.HelpDesc" class="u-remark">HelpDesc : {{ o.HelpDesc }}</span>
+                                            <span v-if="o.SimpleDesc" class="u-remark"
+                                                >SimpleDesc : {{ o.SimpleDesc }}</span
+                                            >
+                                            <span v-if="o.SpecialDesc" class="u-remark"
+                                                >SpecialDesc : {{ o.SpecialDesc }}</span
+                                            >
+                                        </div>
                                     </div>
-                                </div>
 
-                                <skill-wiki
-                                    :wiki="wikis[o.SkillID]"
-                                    :key="kungfuid + o.SkillID"
-                                    :sourceId="o.SkillID"
-                                />
-                            </li>
-                        </template>
-                    </el-collapse-item>
-                </el-collapse>
-            </template>
-            <template v-else>
-                <li v-for="(o, i) in data" class="u-item" :key="i">
-                    <span class="u-id" v-if="o">ID:{{ o.SkillID }}</span>
-                    <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
-                    <div class="u-primary">
-                        <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
-                            {{ o.Name }}
-                            <em v-if="o.SkillName">({{ o.SkillName }})</em>
-                        </a>
-                        <span class="u-content">{{ o.Desc | filterRaw }}</span>
-                        <div class="u-remarks">
-                            <span class="u-remark">Level : {{ o.Level }}</span>
-                            <span class="u-remark">Remark : {{ o.Remark }}</span>
-                            <span v-if="o.HelpDesc" class="u-remark">HelpDesc : {{ o.HelpDesc }}</span>
-                            <span v-if="o.SimpleDesc" class="u-remark">SimpleDesc : {{ o.SimpleDesc }}</span>
-                            <span v-if="o.SpecialDesc" class="u-remark">SpecialDesc : {{ o.SpecialDesc }}</span>
+                                    <!-- <skill-wiki
+                                        :wiki="wikis[o.SkillID]"
+                                        :key="kungfuid + o.SkillID"
+                                        :sourceId="o.SkillID"
+                                    /> -->
+                                </li>
+                            </template>
+                        </el-collapse-item>
+                    </el-collapse>
+                </template>
+                <template v-else>
+                    <li v-for="(o, i) in data" class="u-item" :key="i">
+                        <span class="u-id" v-if="o">ID:{{ o.SkillID }}</span>
+                        <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
+                        <div class="u-primary">
+                            <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
+                                {{ o.Name }}
+                                <em v-if="o.SkillName">({{ o.SkillName }})</em>
+                            </a>
+                            <span class="u-content">{{ o.Desc | filterRaw }}</span>
+                            <div class="u-remarks">
+                                <span class="u-remark">Level : {{ o.Level }}</span>
+                                <span class="u-remark">Remark : {{ o.Remark }}</span>
+                                <span v-if="o.HelpDesc" class="u-remark">HelpDesc : {{ o.HelpDesc }}</span>
+                                <span v-if="o.SimpleDesc" class="u-remark">SimpleDesc : {{ o.SimpleDesc }}</span>
+                                <span v-if="o.SpecialDesc" class="u-remark">SpecialDesc : {{ o.SpecialDesc }}</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <skill-wiki
-                        v-if="o"
-                        :wiki="wikis[o.SkillID]"
-                        :key="kungfuid + o.SkillID + o.Level"
-                        :sourceId="o.SkillID"
-                    />
-                </li>
-            </template>
-        </ul>
-        <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
-    </div>
+                        <!-- <skill-wiki
+                            v-if="o"
+                            :wiki="wikis[o.SkillID]"
+                            :key="kungfuid + o.SkillID + o.Level"
+                            :sourceId="o.SkillID"
+                        /> -->
+                    </li>
+                </template>
+            </ul>
+            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon></el-alert>
+        </div>
+    </AppLayout>
 </template>
 
 <script>
+import AppLayout from "@/layout/AppLayout.vue";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { getSkills, getTalents, getTalents2 } from "../service/raw";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -117,11 +120,12 @@ import { getSkillWiki } from "@/service/helper";
 import { flattenDeep } from "lodash";
 
 // components
-import skillWiki from "@/components/skill/skill_wiki.vue";
+// import skillWiki from "@/components/skill/skill_wiki.vue";
 export default {
     name: "Raw",
     components: {
-        skillWiki,
+        // skillWiki,
+        AppLayout,
     },
     props: [],
     data: function () {

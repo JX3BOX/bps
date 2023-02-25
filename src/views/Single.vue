@@ -1,27 +1,31 @@
 <template>
-    <singlebox :post="post" :stat="stat" v-loading="loading" @extendUpdate="updateExtend">
-        <!-- 子类别 -->
-        <div class="u-meta u-sub-block" slot="single-header">
-            <em class="u-label">心法</em>
-            <span class="u-value">
-                {{ post_subtype }}
-            </span>
-        </div>
-    </singlebox>
+    <SingleLayout>
+        <singlebox :post="post" :stat="stat" v-loading="loading" @extendUpdate="updateExtend">
+            <!-- 子类别 -->
+            <div class="u-meta u-sub-block" slot="single-header">
+                <em class="u-label">心法</em>
+                <span class="u-value">
+                    {{ post_subtype }}
+                </span>
+            </div>
+        </singlebox>
+    </SingleLayout>
 </template>
 
 <script>
 // 依赖模块
+import SingleLayout from "@/layout/SingleLayout.vue";
 import singlebox from "@/components/cms-single";
 
 // 本地数据
 import { getPost } from "../service/post.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import { appKey } from "../../../setting.json";
+
 export default {
     name: "single",
     props: ["id"],
-    data: function() {
+    data: function () {
         return {
             loading: false,
             post: {},
@@ -29,21 +33,20 @@ export default {
         };
     },
     computed: {
-        post_subtype: function() {
-            return this?.post?.post_subtype || '其它';
+        post_subtype: function () {
+            return this?.post?.post_subtype || "其它";
         },
     },
     methods: {
-        updateExtend : function (val){
-            this.$store.state.extend = val
-        }
+        updateExtend: function (val) {
+            this.$store.state.extend = val;
+        },
     },
-    mounted: function() {
+    mounted: function () {
         if (this.id) {
             this.loading = true;
             getPost(this.id)
                 .then((res) => {
-
                     this.post = this.$store.state.post = res.data.data;
                     this.$store.state.id = this.id;
                     this.$store.state.user_id = this.post?.post_author;
@@ -62,7 +65,7 @@ export default {
     },
     components: {
         singlebox,
+        SingleLayout,
     },
 };
 </script>
-

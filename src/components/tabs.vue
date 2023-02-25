@@ -15,30 +15,6 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能/Buff数据库" name="raw">
-            <span slot="label">
-                <i class="el-icon-reading"></i>
-                <b>原始数据</b>
-                <!-- <em class="u-hot">独家资料</em> -->
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="源码解析" name="lua" v-if="isSuperAuthor">
-            <span slot="label">
-                <i class="el-icon-full-screen"></i>
-                <b>源码分析</b>
-                <!-- <em class="u-ready">签约作者</em> -->
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="秘籍大全" name="recipe">
-            <span slot="label">
-                <i class="el-icon-paperclip"></i>
-                <b>秘籍大全</b>
-                <!-- <em class="u-new">全新上线</em> -->
-            </span>
-        </el-tab-pane>
-
         <el-tab-pane label="技能合集" name="collection">
             <span slot="label">
                 <i class="el-icon-notebook-1"></i>
@@ -69,6 +45,30 @@
             </span>
         </el-tab-pane>
 
+        <el-tab-pane label="技能/Buff数据库" name="raw" v-if="isSuperAuthor">
+            <span slot="label">
+                <i class="el-icon-reading"></i>
+                <b>原始数据</b>
+                <em class="u-ready">签约</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="秘籍大全" name="recipe" v-if="isSuperAuthor">
+            <span slot="label">
+                <i class="el-icon-paperclip"></i>
+                <b>秘籍大全</b>
+                <em class="u-ready">签约</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="源码解析" name="lua" v-if="isSuperAuthor">
+            <span slot="label">
+                <i class="el-icon-full-screen"></i>
+                <b>源码分析</b>
+                <em class="u-ready">签约</em>
+            </span>
+        </el-tab-pane>
+
         <!-- <el-tab-pane label="门派群组" name="group" v-if="client == 'std'">
             <span slot="label">
                 <i class="el-icon-headset"></i>
@@ -82,7 +82,6 @@
                 <b>背景故事</b>
             </span>
         </el-tab-pane> -->
-
     </el-tabs>
 </template>
 
@@ -97,7 +96,7 @@ export default {
         };
     },
     watch: {
-        '$route': {
+        $route: {
             handler: function (_route) {
                 this.view = _route.name;
             },
@@ -109,9 +108,9 @@ export default {
         client: function () {
             return this.$store.state.client || "std";
         },
-        isSuperAuthor : function (){
-            return this.$store.state.isSuperAuthor || false
-        }
+        isSuperAuthor: function () {
+            return this.$store.state.isSuperAuthor || false;
+        },
     },
     methods: {
         changeView: function () {
@@ -123,11 +122,11 @@ export default {
             });
         },
     },
-    mounted : function (){
+    mounted: function () {
         User.isSuperAuthor().then((data) => {
             this.$store.state.isSuperAuthor = data;
         });
-    }
+    },
 };
 </script>
 

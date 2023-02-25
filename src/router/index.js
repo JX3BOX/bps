@@ -10,17 +10,22 @@ VueRouter.prototype.push = function push(location) {
 
 const routes = [
     { name: "index", path: "/", component: () => import("@/views/Index.vue") },
-    // { name: "post", path: "/:id(\\d+)", component: () => import("@/views/Index.vue") },
-    // { name: "skill", path: "/skill", component: () => import("@/views/Skill.vue") },
-    // { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
-    // { name: "collection", path: "/collection", component: () => import("@/views/Collection.vue") },
+    { name: "post", path: "/:id(\\d+)", component: () => import("@/views/Single.vue") },
+
+    { name: "skill", path: "/skill", component: () => import("@/views/Skill.vue") },
+
+    { name: "collection", path: "/collection", component: () => import("@/views/Collection.vue") },
+    { name: "recipe", path: "/recipe", component: () => import("@/views/Recipe.vue") },
+
+    { name: "haste", path: "/haste", component: () => import("@/views/Haste.vue") },
+    { name: "dps", path: "/dps", component: () => import("@/views/Dps.vue") },
     { name: "ladder", path: "/ladder", component: () => import("@/views/Ladder.vue") },
-    // { name: "story", path: "/story", component: () => import("@/views/Story.vue") },
-    // { name: "lua", path: "/lua", component: () => import("@/views/Lua.vue") },
-    // { name: "recipe", path: "/recipe", component: () => import("@/views/Recipe.vue") },
+
+    { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
+    { name: "lua", path: "/lua", component: () => import("@/views/Lua.vue") },
+
     // { name: "group", path: "/group", component: () => import("@/views/Group.vue") },
-    // { name: "haste", path: "/haste", component: () => import("@/views/Haste.vue") },
-    // { name: "dps", path: "/dps", component: () => import("@/views/Dps.vue") },
+    // { name: "story", path: "/story", component: () => import("@/views/Story.vue") },
 ];
 
 const router = new VueRouter({

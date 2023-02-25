@@ -1,44 +1,57 @@
 <template>
-    <div class="v-collection">
-        <el-tabs v-model="type" type="card" @tab-click="changeTab">
-            <el-tab-pane :label="item.label" :name="item.key" v-for="(item, i) in types" :key="i">
-                <router-link slot="label" class="u-tab-icon" :to="{ name: 'collection', query: { tab: item.key, subtype } }">
-                    <i :class="item.icon"></i>
-                    {{ item.label }}
-                </router-link>
-                <div class="m-collection-box">
-                    <div class="m-collection-header" v-html="desc || item.desc"></div>
-                </div>
-                <ul class="m-collection-list" v-if="origin && data[item.key].length">
-                    <li class="u-item" v-for="(item, j) in data[item.key]" :key="j" v-show="filterSchool(item)">
-                        <a :href="getItemLink(item)" target="_blank">
-                            <img class="u-icon" :src="iconLink(item.icon, c)" />
-                            <span class="u-name">{{ item.label }}</span>
-                            <span class="u-xf">
-                                <!-- <img :src="item.meta_2 | showXfIcon" :alt="item.meta_2" /> -->
-                                ({{ item.meta_2 }})
-                            </span>
-                            <span class="u-desc">{{ item.meta_3 }}</span>
-                            <span class="u-remark">{{ item.meta_4 }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </el-tab-pane>
-        </el-tabs>
+    <AppLayout>
+        <div class="v-collection">
+            <el-tabs v-model="type" type="card" @tab-click="changeTab">
+                <el-tab-pane :label="item.label" :name="item.key" v-for="(item, i) in types" :key="i">
+                    <router-link
+                        slot="label"
+                        class="u-tab-icon"
+                        :to="{ name: 'collection', query: { tab: item.key, subtype } }"
+                    >
+                        <i :class="item.icon"></i>
+                        {{ item.label }}
+                    </router-link>
+                    <div class="m-collection-box">
+                        <div class="m-collection-header" v-html="desc || item.desc"></div>
+                    </div>
+                    <ul class="m-collection-list" v-if="origin && data[item.key].length">
+                        <li class="u-item" v-for="(item, j) in data[item.key]" :key="j" v-show="filterSchool(item)">
+                            <a :href="getItemLink(item)" target="_blank">
+                                <img class="u-icon" :src="iconLink(item.icon, c)" />
+                                <span class="u-name">{{ item.label }}</span>
+                                <span class="u-xf">
+                                    <!-- <img :src="item.meta_2 | showXfIcon" :alt="item.meta_2" /> -->
+                                    ({{ item.meta_2 }})
+                                </span>
+                                <span class="u-desc">{{ item.meta_3 }}</span>
+                                <span class="u-remark">{{ item.meta_4 }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </el-tab-pane>
+            </el-tabs>
 
-        <div class="m-ladder-contributor">
-            <div class="u-label">❤️ 感谢以下人员的贡献</div>
-            <div class="u-list" v-if="authors && authors.length">
-                <a class="u-author" target="_blank" :href="item.ID | authorLink" v-for="(item, i) in authors" :key="i">
-                    <img :src="item.user_avatar | showAvatar" :alt="item.display_name" />
-                    {{ item.display_name }}
-                </a>
+            <div class="m-ladder-contributor">
+                <div class="u-label">❤️ 感谢以下人员的贡献</div>
+                <div class="u-list" v-if="authors && authors.length">
+                    <a
+                        class="u-author"
+                        target="_blank"
+                        :href="item.ID | authorLink"
+                        v-for="(item, i) in authors"
+                        :key="i"
+                    >
+                        <img :src="item.user_avatar | showAvatar" :alt="item.display_name" />
+                        {{ item.display_name }}
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>
+        </div></AppLayout
+    >
 </template>
 
 <script>
+import AppLayout from "@/layout/AppLayout.vue";
 import { getSkillGroups } from "@/service/helper.js";
 import { getUsers, getBread } from "@/service/ladder.js";
 import { getLink, iconLink, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
@@ -47,14 +60,13 @@ import relation from "@jx3box/jx3box-data/data/xf/relation.json";
 export default {
     name: "Collection",
     props: [],
-    components: {},
-    data: function() {
+    components: { AppLayout },
+    data: function () {
         return {
             types: [
                 {
                     label: "减伤",
-                    desc:
-                        "包含减伤、化解等，穿透技能将无视部分此类技能效果。同时减伤具有优先级，优先级高的减伤会覆盖优先级低的减伤，相同优先级则后附加的覆盖先前存在的。如果已经存在高优先级的减伤，则低优先级的减伤不会被附加上去。",
+                    desc: "包含减伤、化解等，穿透技能将无视部分此类技能效果。同时减伤具有优先级，优先级高的减伤会覆盖优先级低的减伤，相同优先级则后附加的覆盖先前存在的。如果已经存在高优先级的减伤，则低优先级的减伤不会被附加上去。",
                     key: "jianshang",
                     icon: "el-icon-sugar",
                 },
@@ -140,34 +152,34 @@ export default {
         };
     },
     computed: {
-        key_list: function() {
+        key_list: function () {
             let list = [];
             this.types.forEach((item) => {
                 list.push(item.key);
             });
             return list;
         },
-        keys: function() {
+        keys: function () {
             return this.key_list.join(",");
         },
-        subtype: function() {
+        subtype: function () {
             return this.$route.query.subtype;
         },
-        desc: function() {
+        desc: function () {
             return this.origin && this.origin[this.type] && this.origin[this.type]["description"];
         },
-        c: function() {
+        c: function () {
             return this.$store.state.client;
         },
-        client: function() {
+        client: function () {
             return this.$store.state.client == "std" ? 1 : 2;
         },
-        contributors: function() {
+        contributors: function () {
             return this.$store.state.client == "std" ? "bps_collection_authors" : "bps_collection_authors_origin";
         },
     },
     methods: {
-        loadData: function() {
+        loadData: function () {
             this.loading = true;
             getSkillGroups(this.keys, this.client)
                 .then((res) => {
@@ -181,31 +193,31 @@ export default {
                     this.loading = false;
                 });
         },
-        getItemLink: function(item) {
+        getItemLink: function (item) {
             return getLink(item.key || "skill", item.id);
         },
-        filterSchool: function(item) {
+        filterSchool: function (item) {
             if (!this.subtype || this.subtype == "通用") {
                 return true;
             } else {
                 return this.relation[this.subtype]?.includes(item.meta_2);
             }
         },
-        changeTab: function(item) {
+        changeTab: function (item) {
             this.$router.push({
                 query: { tab: item.name, subtype: this.subtype },
             });
         },
-        iconLink
+        iconLink,
     },
     filters: {
-        showXfIcon: function(xf) {
+        showXfIcon: function (xf) {
             return xfmap[xf] && iconLink(xfmap[xf]["icon"], this.c);
         },
         authorLink,
         showAvatar,
     },
-    mounted: function() {
+    mounted: function () {
         this.loadData();
 
         // 加载贡献名单

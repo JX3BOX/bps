@@ -5,11 +5,14 @@
  * @Description:
 -->
 <template>
-    <HasteStd v-if="client == 'std'"></HasteStd>
-    <HasteOrigin v-else></HasteOrigin>
+    <AppLayout>
+        <HasteStd v-if="client == 'std'"></HasteStd>
+        <HasteOrigin v-else></HasteOrigin>
+    </AppLayout>
 </template>
 
 <script>
+import AppLayout from "@/layout/AppLayout.vue";
 import HasteStd from "./HasteStd.vue";
 import HasteOrigin from "./HasteOrigin.vue";
 export default {
@@ -18,6 +21,7 @@ export default {
     components: {
         HasteStd,
         HasteOrigin,
+        AppLayout,
     },
     data: function () {
         return {};
