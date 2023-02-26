@@ -15,11 +15,17 @@
             </span>
         </el-tab-pane>
 
+        <el-tab-pane label="秘籍大全" name="recipe">
+            <span slot="label">
+                <i class="el-icon-paperclip"></i>
+                <b>秘籍大全</b>
+            </span>
+        </el-tab-pane>
+
         <el-tab-pane label="技能合集" name="collection">
             <span slot="label">
                 <i class="el-icon-notebook-1"></i>
                 <b>技能合集</b>
-                <!-- <em class="u-new">全新上线</em> -->
             </span>
         </el-tab-pane>
 
@@ -49,14 +55,6 @@
             <span slot="label">
                 <i class="el-icon-reading"></i>
                 <b>原始数据</b>
-                <em class="u-ready">签约</em>
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="秘籍大全" name="recipe" v-if="isSuperAuthor">
-            <span slot="label">
-                <i class="el-icon-paperclip"></i>
-                <b>秘籍大全</b>
                 <em class="u-ready">签约</em>
             </span>
         </el-tab-pane>

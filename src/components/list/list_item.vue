@@ -30,9 +30,7 @@
             </div>
             <div class="u-metalist u-pvmode" v-if="item.post_meta">
                 <strong>方向</strong>
-                <em>
-                    {{ (item.tags && item.tags.join(",")) || item.post_meta.pvmode || "全部" }}
-                </em>
+                <em>{{ (item.tags && item.tags.join(",")) || item.post_meta.pvmode || "全部" }}</em>
             </div>
         </div>
 

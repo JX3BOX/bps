@@ -15,7 +15,7 @@
         <LeftSidebar>
             <Nav class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="false">
+        <Main :withoutRight="true">
             <div class="m-main">
                 <tabs />
                 <slot></slot>
