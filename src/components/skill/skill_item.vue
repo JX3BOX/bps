@@ -46,7 +46,6 @@
                 size="mini"
                 icon="el-icon-reading"
                 @click="toggleWiki(item)"
-                v-if="item.cheasts.length"
                 >百科</el-button
             >
         </div>
@@ -75,7 +74,6 @@ export default {
             this.$forceUpdate();
         },
     },
-    filters: {},
     mounted: function () {},
     components: {
         skillWiki,
