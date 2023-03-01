@@ -41,7 +41,7 @@
                     </el-table-column>
 
                     <el-table-column label="作者" prop="user" sortable>
-                        <template slot-scope="scope">
+                        <template slot-scope="scope" v-if="scope.row.user">
                             <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop="">
                                 <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)" />
                                 <span class="u-author">{{ scope.row.user.display_name }}</span>
@@ -76,18 +76,6 @@
                     </el-table-column>
                 </el-table>
             </div>
-
-            <!-- 分页 -->
-            <el-pagination
-                class="m-dps-pages"
-                background
-                layout="total, prev, pager, next, jumper"
-                :hide-on-single-page="true"
-                :page-size="per"
-                :total="total"
-                :current-page.sync="page"
-                @current-change="changePage"
-            ></el-pagination>
         </div>
     </AppLayout>
 </template>
@@ -128,20 +116,13 @@ export default {
             },
 
             list: [],
-            page: 1,
-            per: 50, //每页条目
-            total: 1, //总条目数
         };
     },
     computed: {
         //提交查询参数
         params: function () {
             return {
-                page: this.page,
-                limit: this.per,
                 name: this.search,
-                client: this.$store.state.client,
-                usePage: 0,
             };
         },
     },
@@ -153,8 +134,7 @@ export default {
             this.loading = true;
             getDpsList(this.params)
                 .then((res) => {
-                    this.total = res?.data?.data?.total || 0;
-                    this.list = res?.data?.data?.list || [];
+                    this.list = res?.data?.data || [];
                 })
                 .finally(() => {
                     this.loading = false;
@@ -169,10 +149,6 @@ export default {
 
         // 分页模块
         // ==========================
-        // 翻页加载
-        changePage: function (i) {
-            this.getData();
-        },
 
         // 其它
         // ==========================
@@ -195,7 +171,6 @@ export default {
     },
     watch: {
         search(val) {
-            this.page = 1;
             this.getData();
         },
     },

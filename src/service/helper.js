@@ -1,4 +1,4 @@
-import { $helper } from "@jx3box/jx3box-common/js/https";
+import { $helper, $cms } from "@jx3box/jx3box-common/js/https";
 
 function getCollection($collection_id, params = {}) {
     return $helper()({
@@ -25,7 +25,7 @@ function getSkillGroup(key) {
 }
 
 function getDpsList(params) {
-    return $helper().get(`/api/dps_registry`, { params: params });
+    return $cms().get(`/api/cms/dps_registry`, { params: params });
 }
 
 // 获取技能百科
