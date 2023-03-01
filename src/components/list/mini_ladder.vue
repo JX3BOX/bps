@@ -20,20 +20,13 @@
                             width: getRate(item.dps),
                             backgroundColor: xfcolor(item.xf),
                         }"
+                        :title="item.label"
                     >
                         <img :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
-                        <template v-if="!!item.link">
-                            <a class="u-text" :href="item.link" target="_blank">
-                                {{ item.xf }}
-                                <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
-                            </a>
-                        </template>
-                        <template v-else>
-                            <span class="u-text">
-                                {{ item.xf }}
-                                <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
-                            </span>
-                        </template>
+                        <span class="u-text">
+                            {{ item.xf }}
+                            <!-- <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span> -->
+                        </span>
                         <span class="u-dps">{{ item.dps }}</span>
                     </div>
                 </li>
