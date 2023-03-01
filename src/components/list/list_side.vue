@@ -7,7 +7,8 @@
                 <a href="https://jq.qq.com/?_wv=1027&k=mEl1e2hL">297985102</a>
             </strong>
         </RightSideMsg>
-
+        <!-- 门派天梯 -->
+        <mini-ladder></mini-ladder>
     </div>
 </template>
 
@@ -15,6 +16,8 @@
 import ladder from "@/assets/data/ladder.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+
+import miniLadder from "./mini_ladder.vue";
 export default {
     name: "list_side",
     props: [],
@@ -40,7 +43,9 @@ export default {
         },
     },
     mounted: function () {},
-    components: {},
+    components: {
+        miniLadder
+    },
 };
 </script>
 

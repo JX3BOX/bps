@@ -120,14 +120,13 @@
 
 <script>
 import AppLayout from "@/layout/AppLayout.vue";
-import { authorLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
+import { authorLink, showAvatar, showSchoolIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
 import { getUsers, getBread, getRank } from "@/service/ladder.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import zlps from "@/assets/data/ladder.json";
-import { showSchoolIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Ladder",
     components: { AppLayout },
