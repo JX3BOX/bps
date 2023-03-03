@@ -35,6 +35,10 @@
     align-items: center;
     justify-content: space-between;
 
+    .u-type {
+        .mr(20px);
+    }
+
     .u-publish {
         .fl;
         .h(32px);
@@ -147,6 +151,27 @@
                 filter: saturate(140%) brightness(120%);
             }
             border-color: @border;
+        }
+    }
+
+    .u-subject {
+        .pa;
+        .lt(5px);
+        color: #fff;
+        .fz(12px);
+        padding: 2px 5px;
+        background-color: #eee;
+        &.PVE {
+            // background-color: #36daee;
+            background-color: #abd603;
+        }
+        &.PVP {
+            // background-color: #ff2d8c;
+            background-color: #fc3c3c;
+        }
+        &.ALL {
+            // background-color: #ff2d8c;
+            background-color: #fba524;
         }
     }
 

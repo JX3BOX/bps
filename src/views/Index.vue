@@ -14,7 +14,16 @@
             <div class="m-archive-filter">
                 <div class="m-filter--left">
                     <!-- 版本过滤 -->
-                    <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
+                    <!-- <clientBy @filter="filterImperceptibly" :type="client"></clientBy> -->
+
+                    <!-- 类型过滤 -->
+                    <!-- <menuBy @filter="filterMeta" :data="pv_types" type="tag" placeholder="类型"></menuBy> -->
+                    <el-radio-group class="u-type" v-model="tag" size="mini">
+                        <el-radio-button label="">全部</el-radio-button>
+                        <el-radio-button label="PVE">PVE</el-radio-button>
+                        <el-radio-button label="PVP">PVP</el-radio-button>
+                    </el-radio-group>
+
                     <!-- 角标过滤 -->
                     <markBy @filter="filterMeta"></markBy>
                     <!-- 资料片过滤 -->
@@ -87,6 +96,9 @@ export default {
             client: this.$store.state.client, //版本选择
             search: "", //搜索字串
             zlp: "", //资料片
+            tag: "", //类型
+
+            pv_types: ["PVE", "PVP"],
         };
     },
     computed: {
@@ -107,6 +119,7 @@ export default {
                 client: this.client,
                 search: this.search,
                 zlp: this.zlp,
+                tag: this.tag,
             };
         },
         // 分页相关参数
