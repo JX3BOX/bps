@@ -17,7 +17,6 @@
                     <!-- <clientBy @filter="filterImperceptibly" :type="client"></clientBy> -->
 
                     <!-- 类型过滤 -->
-                    <!-- <menuBy @filter="filterMeta" :data="pv_types" type="tag" placeholder="类型"></menuBy> -->
                     <el-radio-group class="u-type" v-model="tag" size="mini">
                         <el-radio-button label="">全部</el-radio-button>
                         <el-radio-button label="PVE">PVE</el-radio-button>
@@ -28,6 +27,9 @@
                     <markBy @filter="filterMeta"></markBy>
                     <!-- 资料片过滤 -->
                     <zlpBy @filter="filterMeta" type="zlp" :client="client"></zlpBy>
+
+                    <!-- TODO:主题 -->
+                    <menuBy @filter="filterMeta" :data="pv_types" type="topic" placeholder="主题"></menuBy>
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->

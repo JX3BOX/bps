@@ -31,8 +31,14 @@
             <!-- {{ item.post_excerpt || item.post_title || "这个作者很懒,什么都没有留下" }} -->
             <div class="u-metalist u-collection">
                 <strong>小册</strong>
-                <!-- TODO:小册 -->
-                <em>{{ item.zlp || item.post_meta.zlp || "全部" }}</em>
+                <em>
+                    <template v-if="item.post_collection">
+                        <a :href="`/collection/${item.post_collection}`" target="_blank">《{{
+                            item.collection_info && item.collection_info.title
+                        }}》</a>
+                    </template>
+                    <template v-else>-</template>
+                </em>
             </div>
             <div class="u-metalist u-topics">
                 <strong>主题</strong>
@@ -73,17 +79,17 @@ export default {
         };
     },
     computed: {
-        subject : function (){
-            let subject = ''
-            if(this.item.tags.includes('PVE') && this.item.tags.includes('PVP')){
-                subject = 'ALL'
-            }else if(this.item.tags.includes('PVE')){
-                subject = 'PVE'
-            }else if(this.item.tags.includes('PVP')){
-                subject = 'PVP'
+        subject: function () {
+            let subject = "";
+            if (this.item.tags.includes("PVE") && this.item.tags.includes("PVP")) {
+                subject = "ALL";
+            } else if (this.item.tags.includes("PVE")) {
+                subject = "PVE";
+            } else if (this.item.tags.includes("PVP")) {
+                subject = "PVP";
             }
-            return subject
-        }
+            return subject;
+        },
     },
     watch: {},
     methods: {
