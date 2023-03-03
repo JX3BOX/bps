@@ -43,8 +43,8 @@
             <div class="u-metalist u-topics">
                 <strong>主题</strong>
                 <em>
-                    <a class="u-topic" :href="`/bps?topic=${topic.tag}`" v-for="topic in item.topics" :key="topic.tag">{{
-                        topic.tag
+                    <a class="u-topic" :href="`/bps?topic=${topic}`" v-for="topic in item.topics" :key="topic">{{
+                        topic
                     }}</a>
                 </em>
             </div>
