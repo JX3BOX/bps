@@ -33,17 +33,20 @@
                 <strong>小册</strong>
                 <em>
                     <template v-if="item.post_collection">
-                        <a :href="`/collection/${item.post_collection}`" target="_blank">《{{
-                            item.collection_info && item.collection_info.title
-                        }}》</a>
+                        <a :href="`/collection/${item.post_collection}`" target="_blank"
+                            >《{{ item.collection_info && item.collection_info.title }}》</a
+                        >
                     </template>
                     <template v-else>-</template>
                 </em>
             </div>
             <div class="u-metalist u-topics">
                 <strong>主题</strong>
-                <!-- TODO:主题 -->
-                <em v-for="tag in item.tags" :key="tag">{{ tag }}</em>
+                <em>
+                    <a class="u-topic" :href="`/bps?topic=${topic.tag}`" v-for="topic in item.topics" :key="topic.tag">{{
+                        topic.tag
+                    }}</a>
+                </em>
             </div>
         </div>
 
