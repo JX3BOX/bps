@@ -44,9 +44,12 @@
                 <strong>主题</strong>
                 <em>
                     <!-- TODO:主题 -->
-                    <a class="u-topic" :href="`/bps?topic=${topic}`" v-for="topic in item.topics" :key="topic">{{
-                        topic
-                    }}</a>
+                    <template v-if="item.topics && item.topics.length">
+                        <a class="u-topic" :href="`/bps?topic=${topic}`" v-for="topic in item.topics" :key="topic">{{
+                            topic
+                        }}</a>
+                    </template>
+                    <template v-else>-</template>
                 </em>
             </div>
         </div>
