@@ -22,7 +22,7 @@
                         }"
                         :title="item.label"
                     >
-                        <img :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
+                        <img v-if="item.xf && xfmap[item.xf]" :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
                         <span class="u-text">
                             {{ item.xf }}
                             <!-- <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span> -->
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import zlps from "@/assets/data/ladder.json";
 import { authorLink, showAvatar, showSchoolIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
 import { getRank } from "@/service/ladder.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
@@ -45,7 +45,6 @@ export default {
     name: "MiniLadder",
     data() {
         return {
-            zlp: "",
             // 排行
             xfmap,
             data: [],
@@ -54,12 +53,6 @@ export default {
         };
     },
     computed: {
-        c: function () {
-            return this.$store.state.client;
-        },
-        zlps: function () {
-            return zlps[this.c] || [];
-        },
         rank: function () {
             let data = this.data;
             data.sort((a, b) => {
@@ -69,8 +62,9 @@ export default {
         },
     },
     mounted() {
-        this.zlp = zlps[this.c][0]["value"];
-        this.loadRank();
+        getBreadcrumb('bps-active-rank').then(res => {
+            this.loadRank(res)
+        })
     },
     methods: {
         xfcolor: function (val) {
@@ -82,11 +76,10 @@ export default {
         viewRank() {
             this.$router.push({ name: "Ladder" });
         },
-        loadRank: function () {
-            if (!this.zlp) return;
+        loadRank: function (key) {
 
             this.loading = true;
-            getRank(this.zlp, this.client)
+            getRank(key, this.client)
                 .then((data) => {
                     this.data = data;
                     this.$forceUpdate();
