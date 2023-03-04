@@ -17,7 +17,7 @@
 
         <el-tab-pane label="秘籍大全" name="recipe">
             <span slot="label">
-                <i class="el-icon-paperclip"></i>
+                <i class="el-icon-magic-stick"></i>
                 <b>秘籍大全</b>
             </span>
         </el-tab-pane>
@@ -40,7 +40,6 @@
             <span slot="label">
                 <i class="el-icon-cpu"></i>
                 <b>DPS计算器</b>
-                <!-- <em class="u-new">全新上线</em> -->
             </span>
         </el-tab-pane>
 
@@ -48,6 +47,13 @@
             <span slot="label">
                 <i class="el-icon-s-data"></i>
                 <b>门派天梯</b>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="作品小册" name="collection">
+            <span slot="label">
+                <i class="el-icon-paperclip"></i>
+                <b>作品小册</b>
             </span>
         </el-tab-pane>
 
@@ -64,13 +70,6 @@
                 <i class="el-icon-full-screen"></i>
                 <b>源码分析</b>
                 <em class="u-ready">签约</em>
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="作品小册" name="collection">
-            <span slot="label">
-                <i class="el-icon-paperclip"></i>
-                <b>作品小册</b>
             </span>
         </el-tab-pane>
 

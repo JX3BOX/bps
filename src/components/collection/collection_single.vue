@@ -1,5 +1,5 @@
 <template>
-    <SingleLayout :has-right="false">
+    <CollectionLayout :has-right="false">
         <div class="m-collection-single">
             <el-alert
                 v-if="!collection"
@@ -148,7 +148,7 @@
                 </div>
             </template>
         </div>
-    </SingleLayout>
+    </CollectionLayout>
 </template>
 
 <script>
@@ -168,13 +168,13 @@ import {
 import User from "@jx3box/jx3box-common/js/user.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 
-import SingleLayout from "@/layout/SingleLayout.vue";
+import CollectionLayout from "@/layout/CollectionLayout.vue";
 export default {
     name: "CollectionSingle",
     props: [],
     components: {
         "jx3-comment": Comment,
-        SingleLayout,
+        CollectionLayout,
     },
     data: function () {
         return {

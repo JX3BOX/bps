@@ -16,7 +16,9 @@
                         ></el-option>
                     </el-select>
                 </h3>
-                <div class="m-ladder-desc">本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。</div>
+                <div class="m-ladder-desc">
+                    {{ description }}
+                </div>
                 <div class="m-ladder-filter">
                     <el-radio-group class="u-filter-rank" v-model="filter" size="medium">
                         <el-radio-button label="全部"></el-radio-button>
@@ -151,6 +153,9 @@ export default {
         };
     },
     computed: {
+        description:function (){
+            return "本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。"//this.data.description
+        },
         maxBase: function () {
             let arr = [];
             this.data.forEach((item) => {

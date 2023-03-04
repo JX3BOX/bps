@@ -1,6 +1,10 @@
 {
     "std":[
         {
+            "label": "横刀断浪（120级）",
+            "value": "hengdaoduanlang"
+        },
+        {
             "label": "白帝风云（110级）",
             "value": "baidifengyun"
         },

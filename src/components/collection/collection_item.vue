@@ -1,13 +1,13 @@
 <template>
     <div class="m-collection-item">
-        <router-link class="u-image" :to="{ name: 'collection-single', params: { id: data.id } }" target="_blank">
+        <a class="u-image" :href="`/collection/${data.id}`" target="_blank">
             <img :src="data.image | getCover" />
-        </router-link>
+        </a>
         <div class="u-content">
-            <router-link class="u-title" :to="{ name: 'collection-single', params: { id: data.id } }" target="_blank">
+            <a class="u-title" :href="`/collection/${data.id}`" target="_blank">
                 <!-- <i class="el-icon-collection"></i> -->
                 {{ data.title }}
-            </router-link>
+            </a>
             <div class="u-info">
                 <a :href="data.user_id | authorLink" class="u-user" target="_blank">
                     <img class="u-avatar" :src="data.user_avatar | showAvatar" />
@@ -29,11 +29,7 @@
                     <el-col :span="6" v-for="(post, key) in data.posts.slice(0, 8)" :key="key">
                         <a
                             class="u-post"
-                            :href="
-                                post.type === 'custom'
-                                    ? post.url
-                                    : getLink(post.type, post.id)
-                            "
+                            :href="post.type === 'custom' ? post.url : getLink(post.type, post.id)"
                             target="_blank"
                         >
                             <i class="el-icon-notebook-2"></i>
@@ -45,7 +41,7 @@
             <div class="u-meta">
                 <span class="u-updated">
                     <i class="el-icon-refresh"></i>
-                    最后更新于{{dateFormat(data.updated)}}
+                    最后更新于{{ dateFormat(data.updated) }}
                 </span>
             </div>
         </div>
@@ -53,14 +49,9 @@
 </template>
 
 <script>
-import {
-    showAvatar,
-    getLink,
-    resolveImagePath,
-    authorLink,
-} from "@jx3box/jx3box-common/js/utils";
+import { showAvatar, getLink, resolveImagePath, authorLink } from "@jx3box/jx3box-common/js/utils";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import dateFormat from '@/utils/dateFormat.js'
+import dateFormat from "@/utils/dateFormat.js";
 export default {
     name: "CollectionItem",
     props: ["data"],
@@ -72,15 +63,13 @@ export default {
     watch: {},
     methods: {
         getLink,
-        dateFormat : function (timestamp){
-            return dateFormat(new Date(timestamp * 1000))
-        }
+        dateFormat: function (timestamp) {
+            return dateFormat(new Date(timestamp * 1000));
+        },
     },
     filters: {
         getCover: function (val) {
-            return val
-                ? resolveImagePath(val)
-                : `${__imgPath}image/collection/default_cover.png`;
+            return val ? resolveImagePath(val) : `${__imgPath}image/collection/default_cover.png`;
         },
         authorLink,
         showAvatar: function (url) {

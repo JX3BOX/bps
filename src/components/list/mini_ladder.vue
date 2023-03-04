@@ -74,10 +74,9 @@ export default {
             return ((val / this.maxBase) * 100).toFixed(2) + "%";
         },
         viewRank() {
-            this.$router.push({ name: "Ladder" });
+            this.$router.push({ name: "ladder" });
         },
         loadRank: function (key) {
-
             this.loading = true;
             getRank(key, this.client)
                 .then((data) => {
