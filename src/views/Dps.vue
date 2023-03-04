@@ -3,6 +3,7 @@
         <div class="m-dps" v-loading="loading">
             <!-- 搜索 -->
             <div class="m-dps-search">
+                <el-button type="primary" @click="onApply">提交申请</el-button>
                 <el-input v-model.trim.lazy="search" placeholder="请输入关键词..">
                     <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
                     <template slot="append">
@@ -51,7 +52,7 @@
                                 :href="authorLink(contributor.ID)"
                                 target="_blank"
                                 @click.stop=""
-                                v-for="contributor in scope.row.contributors"
+                                v-for="contributor in scope.row.contributor_users"
                                 :key="contributor.ID"
                             >
                                 <img class="u-img" :src="showAvatar(contributor.user_avatar)" />
@@ -77,6 +78,8 @@
                 </el-table>
             </div>
         </div>
+
+        <dps-form :modelValue="showDpsForm" @update:modelValue="updateShowDps" :options="options"></dps-form>
     </AppLayout>
 </template>
 
@@ -89,9 +92,11 @@ import { __imgPath, __Domain, __Origin } from "@jx3box/jx3box-common/data/jx3box
 import { showAvatar, authorLink, showMountIcon, showClientLabel } from "@jx3box/jx3box-common/js/utils";
 import { map as each } from "lodash";
 import types from "@/assets/data/dps_types.json";
+
+import DpsForm from "@/components/dps-form.vue";
 export default {
     name: "Dps",
-    components: { AppLayout },
+    components: { AppLayout, DpsForm },
     data: function () {
         return {
             loading: false, //加载状态
@@ -116,6 +121,8 @@ export default {
             },
 
             list: [],
+
+            showDpsForm: false,
         };
     },
     computed: {
@@ -123,6 +130,7 @@ export default {
         params: function () {
             return {
                 name: this.search,
+                client: this.$store.state.client
             };
         },
     },
@@ -139,6 +147,13 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        // 提交申请
+        onApply() {
+            this.showDpsForm = true;
+        },
+        updateShowDps(val) {
+            this.showDpsForm = val;
         },
 
         // 过滤模块

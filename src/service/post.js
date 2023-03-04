@@ -25,4 +25,8 @@ function getMyPostCount() {
     return $cms().get("/api/cms/posts/user/my/count");
 }
 
-export { getPosts, getPost, getMyPostCount, getMyPost };
+function addDpsRegistry(data){
+    return $cms().post("/api/cms/dps_registry", data);
+}
+
+export { getPosts, getPost, getMyPostCount, getMyPost, addDpsRegistry };
