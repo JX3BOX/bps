@@ -59,4 +59,12 @@ function getSkillWiki(type, params) {
     });
 }
 
-export { getCollection, getSkillGroups, getSkillGroup, getDpsList, getSkillWiki, getCollections, getCollectionMenus, removeCollection };
+function getMenuGroups(keys) {
+    return $helper({ mute: true }).get(`/api/menu_groups`, {
+        params: {
+            names:keys
+        },
+    });
+}
+
+export { getCollection, getSkillGroups, getSkillGroup, getDpsList, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups };
