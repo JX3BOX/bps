@@ -6,10 +6,11 @@
             <router-link to="/raw"><i class="el-icon-reading"></i></router-link>
             <router-link to="/lua" v-if="isSuperAuthor"><i class="el-icon-full-screen"></i></router-link>
             <router-link to="/recipe"><i class="el-icon-paperclip"></i></router-link>
-            <router-link to="/collection"><i class="el-icon-notebook-1"></i></router-link>
+            <router-link to="/kungfu"><i class="el-icon-notebook-1"></i></router-link>
             <router-link to="/haste"><i class="el-icon-stopwatch"></i></router-link>
             <router-link to="/dps"><i class="el-icon-cpu"></i></router-link>
             <router-link to="/ladder"><i class="el-icon-s-data"></i></router-link>
+            <router-link to="/collection"><i class="el-icon-paperclip"></i></router-link>
             <!-- <router-link to="/story"><i class="el-icon-film"></i></router-link> -->
         </div>
     </div>

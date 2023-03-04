@@ -22,7 +22,7 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能合集" name="collection">
+        <el-tab-pane label="技能合集" name="kungfu">
             <span slot="label">
                 <i class="el-icon-notebook-1"></i>
                 <b>技能合集</b>
@@ -64,6 +64,13 @@
                 <i class="el-icon-full-screen"></i>
                 <b>源码分析</b>
                 <em class="u-ready">签约</em>
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="作品小册" name="collection">
+            <span slot="label">
+                <i class="el-icon-paperclip"></i>
+                <b>作品小册</b>
             </span>
         </el-tab-pane>
 

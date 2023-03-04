@@ -1,0 +1,267 @@
+// 列表页
+// =======================
+.m-collection-search{
+    padding-left: 0;
+}
+
+.m-collection-list{
+    .mt(20px);
+}
+
+.m-collection-null{
+    .mt(20px);
+}
+.m-collection-pagination{
+    .mt(20px);
+    .x;
+}
+@media screen and (max-width:@phone){
+    .m-collection-pagination{
+        overflow-x: auto;
+    }
+}
+.m-collection-item{
+
+    .pr;
+    .mb(15px);
+    .pb(15px);
+    overflow: hidden;
+    border-bottom: 1px solid #eeeeee;
+    min-height:100px;
+
+
+    .u-image {
+        .pa;.lt(0);
+        .w(180px);
+        .h(100px);
+        padding: 5px;
+        line-height: 0;
+        border: 1px solid #eeeeee;
+        box-sizing: border-box;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            max-height:100%;
+            max-width:100%;
+        }
+    }
+
+    .u-content {
+        .ml(180px);
+        padding: 0 0 0 20px;
+    }
+
+    .u-title{
+        .fz(14px);
+        // color:#333;
+        .bold;
+        &:hover{
+            .underline(@color-link);
+        }
+        // .db;
+        // .nobreak;
+    }
+
+    .u-info{
+        .mt(5px);
+        .clearfix;
+    }
+
+    .u-user{
+        .fl;
+        .fz(12px);
+        .mr(10px);
+        color:#666;
+        &:hover .u-nickname{
+            color:@color-link;
+            .underline(@color-link);
+        }
+    }
+    .u-avatar{
+        .y(-5px);
+        .mr(5px);
+        .size(20px);
+        .r(100%);
+    }
+
+    .u-tags{
+        .fl;
+        list-style: none;
+        padding:0;
+        margin:0;
+        // .mt(5px);
+        .clearfix;
+    }
+    .u-tag{
+        .fl;
+        margin-right: 5px;
+        padding: 2px 6px 4px;
+        font-size: 12px;
+        background-color: #f2f6fc;
+        color: #637a9c;
+    }
+
+    .u-excerpt{
+        color:#888;
+        padding:5px 2px;
+        .fz(12px,1.8);
+        .break(2);
+    }
+
+    .u-posts{
+        .mt(5px);
+        .el-col{
+            overflow: hidden;
+            .mb(5px);
+        }
+    }
+
+    .u-post{
+        .color(#555);
+        .nobreak;
+        margin-right:10px;
+        .fz(12px);
+        letter-spacing: 0.3px;
+        i{
+            .mr(3px);
+        }
+        &:hover{
+            color:@color-link;
+        }
+    }
+
+    .u-meta{
+        .pa;.rt(0);
+        .fz(12px);
+        .x(right);
+    }
+
+    .u-updated{
+        .db;
+        color:#999;
+        .mt(5px);
+    }
+}
+@media screen and (max-width:@ipad-y){
+    .m-collection-item .u-posts .el-col{
+        .w(50%);
+    }
+}
+@media screen and (max-width:@phone){
+    .m-collection-item .u-post{
+        .fz(12px);
+    }
+    .m-collection-item .u-image{
+        .none;
+    }
+    .m-collection-item .u-content{
+        .ml(0);
+        .pl(0);
+    }
+    .m-collection-item .u-meta{
+        .ps;
+    }
+    .m-collection-item .u-posts .el-col{
+        .w(100%);
+    }
+}
+
+
+// 单页
+// ====================
+@import './single-header.less';
+.m-collection-single {
+    padding: 20px 30px;
+    .m-single-info{
+        .u-icon{
+            .fz(16px);
+            .y(-1px);
+            .mr(5px);
+        }
+
+    }
+
+    .m-thx{margin-top:40px;}
+}
+
+.m-collection-detail-header{
+    .pr;
+    .u-private{
+        color:#fba524;
+    }
+}
+
+.m-collection-detail-content {
+    .pr;
+    // padding:0 10px;
+    .u-description {
+        .fz(13px,2);
+        padding:0 10px;
+        .mb(40px);
+    }
+
+    .u-list{
+        // background-color: #fcfbff;
+        // border-color: blueviolet;
+        list-style: none;
+        padding:0 5px;
+    }
+
+    .u-item{
+        .db;
+        border-bottom:1px solid #eee;
+        .mb(10px);
+
+        .fz(14px);
+        padding:10px 0;
+
+        a:hover{
+            color:@pink;
+        }
+
+        .u-item-order{
+            .mr(10px);
+            color:#999;
+        }
+
+        .u-item-link{
+            background-color:#aaa;
+            color:#fff;
+            .fz(12px);
+            padding:3px 5px;
+            .r(2px);
+            .mr(5px);
+        }
+
+        .u-updated{
+            .fr;
+            .fz(12px);
+            color:#999;
+        }
+
+        .u-item-author{
+            img{
+                .y;
+                .r(2px);
+                .mr(3px);
+            }
+        }
+        .u-avatar{
+            .size(20px);
+        }
+        .u-div{
+            padding:0 10px;
+            color:#aaa;
+        }
+    }
+
+}
+
+@media screen and (max-width:@phone){
+    .m-collection-detail-content .u-item{
+        .nobreak;
+        .u-updated{.none;}
+    }
+}

@@ -14,7 +14,7 @@
         <LeftSidebar :uid="user_id">
             <Nav :id="id" class="m-nav" />
         </LeftSidebar>
-        <Main :withoutRight="false">
+        <Main :withoutRight="!hasRight">
             <slot></slot>
             <RightSidebar>
                 <Side :id="id" class="m-extend" />
@@ -30,7 +30,12 @@ import Side from "@/components/single/single_side.vue";
 import { getAppIcon, getAppID } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "SingleLayout",
-    props: [],
+    props: {
+        hasRight: {
+            type: Boolean,
+            default: true,
+        },
+    },
     data: function () {
         return {
             id: getAppID(),
