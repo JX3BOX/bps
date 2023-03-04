@@ -1,82 +1,91 @@
 .m-dps-search {
     .flex;
     gap: 10px;
-	.mb(20px);
+    .mb(10px);
 }
 
 .m-dps-list {
+    overflow-x: auto;
 
-	tr:hover{
-		.pointer;
-	}
-
-	.u-xf-icon {
-		.size(24px);
-		.y;
-		.mr(5px);
-	}
-
-	.u-star {
-		.fz(12px);
-		.r(2px);
+    .u-xf-icon {
+        .size(24px);
+        .y;
         .mr(5px);
-		color: #fff;
-		background-color: #6f42c1;
-		padding: 1px 5px 2px 5px;
-		font-style: normal;
-	}
+    }
 
-	.u-name,.u-author{
-		&:hover {
-			color: #0366d6;
-			box-shadow: 0 1px 0 #0366d6;
-		}
-	}
+    .u-star {
+        .fz(12px);
+        .r(2px);
+        .mr(5px);
+        color: #fff;
+        background-color: #6f42c1;
+        padding: 1px 5px 2px 5px;
+        font-style: normal;
+    }
 
-	.u-user {
-		.u-img {
-			.size(24px);
-			.mr(6px);
-			.r(6px);
-			vertical-align: middle;
-		}
-		&:after{
-			content : '、';
-			color:#999;
-			.ml(5px);
-		}
-		&:last-child::after{
-			content : ''
-		}
-	}
+    .u-name,
+    .u-author {
+        &:hover {
+            color: #0366d6;
+            box-shadow: 0 1px 0 #0366d6;
+        }
+    }
 
-	.u-client{
-		font-style: normal;
-		font-size: 12px;
-		padding: 0 5px;
-		border-radius: 3px;
-		.mr(8px);
-	}
+    .u-user {
+        .u-img {
+            .size(24px);
+            .mr(6px);
+            .r(6px);
+            vertical-align: middle;
+        }
+        &:after {
+            content: "、";
+            color: #999;
+            .ml(5px);
+        }
+        &:last-child::after {
+            content: "";
+        }
+    }
 
-	.u-type{
-		img{.size(24px);.y;}
-	}
+    .u-client {
+        font-style: normal;
+        font-size: 12px;
+        padding: 0 5px;
+        border-radius: 3px;
+        .mr(8px);
+    }
 
+    .u-type {
+        img {
+            .size(24px);
+            .y;
+        }
+    }
+}
 
+.m-dps-table {
+    tr:hover {
+        .pointer;
+    }
+    .cell {
+        white-space: nowrap;
+    }
+    min-width: 800px;
 }
 
 .m-dps-more {
-	.w(100%);
-	.mt(20px);
+    .w(100%);
+    .mt(20px);
 }
 
 .m-dps-pages {
-	.mt(20px);
-	overflow-x: auto;
+    .mt(20px);
+    overflow-x: auto;
 }
 
 .el-table-filter__list {
-	max-height: 360px;
+    max-height: 360px;
     overflow-y: auto;
     .scrollbar();
 }

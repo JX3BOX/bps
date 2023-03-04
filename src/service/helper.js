@@ -48,10 +48,6 @@ function getSkillGroup(key) {
     return $helper().get(`/api/skill_group/${key}`);
 }
 
-function getDpsList(params) {
-    return $cms().get(`/api/cms/dps_registry`, { params: params });
-}
-
 // 获取技能百科
 function getSkillWiki(type, params) {
     return $helper().get(`/api/wiki/posts/${type}`, {
@@ -67,4 +63,4 @@ function getMenuGroups(keys) {
     });
 }
 
-export { getCollection, getSkillGroups, getSkillGroup, getDpsList, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups };
+export { getCollection, getSkillGroups, getSkillGroup, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups };

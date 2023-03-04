@@ -1,6 +1,6 @@
 {
-    "jx3box":"魔盒DPS计算器",
-    "cloud":"云计算器",
     "excel":"xls/excel",
-    "other":"其它"
+    "other":"其它",
+    "jx3box":"魔盒DPS计算器",
+    "cloud":"云计算器"
 }

@@ -29,7 +29,7 @@
                     <zlpBy @filter="filterMeta" type="zlp" :client="client"></zlpBy>
 
                     <!-- TODO:主题 -->
-                    <menuBy @filter="filterMeta" :data="pv_types" type="topic" placeholder="主题"></menuBy>
+                    <!-- <menuBy @filter="filterMeta" :data="pv_types" type="topic" placeholder="主题"></menuBy> -->
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->

@@ -3,7 +3,7 @@
         <div class="m-dps" v-loading="loading">
             <!-- 搜索 -->
             <div class="m-dps-search">
-                <el-button type="primary" @click="onApply">提交申请</el-button>
+                <el-button type="primary" @click="onApply">+ 提交计算器</el-button>
                 <el-input v-model.trim.lazy="search" placeholder="请输入关键词..">
                     <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
                     <template slot="append">
@@ -13,7 +13,7 @@
             </div>
             <!-- 表格 -->
             <div class="m-dps-list">
-                <el-table :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink">
+                <el-table class="m-dps-table" :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink">
                     <el-table-column
                         label="心法"
                         :filters="options.mount_filters"
@@ -85,7 +85,7 @@
 
 <script>
 import AppLayout from "@/layout/AppLayout.vue";
-import { getDpsList } from "@/service/helper.js";
+import { getDpsList } from "@/service/dps.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { __imgPath, __Domain, __Origin } from "@jx3box/jx3box-common/data/jx3box";

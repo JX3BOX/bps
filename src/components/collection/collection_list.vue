@@ -4,13 +4,15 @@
         <div class="m-archive-search m-collection-search">
             <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
             <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" class="input-with-select">
-                <span slot="prepend">关键词</span>
-                <el-button slot="append" icon="el-icon-search"></el-button>
+                <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
+                <template slot="append">
+                    <i class="el-icon-position"></i>
+                </template>
             </el-input>
         </div>
         <!-- 列表 -->
         <div class="m-collection-list" v-if="data && data.length">
-            <div v-for="(item,i) in data" :key="i">
+            <div v-for="(item, i) in data" :key="i">
                 <collection-item :data="item" />
             </div>
         </div>
@@ -54,8 +56,8 @@ export default {
     },
     computed: {
         // 发布按钮链接
-        publish_link: function() {
-            return publishLink('collection');
+        publish_link: function () {
+            return publishLink("collection");
         },
         params: function () {
             return {
@@ -83,16 +85,15 @@ export default {
     },
     filters: {},
     watch: {
-        params : {
-            immediate : true,
-            deep : true,
-            handler : function (){
-                this.loadData()
-            }
-        }
+        params: {
+            immediate: true,
+            deep: true,
+            handler: function () {
+                this.loadData();
+            },
+        },
     },
     created: function () {},
-    mounted: function () {
-    },
+    mounted: function () {},
 };
 </script>

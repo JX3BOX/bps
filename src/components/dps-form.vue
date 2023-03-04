@@ -49,9 +49,6 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="贡献者" prop="contributors">
-                <el-input v-model="form.contributors" placeholder="请输入贡献者UID，用,隔开"></el-input>
-            </el-form-item>
             <el-form-item label="类型" prop="type">
                 <el-select v-model="form.type" placeholder="请选择类型" style="width: 100%">
                     <el-option
@@ -61,6 +58,12 @@
                         :value="item.value"
                     ></el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item label="贡献者" prop="contributors">
+                <el-input v-model="form.contributors" placeholder="请输入贡献者魔盒UID，用半角逗号,隔开"></el-input>
+            </el-form-item>
+            <el-form-item label="备注" prop="remark">
+                <el-input v-model="form.remark" placeholder="（非必填）"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submit">提交</el-button>
@@ -73,7 +76,8 @@
 <script>
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { showMountIcon } from "@jx3box/jx3box-common/js/utils";
-import { getMyPost, addDpsRegistry } from "@/service/post";
+import { getMyPost } from "@/service/post";
+import { addDpsRegistry } from "@/service/dps";
 import { debounce } from "lodash";
 export default {
     name: "dps-form",
@@ -97,6 +101,7 @@ export default {
                 client: this.client,
                 type: "",
                 contributors: "",
+                remark: "",
             },
             rules: {
                 mount: [{ required: true, message: "请选择心法", trigger: "blur" }],
@@ -138,12 +143,14 @@ export default {
             this.$refs.form.validate((valid) => {
                 if (valid) {
                     this.saveLoading = true;
-                    addDpsRegistry(this.form).then((res) => {
-                        this.$message.success("提交成功");
-                        this.close();
-                    }).finally(() => {
-                        this.saveLoading = false;
-                    })
+                    addDpsRegistry(this.form)
+                        .then((res) => {
+                            this.$message.success("提交成功");
+                            this.close();
+                        })
+                        .finally(() => {
+                            this.saveLoading = false;
+                        });
                 }
             });
         },
