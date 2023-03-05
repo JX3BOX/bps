@@ -10,9 +10,9 @@
                     <el-select v-model="zlp" placeholder="请选择">
                         <el-option
                             v-for="item in zlps"
-                            :key="item.value"
+                            :key="item.key"
                             :label="item.label"
-                            :value="item.value"
+                            :value="item.key"
                         ></el-option>
                     </el-select>
                 </h3>
@@ -123,12 +123,11 @@
 <script>
 import AppLayout from "@/layout/AppLayout.vue";
 import { authorLink, showAvatar, showSchoolIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
-import { getUsers, getBread, getRank } from "@/service/ladder.js";
+import { getUsers, getBread, getRank, getDpsGroup } from "@/service/ladder.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import zlps from "@/assets/data/ladder.json";
 export default {
     name: "Ladder",
     components: { AppLayout },
@@ -137,6 +136,7 @@ export default {
         return {
             // 版本
             zlp: "",
+            zlps: [],
 
             // 排行
             xfmap,
@@ -171,13 +171,10 @@ export default {
             return data;
         },
         client: function () {
-            return this.$store.state.client == "std" ? 1 : 2;
+            return this.$store.state.client;
         },
         c: function () {
             return this.$store.state.client;
-        },
-        zlps: function () {
-            return zlps[this.c] || [];
         },
         contributors: function () {
             return this.$store.state.client == "std" ? "bps_ladder_authors" : "bps_ladder_authors_origin";
@@ -213,9 +210,9 @@ export default {
             if (!this.zlp) return;
 
             this.loading = true;
-            getRank(this.zlp, this.client)
-                .then((data) => {
-                    this.data = data;
+            getRank(this.zlp)
+                .then((res) => {
+                    this.data = res.data.data?.items || [];
                     this.$forceUpdate();
                 })
                 .finally(() => {
@@ -231,15 +228,16 @@ export default {
             });
         },
         init: function () {
-            // this.loadContributors();
+            getDpsGroup({ client: this.client }).then((res) => {
+                this.zlps = res.data.data;
+
+                this.zlp = this.zlps[0].key;
+            });
         },
         authorLink,
         showAvatar,
         showSchoolIcon,
         showMountIcon,
-    },
-    created: function () {
-        this.zlp = zlps[this.c][0]["value"];
     },
     mounted: function () {
         this.init();

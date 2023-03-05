@@ -20,16 +20,14 @@ function getUsers(ids) {
         });
 }
 
-function getRank(key, client) {
-    return $helper({
-        headers: {
-            "JX3-Client-Type": client,
-        },
+function getDpsGroup(params){
+    return $cms().get(`/api/cms/bps/dps/group`,{
+        params
     })
-        .get(`/api/dps_group/${key}`)
-        .then((res) => {
-            return res.data.data.group.items;
-        });
 }
 
-export { getUsers, getBread, getRank };
+function getRank(key) {
+    return $cms().get(`/api/cms/bps/dps/group/${key}`);
+}
+
+export { getUsers, getBread, getRank, getDpsGroup };
