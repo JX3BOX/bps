@@ -154,7 +154,9 @@ export default {
     },
     computed: {
         description:function (){
-            return "本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。"//this.data.description
+            return this.zlps.find((item) => {
+                return item.key == this.zlp;
+            })?.description || "本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。"
         },
         maxBase: function () {
             let arr = [];
@@ -230,7 +232,6 @@ export default {
         init: function () {
             getDpsGroup({ client: this.client }).then((res) => {
                 this.zlps = res.data.data;
-
                 this.zlp = this.zlps[0].key;
             });
         },

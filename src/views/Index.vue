@@ -27,9 +27,8 @@
                     <markBy @filter="filterMeta"></markBy>
                     <!-- 资料片过滤 -->
                     <zlpBy @filter="filterMeta" type="zlp" :client="client"></zlpBy>
-
-                    <!-- TODO:主题 -->
-                    <tagBy v-model="topic" :topics="topics" />
+                    <!-- 主题过滤 -->
+                    <topicBy v-model="topic" :topics="topics" />
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->
@@ -78,7 +77,6 @@ import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts, getTopicPost } from "@/service/post";
-import tagBy from "@jx3box/jx3box-common-ui/src/filters/tagBy2.vue";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
 export default {
     name: "Index",
@@ -267,7 +265,6 @@ export default {
     components: {
         listItem,
         ListLayout,
-        tagBy,
     },
 };
 </script>
