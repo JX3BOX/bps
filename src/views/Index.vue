@@ -140,12 +140,12 @@ export default {
         },
         topics: function ({ tag }) {
             if (tag === 'PVE') {
-                return post_topics['pve']
+                return post_topics['bps_pve']
             }
             if (tag === 'PVP') {
-                return post_topics['pvp']
+                return post_topics['bps_pvp']
             }
-            return [...new Set([...post_topics['pve'], ...post_topics['pvp']])]
+            return [...new Set([...post_topics['bps_pve'], ...post_topics['bps_pvp']])]
         },
     },
     methods: {
