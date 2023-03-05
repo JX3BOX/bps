@@ -29,7 +29,7 @@
                     <zlpBy @filter="filterMeta" type="zlp" :client="client"></zlpBy>
 
                     <!-- TODO:主题 -->
-                    <!-- <menuBy @filter="filterMeta" :data="pv_types" type="topic" placeholder="主题"></menuBy> -->
+                    <tagBy v-model="topic" :topics="topics" />
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->
@@ -40,7 +40,7 @@
             <!-- 列表 -->
             <div class="m-archive-list" v-if="data && data.length">
                 <ul class="u-list">
-                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" />
+                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order"  />
                 </ul>
             </div>
 
@@ -77,7 +77,9 @@ import ListLayout from "@/layout/ListLayout.vue";
 import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
-import { getPosts } from "@/service/post";
+import { getPosts, getTopicPost } from "@/service/post";
+import tagBy from "@jx3box/jx3box-common-ui/src/filters/tagBy2.vue";
+import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
 export default {
     name: "Index",
     props: [],
@@ -98,7 +100,8 @@ export default {
             client: this.$store.state.client, //版本选择
             search: "", //搜索字串
             zlp: "", //资料片
-            tag: "", //类型
+            tag: "", //标签
+            topic: "", // 主题
 
             pv_types: ["PVE", "PVP"],
         };
@@ -122,6 +125,8 @@ export default {
                 search: this.search,
                 zlp: this.zlp,
                 tag: this.tag,
+
+                topic: this.topic,
             };
         },
         // 分页相关参数
@@ -134,6 +139,15 @@ export default {
         // 重置页码参数
         reset_queries: function () {
             return [this.subtype, this.search];
+        },
+        topics: function ({ tag }) {
+            if (tag === 'PVE') {
+                return post_topics['pve']
+            }
+            if (tag === 'PVP') {
+                return post_topics['pvp']
+            }
+            return [...new Set([...post_topics['pve'], ...post_topics['pvp']])]
         },
     },
     methods: {
@@ -166,10 +180,12 @@ export default {
         // 加载数据
         loadData: function (appendMode = false) {
             let query = this.buildQuery(appendMode);
-            console.log("[cms-list]", "<loading data>", query);
+            // console.log("[cms-list]", "<loading data>", query);
+
+            const fn = query?.topic ? getTopicPost : getPosts;
 
             this.loading = true;
-            return getPosts(query)
+            return fn(query)
                 .then((res) => {
                     if (appendMode) {
                         this.data = this.data.concat(res.data?.data?.list);
@@ -217,7 +233,7 @@ export default {
             immediate: true,
             handler: function (query) {
                 if (Object.keys(query).length) {
-                    console.log("[cms-list]", "<route query change>", query);
+                    // console.log("[cms-list]", "<route query change>", query);
                     for (let key in query) {
                         // for:element分页组件兼容性问题
                         if (this.number_queries.includes(key)) {
@@ -233,7 +249,7 @@ export default {
         reset_queries: {
             deep: true,
             handler: function () {
-                console.log("[cms-list]", "<reset page>");
+                // console.log("[cms-list]", "<reset page>");
                 this.page = 1;
             },
         },
@@ -242,7 +258,7 @@ export default {
             deep: true,
             immediate: true,
             handler: function (query) {
-                console.log("[cms-list]", "<request query change>", query);
+                // console.log("[cms-list]", "<request query change>", query);
                 this.loadData();
             },
         },
@@ -251,6 +267,7 @@ export default {
     components: {
         listItem,
         ListLayout,
+        tagBy,
     },
 };
 </script>

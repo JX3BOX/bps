@@ -79,8 +79,8 @@ export default {
         loadRank: function (key) {
             this.loading = true;
             getRank(key, this.client)
-                .then((data) => {
-                    this.data = data;
+                .then((res) => {
+                    this.data = res.data.data?.items || [];
                     this.$forceUpdate();
                 })
                 .finally(() => {
