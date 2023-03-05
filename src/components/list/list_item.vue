@@ -87,11 +87,11 @@ export default {
     computed: {
         subject: function () {
             let subject = "";
-            if (this.item.tags.includes("PVE") && this.item.tags.includes("PVP")) {
+            if (this.item.tags?.includes("PVE") && this.item.tags?.includes("PVP")) {
                 subject = "ALL";
-            } else if (this.item.tags.includes("PVE")) {
+            } else if (this.item.tags?.includes("PVE")) {
                 subject = "PVE";
-            } else if (this.item.tags.includes("PVP")) {
+            } else if (this.item.tags?.includes("PVP")) {
                 subject = "PVP";
             }
             return subject;
