@@ -1,13 +1,19 @@
 <template>
     <SingleLayout>
         <singlebox :post="post" :stat="stat" v-loading="loading" @extendUpdate="updateExtend">
-            <!-- 子类别 -->
-            <div class="u-meta u-sub-block" slot="single-header">
-                <em class="u-label">心法</em>
-                <span class="u-value">
-                    {{ post_subtype }}
-                </span>
-            </div>
+            <template slot="single-header">
+                <div class="u-meta u-sub-block">
+                    <em class="u-label">心法</em>
+                    <span class="u-value">
+                        <img class="u-icon-xf" :src="xficon(xficon_id)" :alt="xf" />
+                        {{ xf }}
+                    </span>
+                </div>
+                <div class="u-meta u-sub-block">
+                    <em class="u-label">资料片</em>
+                    <span class="u-value">{{ zlp }}</span>
+                </div>
+            </template>
         </singlebox>
     </SingleLayout>
 </template>
@@ -21,6 +27,8 @@ import singlebox from "@/components/cms-single";
 import { getPost } from "@/service/post.js";
 import { getStat, postStat } from "@jx3box/jx3box-common/js/stat";
 import { appKey } from "@/../setting.json";
+import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
+import { __ossRoot, __ossMirror, __iconPath, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 
 export default {
     name: "single",
@@ -35,14 +43,26 @@ export default {
         post_subtype: function () {
             return this?.post?.post_subtype || "其它";
         },
-        id : function (){
-            return this.$route.params.id
-        }
+        id: function () {
+            return this.$route.params.id;
+        },
+        xf: function () {
+			return this.post?.post_subtype;
+		},
+        xficon_id: function () {
+			return this.xf && xfmap[this.xf]?.id;
+		},
+        zlp: function () {
+			return this.post?.zlp || "未知";
+		},
     },
     methods: {
         updateExtend: function (val) {
             this.$store.state.extend = val;
         },
+        xficon: function (val) {
+			return __imgPath + "image/xf/" + val + ".png";
+		},
     },
     mounted: function () {
         if (this.id) {
@@ -71,3 +91,7 @@ export default {
     },
 };
 </script>
+
+<style lang="less">
+    @import '~@/assets/css/single.less';
+</style>
