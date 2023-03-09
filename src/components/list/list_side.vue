@@ -12,32 +12,16 @@
 
         <!-- 其他链接 -->
         <div class="m-side-links">
-            <h3 class="m-side-title" style="border-bottom: none;">
+            <h3 class="m-side-title" style="border-bottom: none">
                 <div class="u-title">
                     <img class="u-icon" svg-inline src="@/assets/img/side/docs.svg" />
                     推荐小册
                 </div>
             </h3>
             <el-collapse class="u-groups" v-model="activeDocGroup">
-                <el-collapse-item title="萌新指南" name="bps_newbie">
+                <el-collapse-item :title="list.label" :name="list.name" v-for="list in data" :key="list.name">
                     <div class="u-docs">
-                        <a v-for="(item, i) in bps_newbie" :key="i" class="u-doc" :href="item.link" target="_blank">
-                            <i class="el-icon-collection"></i>
-                            {{ item.label }}
-                        </a>
-                    </div>
-                </el-collapse-item>
-                <el-collapse-item title="进阶指南" name="bps_senior">
-                    <div class="u-docs">
-                        <a v-for="(item, i) in bps_senior" :key="i" class="u-doc" :href="item.link" target="_blank">
-                            <i class="el-icon-collection"></i>
-                            {{ item.label }}
-                        </a>
-                    </div>
-                </el-collapse-item>
-                <el-collapse-item title="高阶指南" name="bps_professor">
-                    <div class="u-docs">
-                        <a v-for="(item, i) in bps_professor" :key="i" class="u-doc" :href="item.link" target="_blank">
+                        <a v-for="(item, i) in list.menus" :key="i" class="u-doc" :href="item.link" target="_blank">
                             <i class="el-icon-collection"></i>
                             {{ item.label }}
                         </a>
@@ -57,6 +41,9 @@ import { getMenuGroups } from "@/service/helper.js";
 import miniLadder from "./mini_ladder.vue";
 export default {
     name: "list_side",
+    components: {
+        miniLadder,
+    },
     props: [],
     data: function () {
         return {
@@ -64,9 +51,7 @@ export default {
             xfmap,
 
             activeDocGroup: [],
-            bps_newbie: [],
-            bps_senior: [],
-            bps_professor: [],
+            data: [],
         };
     },
     computed: {
@@ -78,23 +63,29 @@ export default {
         xfcolor: function (val) {
             return this.xfmap[val]["color"];
         },
+        loadData: function (client) {
+            getMenuGroups([`${client}_bps_newbie`, `${client}_bps_senior`, `${client}_bps_professor`]).then((res) => {
+                this.data = res.data.data.data || {};
+                console.log(this.data)
+            });
+        },
     },
     filters: {
         xficon: function (val) {
             return __imgPath + "image/xf/" + xfmap[val]["id"] + ".png";
         },
     },
-    mounted: function () {
-        getMenuGroups(["bps_newbie", "bps_senior", "bps_professor"]).then((res) => {
-            let data = res.data.data.data || {};
-            for (let key in data) {
-                this[key] = data[key]["menus"];
-            }
-        });
+    watch: {
+        client: {
+            immediate: true,
+            handler: function (client = 'std') {
+                if (client) {
+                    this.loadData(client);
+                }
+            },
+        },
     },
-    components: {
-        miniLadder
-    },
+    mounted: function () {},
 };
 </script>
 
