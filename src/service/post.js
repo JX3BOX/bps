@@ -25,12 +25,4 @@ function getMyPostCount() {
     return $cms().get("/api/cms/posts/user/my/count");
 }
 
-// getTopicPosts
-function getTopicPost(params, type = 'bps'){
-    return $cms().get(`/api/cms/posts/${type}/topic/list`,{
-        params
-    })
-}
-
-
-export { getPosts, getPost, getMyPostCount, getMyPost, getTopicPost };
+export { getPosts, getPost, getMyPostCount, getMyPost };

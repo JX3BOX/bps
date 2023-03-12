@@ -76,7 +76,7 @@ import ListLayout from "@/layout/ListLayout.vue";
 import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
-import { getPosts, getTopicPost } from "@/service/post";
+import { getPosts } from "@/service/post";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
 export default {
     name: "Index",
@@ -123,7 +123,6 @@ export default {
                 search: this.search,
                 zlp: this.zlp,
                 tag: this.tag,
-
                 topic: this.topic,
             };
         },
@@ -178,12 +177,10 @@ export default {
         // 加载数据
         loadData: function (appendMode = false) {
             let query = this.buildQuery(appendMode);
-            // console.log("[cms-list]", "<loading data>", query);
-
-            const fn = query?.topic ? getTopicPost : getPosts;
+            console.log("[cms-list]", "<loading data>", query);
 
             this.loading = true;
-            return fn(query)
+            return getPosts(query)
                 .then((res) => {
                     if (appendMode) {
                         this.data = this.data.concat(res.data?.data?.list);
@@ -231,7 +228,7 @@ export default {
             immediate: true,
             handler: function (query) {
                 if (Object.keys(query).length) {
-                    // console.log("[cms-list]", "<route query change>", query);
+                    console.log("[cms-list]", "<route query change>", query);
                     for (let key in query) {
                         // for:element分页组件兼容性问题
                         if (this.number_queries.includes(key)) {
@@ -247,7 +244,7 @@ export default {
         reset_queries: {
             deep: true,
             handler: function () {
-                // console.log("[cms-list]", "<reset page>");
+                console.log("[cms-list]", "<reset page>");
                 this.page = 1;
             },
         },
@@ -256,7 +253,7 @@ export default {
             deep: true,
             immediate: true,
             handler: function (query) {
-                // console.log("[cms-list]", "<request query change>", query);
+                console.log("[cms-list]", "<request query change>", query);
                 this.loadData();
             },
         },

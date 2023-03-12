@@ -66,7 +66,6 @@ export default {
         loadData: function (client) {
             getMenuGroups([`${client}_bps_newbie`, `${client}_bps_senior`, `${client}_bps_professor`]).then((res) => {
                 this.data = res.data.data.data || {};
-                console.log(this.data)
             });
         },
     },

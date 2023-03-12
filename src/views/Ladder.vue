@@ -16,9 +16,7 @@
                         ></el-option>
                     </el-select>
                 </h3>
-                <div class="m-ladder-desc">
-                    {{ description }}
-                </div>
+                <div class="m-ladder-desc" v-html="description"></div>
                 <div class="m-ladder-filter">
                     <el-radio-group class="u-filter-rank" v-model="filter" size="medium">
                         <el-radio-button label="全部"></el-radio-button>
@@ -153,10 +151,12 @@ export default {
         };
     },
     computed: {
-        description:function (){
-            return this.zlps.find((item) => {
-                return item.key == this.zlp;
-            })?.description || "本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。"
+        description: function () {
+            return (
+                this.zlps.find((item) => {
+                    return item.key == this.zlp;
+                })?.description || "本榜单仅作参考，以无团队增益下对单体静止目标伤害作为参考。"
+            );
         },
         maxBase: function () {
             let arr = [];
