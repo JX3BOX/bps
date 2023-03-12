@@ -4,10 +4,10 @@
             <!-- 搜索 -->
             <div class="m-dps-search">
                 <el-button type="primary" @click="onApply">+ 提交计算器</el-button>
-                <el-input v-model.trim.lazy="search" placeholder="请输入关键词..">
-                    <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
-                    <template slot="append">
-                        <i class="el-icon-position"></i>
+                <el-input v-model.trim.lazy="search" placeholder="请输入关键词.." clearable @clear="onSearch" @keydown.native.enter="onSearch">
+                    <template #prepend> <i class="el-icon-search"></i> 搜索 </template>
+                    <template #append>
+                        <el-button icon="el-icon-position" @click="onSearch"></el-button>
                     </template>
                 </el-input>
             </div>
@@ -129,7 +129,6 @@ export default {
         //提交查询参数
         params: function () {
             return {
-                name: this.search,
                 client: this.$store.state.client
             };
         },
@@ -140,13 +139,20 @@ export default {
         // 获取数据
         getData() {
             this.loading = true;
-            getDpsList(this.params)
+            const params = {
+                name: this.search,
+                ...this.params,
+            }
+            getDpsList(params)
                 .then((res) => {
                     this.list = res?.data?.data || [];
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        onSearch() {
+            this.getData();
         },
         // 提交申请
         onApply() {
@@ -184,12 +190,7 @@ export default {
             return require(`@/assets/img/dps/${val}.svg`);
         },
     },
-    watch: {
-        search(val) {
-            this.getData();
-        },
-    },
-    created: function () {
+    mounted: function () {
         this.getData();
     },
 };

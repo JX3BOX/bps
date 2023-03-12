@@ -3,10 +3,10 @@
         <div class="m-recipe" v-loading="loading">
             <!-- 搜索 -->
             <div class="m-recipe-search">
-                <el-input v-model.trim.lazy="search" placeholder="请输入关键词..">
-                    <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
-                    <template slot="append">
-                        <i class="el-icon-position"></i>
+                <el-input v-model.trim.lazy="search" placeholder="请输入关键词.." clearable @clear="onSearch" @keydown.native.enter="onSearch">
+                    <template #prepend> <i class="el-icon-search"></i> 搜索 </template>
+                    <template #append>
+                        <el-button icon="el-icon-position" @click="onSearch"></el-button>
                     </template>
                 </el-input>
             </div>
@@ -43,8 +43,8 @@
                     ></el-table-column>
                     <el-table-column prop="name" label="秘籍名称" sortable width="300">
                         <template slot-scope="scope">
-                            <span :href="scope.row.RecipeName | getItemLink" class="u-link">
-                                <img :src="scope.row.IconID | iconLink" class="u-icon" />
+                            <span :href="getItemLink(scope.row.RecipeName)" class="u-link">
+                                <img :src="iconLink(scope.row.IconID)" class="u-icon" />
                                 <span class="u-name" :class="'isQuality-' + scope.row.Quality">{{
                                     scope.row.RecipeName
                                 }}</span>
@@ -83,7 +83,7 @@
                             <a
                                 v-for="task in scope.row.tasks"
                                 :key="task.name"
-                                :href="task.id | getTaskLink"
+                                :href="getTaskLink(task.id)"
                                 target="_blank"
                                 @click.stop
                             >
@@ -96,7 +96,7 @@
                             <a
                                 v-for="book in scope.row.books"
                                 :key="book.name"
-                                :href="book.id | getItemLink"
+                                :href="getItemLink(book.id)"
                                 target="_blank"
                                 @click.stop
                             >
@@ -109,7 +109,7 @@
                             <a
                                 v-for="doodad in scope.row.doodad_template_id"
                                 :key="doodad.name"
-                                :href="doodad.id | getDoodadLink"
+                                :href="getDoodadLink(doodad.id)"
                                 target="_blank"
                                 @click.stop
                             >
@@ -124,7 +124,7 @@
                     </el-table-column>
                     <el-table-column prop="RecipeName" label="百科">
                         <template slot-scope="scope">
-                            <a :href="scope.row.RecipeName | getItemWiki" class="u-link" target="_blank" @click.stop
+                            <a :href="getItemWiki(scope.row.RecipeName)" class="u-link" target="_blank" @click.stop
                                 >查看百科&raquo;</a
                             >
                         </template>
@@ -169,7 +169,6 @@ export default {
         params: function () {
             return {
                 school: this.school_name,
-                search: this.search,
                 client: this.client,
             };
         },
@@ -235,13 +234,20 @@ export default {
         },
     },
     methods: {
+        onSearch() {
+            this.getRecipe();
+        },
         // 加载秘籍
         loadData: function () {
             this.getRecipe();
         },
         getRecipe: function () {
             this.loading = true;
-            getRecipe(this.params)
+            const params = {
+                ...this.params,
+                search: this.search,
+            }
+            getRecipe(params)
                 .then((res) => {
                     this.raw = res.data;
                 })
@@ -261,8 +267,6 @@ export default {
         expandRow: function (row, column, event) {
             this.$refs.recipeTable.toggleRowExpansion(row);
         },
-    },
-    filters: {
         iconLink,
         getItemLink: function (id) {
             return getLink("item", id);
@@ -277,8 +281,6 @@ export default {
             return `/item/search/${str}`;
         },
     },
-    created: function () {},
-    mounted: function () {},
 };
 </script>
 

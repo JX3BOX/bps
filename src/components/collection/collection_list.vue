@@ -3,10 +3,10 @@
         <!-- 搜索 -->
         <div class="m-archive-search m-collection-search">
             <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
-            <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" class="input-with-select">
-                <template slot="prepend"> <i class="el-icon-search"></i> 搜索 </template>
-                <template slot="append">
-                    <i class="el-icon-position"></i>
+            <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" class="input-with-select" clearable @clear="onSearch" @keydown.native.enter="onSearch">
+                <template #prepend> <i class="el-icon-search"></i> 搜索 </template>
+                <template #append>
+                    <el-button icon="el-icon-position" class="u-btn" @click="onSearch"></el-button>
                 </template>
             </el-input>
         </div>
@@ -63,7 +63,6 @@ export default {
             return {
                 page: this.page,
                 limit: this.per,
-                keyword: this.search,
             };
         },
     },
@@ -73,7 +72,11 @@ export default {
         },
         loadData: function () {
             this.loading = true;
-            getCollections(this.params)
+            const params = {
+                ...this.params,
+                keyword: this.search,
+            }
+            getCollections(params)
                 .then((res) => {
                     this.data = res?.data?.data?.data;
                     this.total = res?.data?.data?.total;
@@ -82,8 +85,14 @@ export default {
                     this.loading = false;
                 });
         },
+        onSearch() {
+            if (this.page !== 1) {
+                this.page = 1;
+                return
+            }
+            this.loadData();
+        }
     },
-    filters: {},
     watch: {
         params: {
             immediate: true,
@@ -93,7 +102,5 @@ export default {
             },
         },
     },
-    created: function () {},
-    mounted: function () {},
 };
 </script>
