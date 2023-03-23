@@ -6,7 +6,7 @@
                     <router-link
                         slot="label"
                         class="u-tab-icon"
-                        :to="{ name: 'collection', query: { tab: item.key, subtype } }"
+                        :to="{ name: 'kungfu', query: { tab: item.key, subtype } }"
                     >
                         <i :class="item.icon"></i>
                         {{ item.label }}
