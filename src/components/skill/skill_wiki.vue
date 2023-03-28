@@ -6,7 +6,7 @@
                     <span class="u-txt">技能百科</span>
                 </template>
                 <template slot="head-actions">
-                    <a class="el-button el-button--primary" :href="publish_url(`skill/${id}`)">
+                    <a class="el-button el-button--primary" :href="publish_url(`skill/${id}`)" target="_blank">
                         <i class="el-icon-edit"></i>
                         <span>完善技能百科</span>
                     </a>
@@ -20,14 +20,14 @@
                 </template>
             </WikiPanel>
 
-            <details class="m-wiki-detail">
-                <summary class="u-wiki__title"><i class="el-icon-info"></i>更多信息</summary>
+            <!-- <details class="m-wiki-detail"> -->
+                <!-- <summary class="u-wiki__title"><i class="el-icon-info"></i>更多信息</summary> -->
                 <!-- 历史版本 -->
-                <WikiRevisions type="skill" :source-id="id" />
+                <!-- <WikiRevisions type="skill" :source-id="id" /> -->
 
                 <!-- 百科评论 -->
-                <WikiComments type="skill" :source-id="id" />
-            </details>
+                <!-- <WikiComments type="skill" :source-id="id" /> -->
+            <!-- </details> -->
         </div>
         <div class="m-wiki-post-empty" v-if="is_empty">
             <i class="el-icon-s-opportunity"></i>
@@ -40,8 +40,8 @@
 <script>
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
-import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
-import WikiComments from "@jx3box/jx3box-common-ui/src/wiki/WikiComments";
+// import WikiRevisions from "@jx3box/jx3box-common-ui/src/wiki/WikiRevisions";
+// import WikiComments from "@jx3box/jx3box-common-ui/src/wiki/WikiComments";
 
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { ts2str } from "@jx3box/jx3box-common/js/utils.js";
@@ -50,8 +50,8 @@ export default {
     components: {
         WikiPanel,
         Article,
-        WikiRevisions,
-        WikiComments,
+        // WikiRevisions,
+        // WikiComments,
     },
     props: {
         wiki: {
