@@ -32,7 +32,7 @@
             <div class="u-metalist u-collection">
                 <strong>小册</strong>
                 <em>
-                    <template v-if="item.post_collection">
+                    <template v-if="~~item.post_collection">
                         <a :href="`/collection/${item.post_collection}`" target="_blank"
                             >《{{ item.collection_info && item.collection_info.title }}》</a
                         >
