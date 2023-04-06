@@ -36,6 +36,9 @@
                 </div>
             </div>
 
+            <!-- 推荐 -->
+            <rec-table v-if="!search && !subtype" />
+
             <!-- 列表 -->
             <div class="m-archive-list" v-if="data && data.length">
                 <ul class="u-list">
@@ -73,8 +76,10 @@
 </template>
 <script>
 import ListLayout from "@/layout/ListLayout.vue";
-import { appKey } from "@/../setting.json";
 import listItem from "@/components/list/list_item.vue";
+import recTable from "@/components/list/rec_table.vue";
+
+import { appKey } from "@/../setting.json";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
@@ -272,6 +277,7 @@ export default {
     components: {
         listItem,
         ListLayout,
+        recTable
     },
 };
 </script>

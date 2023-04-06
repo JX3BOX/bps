@@ -63,4 +63,15 @@ function getMenuGroups(keys) {
     });
 }
 
-export { getCollection, getSkillGroups, getSkillGroup, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups };
+// 公告
+function getBread(key) {
+    return $helper({ mute: true }).get(`/api/breadcrumb/${key}`);
+}
+
+
+// 边栏文档
+function getMenuGroup(name) {
+    return $helper({ mute: true }).get(`/api/menu_group/${name}`, {});
+}
+
+export { getCollection, getSkillGroups, getSkillGroup, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups, getMenuGroup, getBread };

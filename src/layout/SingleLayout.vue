@@ -9,6 +9,7 @@
             :adminEnable="true"
             :feedbackEnable="true"
             :crumbEnable="true"
+            :adminMarks="{}"
         >
         </Breadcrumb>
         <LeftSidebar :uid="user_id">
