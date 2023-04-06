@@ -2,7 +2,7 @@
     <div class="u-item" v-if="item">
         <div class="u-info">
             <i class="u-pic"><img :src="item.icon.FileName" /></i>
-            <span class="u-name">{{ item.skillName }}</span>
+            <span class="u-name">{{ item.skillName }}<span class="u-id">（ID:{{ item._id }}）</span></span>
             <span class="u-release">{{ item.releaseType }}</span>
             <span class="u-cd">{{ item.cd }}</span>
         </div>
@@ -84,6 +84,11 @@ export default {
 <style scoped lang="less">
 .u-item {
     .pr;
+}
+.u-id{
+    .fz(12px);
+    color:#999;
+    font-weight: normal;
 }
 .u-panel {
     .pa;
