@@ -79,6 +79,7 @@ import { showMountIcon } from "@jx3box/jx3box-common/js/utils";
 import { getMyPost } from "@/service/post";
 import { addDpsRegistry } from "@/service/dps";
 import { debounce } from "lodash";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "dps-form",
     props: {
@@ -162,7 +163,7 @@ export default {
                 client: this.client,
                 type: "bps",
             };
-            getMyPost(params).then((res) => {
+            User.isLogin() && getMyPost(params).then((res) => {
                 this.list = res.data.data?.list || [];
             });
         }, 500),

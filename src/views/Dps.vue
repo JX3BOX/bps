@@ -3,7 +3,7 @@
         <div class="m-dps" v-loading="loading">
             <!-- 搜索 -->
             <div class="m-dps-search">
-                <el-button type="primary" @click="onApply">+ 提交计算器</el-button>
+                <el-button type="primary" @click="onApply" :disabled="disabled">+ 提交计算器</el-button>
                 <el-input v-model.trim.lazy="search" placeholder="请输入关键词.." clearable @clear="onSearch" @keydown.native.enter="onSearch">
                     <template #prepend> <i class="el-icon-search"></i> 搜索 </template>
                     <template #append>
@@ -92,6 +92,7 @@ import { __imgPath, __Domain, __Origin } from "@jx3box/jx3box-common/data/jx3box
 import { showAvatar, authorLink, showMountIcon, showClientLabel } from "@jx3box/jx3box-common/js/utils";
 import { map as each } from "lodash";
 import types from "@/assets/data/dps_types.json";
+import User from "@jx3box/jx3box-common/js/user";
 
 import DpsForm from "@/components/dps-form.vue";
 export default {
@@ -132,6 +133,9 @@ export default {
                 client: this.$store.state.client
             };
         },
+        disabled : function (){
+            return !User.isLogin()
+        }
     },
     methods: {
         // 数据模块
