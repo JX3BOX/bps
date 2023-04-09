@@ -10,6 +10,7 @@ VueRouter.prototype.push = function push(location) {
 
 const routes = [
     { name: "index", path: "/", component: () => import("@/views/Index.vue") },
+    { name: "highlights", path: "/highlights", component: () => import("@/views/Highlights.vue") },
     { name: "post", path: "/:id(\\d+)", component: () => import("@/views/Single.vue") },
 
     { name: "skill", path: "/skill", component: () => import("@/views/Skill.vue") },

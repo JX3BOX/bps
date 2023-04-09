@@ -4,7 +4,15 @@
             <span slot="label">
                 <i class="el-icon-collection"></i>
                 <b>职业攻略</b>
-                <em class="u-secret">权威白皮书</em>
+                <!-- <em class="u-secret">权威白皮书</em> -->
+            </span>
+        </el-tab-pane>
+
+        <el-tab-pane label="精品区" name="highlights">
+            <span slot="label">
+                <i class="el-icon-collection"></i>
+                <b>精品区</b>
+                <em class="u-secret">优质作品</em>
             </span>
         </el-tab-pane>
 
@@ -57,11 +65,11 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能/Buff数据库" name="raw" v-if="isSuperAuthor">
+        <el-tab-pane label="技能/Buff数据库" name="raw">
             <span slot="label">
                 <i class="el-icon-reading"></i>
                 <b>原始数据</b>
-                <em class="u-ready">签约</em>
+                <!-- <em class="u-ready">签约</em> -->
             </span>
         </el-tab-pane>
 
