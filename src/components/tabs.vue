@@ -16,12 +16,12 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="技能系数" name="skill">
+        <!-- <el-tab-pane label="技能系数" name="skill">
             <span slot="label">
                 <i class="el-icon-key"></i>
                 <b>技能系数</b>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="秘籍大全" name="recipe">
             <span slot="label">
