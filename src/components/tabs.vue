@@ -23,6 +23,14 @@
             </span>
         </el-tab-pane> -->
 
+        <el-tab-pane label="技能/Buff数据库" name="raw">
+            <span slot="label">
+                <i class="el-icon-reading"></i>
+                <b>技能大全</b>
+                <!-- <em class="u-ready">签约</em> -->
+            </span>
+        </el-tab-pane>
+
         <el-tab-pane label="秘籍大全" name="recipe">
             <span slot="label">
                 <i class="el-icon-magic-stick"></i>
@@ -62,14 +70,6 @@
             <span slot="label">
                 <i class="el-icon-paperclip"></i>
                 <b>作品小册</b>
-            </span>
-        </el-tab-pane>
-
-        <el-tab-pane label="技能/Buff数据库" name="raw">
-            <span slot="label">
-                <i class="el-icon-reading"></i>
-                <b>原始数据</b>
-                <!-- <em class="u-ready">签约</em> -->
             </span>
         </el-tab-pane>
 

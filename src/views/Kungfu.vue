@@ -236,6 +236,6 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 @import "../assets/css/collection.less";
 </style>
