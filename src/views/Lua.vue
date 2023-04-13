@@ -136,9 +136,6 @@ export default {
     },
     methods: {
         isDirectory: function (val,key) {
-            if(key == '技能'){
-                console.log(val)
-            }
             return Array.isArray(val);
         },
         showSubtree: function (e, key) {
