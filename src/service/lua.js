@@ -2,7 +2,7 @@ import { $lua } from "@jx3box/jx3box-common/js/https";
 
 function getMap(client) {
     return $lua({ mute: true })
-        .get("/lua/bps/index.json", {
+        .get("/api/lua/bps/index.json", {
             params: {
                 client: client,
             },
@@ -16,7 +16,7 @@ function getMap(client) {
 }
 
 function getLua(client, path) {
-    let _root = "/lua/bps/";
+    let _root = "/api/lua/bps/";
     let _path = encodeURIComponent(path);
 
     // TEST

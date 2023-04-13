@@ -62,18 +62,18 @@ module.exports = {
                     request.setHeader("origin", "");
                 },
             },
+            "/api/lua":{
+                target: "https://lua.jx3box.com/",
+                onProxyReq: function(request) {
+                    request.setHeader("origin", "");
+                },
+            },
             "/api": {
                 target: "https://next2.jx3box.com/",
                 onProxyReq: function(request) {
                     request.setHeader("origin", "");
                 },
             },
-            "/lua":{
-                target: "https://lua.jx3box.com/",
-                onProxyReq: function(request) {
-                    request.setHeader("origin", "");
-                },
-            }
         },
         disableHostCheck: true,
     },
