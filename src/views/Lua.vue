@@ -46,7 +46,7 @@
                         :class="{ isHidden: search && !hasResult(subitem) }"
                     >
                         <div class="u-wrapper">
-                            <div class="u-container" v-if="isDirectory(subitem)">
+                            <div class="u-container" v-if="isDirectory(subitem,subgroup)">
                                 <div class="u-folder" @click="showSubtree($event, group + subgroup)">
                                     <i class="el-icon-folder"></i> {{ subgroup }}
                                 </div>
@@ -135,7 +135,10 @@ export default {
         },
     },
     methods: {
-        isDirectory: function (val) {
+        isDirectory: function (val,key) {
+            if(key == '技能'){
+                console.log(val)
+            }
             return Array.isArray(val);
         },
         showSubtree: function (e, key) {
