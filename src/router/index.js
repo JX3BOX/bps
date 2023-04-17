@@ -13,7 +13,7 @@ const routes = [
     { name: "highlights", path: "/highlights", component: () => import("@/views/Highlights.vue") },
     { name: "post", path: "/:id(\\d+)", component: () => import("@/views/Single.vue") },
 
-    // { name: "skill", path: "/skill", component: () => import("@/views/Skill.vue") },
+    { name: "skill", path: "/skill", component: () => import("@/views/Skill.vue") },
 
     { name: "kungfu", path: "/kungfu", component: () => import("@/views/Kungfu.vue") },
     { name: "recipe", path: "/recipe", component: () => import("@/views/Recipe.vue") },
