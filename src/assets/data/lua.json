@@ -24,5 +24,6 @@
     "经脉": "jm",
     "阵法": "zf",
     "秘笈": "mj",
-    "npc": "npc"
+    "npc": "npc",
+    "global":"global"
 }
