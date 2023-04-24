@@ -10,7 +10,7 @@
 
         <el-tab-pane label="精品区" name="highlights">
             <span slot="label">
-                <i class="el-icon-collection"></i>
+                <i class="el-icon-star-off"></i>
                 <b>精品区</b>
                 <em class="u-secret">优质作品</em>
             </span>
