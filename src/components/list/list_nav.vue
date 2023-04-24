@@ -47,7 +47,7 @@
             </a>
             <a href="/jcl" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jcl', true)" />
-                <span>战斗日志分析</span>
+                <span>战斗分析</span>
                 <em>JX3 Combat Log</em>
             </a>
         </div>
