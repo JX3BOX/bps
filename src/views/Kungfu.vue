@@ -95,7 +95,7 @@ export default {
             return this.$route.query.subtype;
         },
         school: function () {
-            return xfmap[this.subtype]?.school || this.subtype === '通用' ? 0 : '';
+            return this.subtype === '通用' ? (this.subtype ? 0 : '') : xfmap[this.subtype]?.school;
         },
         mount: function () {
             return xfmap[this.subtype]?.id || 0;
