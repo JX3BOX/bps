@@ -1,6 +1,6 @@
 <template>
     <AppLayout>
-        <div class="v-collection">
+        <div class="v-collection" v-loading="loading">
             <el-tabs v-model="type" type="card" @tab-click="changeTab">
                 <el-tab-pane :label="item.label" :name="item.key" v-for="(item, i) in types" :key="i">
                     <router-link
@@ -27,6 +27,7 @@
                             </a>
                         </li>
                     </ul>
+                    <el-empty description="当前心法暂无此类技能" v-else :image-size="180"></el-empty>
                 </el-tab-pane>
             </el-tabs>
 
@@ -86,24 +87,15 @@ export default {
             relation: relation["mount_relation"],
 
             data: [],
+            loading: false,
         };
     },
     computed: {
-        key_list: function () {
-            let list = [];
-            this.types.forEach((item) => {
-                list.push(item.key);
-            });
-            return list;
-        },
-        keys: function () {
-            return this.key_list.join(",");
-        },
         subtype: function () {
             return this.$route.query.subtype;
         },
         school: function () {
-            return xfmap[this.subtype]?.school || 0;
+            return xfmap[this.subtype]?.school || this.subtype === '通用' ? 0 : '';
         },
         mount: function () {
             return xfmap[this.subtype]?.id || 0;
@@ -126,7 +118,14 @@ export default {
     methods: {
         loadData: function () {
             this.loading = true;
-            getSpecialGroupSkill({ group: this.type, client: this.client, school: this.school }).then((res) => {
+            const params = {
+                group: this.type,
+                client: this.client,
+            }
+            if (this.school !== '') {
+                params.school = this.school;
+            }
+            getSpecialGroupSkill(params).then((res) => {
                 this.data = res.data.data.filter(item => item?.mount == this.mount || !item?.mount);
             }).finally(() => {
                 this.loading = false;
@@ -140,7 +139,7 @@ export default {
                         icon: this.icons[item.name],
                         key: item.name
                     }
-                });
+                }).filter(item => !['chuanci','chuantou','guanti'].includes(item.name));
             })
         },
         getItemLink: function (item) {
