@@ -80,6 +80,8 @@ export default {
                 jiansu: "el-icon-lollipop",
                 chaofeng: "el-icon-ice-cream-round",
                 huifu: "el-icon-ice-drink",
+                chuantou: "el-icon-knife-fork",
+                chuanci: "el-icon-scissors"
             },
             type: "jianshang",
             authors: [],
@@ -89,16 +91,6 @@ export default {
         };
     },
     computed: {
-        key_list: function () {
-            let list = [];
-            this.types.forEach((item) => {
-                list.push(item.key);
-            });
-            return list;
-        },
-        keys: function () {
-            return this.key_list.join(",");
-        },
         subtype: function () {
             return this.$route.query.subtype;
         },
