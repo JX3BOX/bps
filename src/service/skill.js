@@ -1,5 +1,4 @@
-// import { $node } from "@jx3box/jx3box-common/js/https";
-// const $ = $node()
+import { $cms } from "@jx3box/jx3box-common/js/https.js";
 
 import axios from "axios";
 import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -38,4 +37,16 @@ function getAll(xf) {
     });
 }
 
-export { getSkill, getTalent, getAll };
+// 获取特殊技能分组
+function getSpecialGroup(){
+    return $cms().get('/api/cms/bps/pvp/specialskill/group');
+}
+
+// 获取特殊技能
+function getSpecialGroupSkill(params){
+    return $cms().get('/api/cms/bps/pvp/specialskill', {
+        params
+    });
+}
+
+export { getSkill, getTalent, getAll, getSpecialGroup, getSpecialGroupSkill };
