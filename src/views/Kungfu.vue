@@ -31,7 +31,7 @@
                 </el-tab-pane>
             </el-tabs>
 
-            <div class="m-ladder-contributor">
+            <!-- <div class="m-ladder-contributor">
                 <div class="u-label">❤️ 感谢以下人员的贡献</div>
                 <div class="u-list" v-if="authors && authors.length">
                     <a
@@ -45,7 +45,7 @@
                         {{ item.display_name }}
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div></AppLayout
     >
 </template>
@@ -167,12 +167,12 @@ export default {
         this.loadData();
 
         // 加载贡献名单
-        getBread(this.contributors).then((ids) => {
-            if (!ids) return;
-            getUsers(ids).then((data) => {
-                this.authors = data || [];
-            });
-        });
+        // getBread(this.contributors).then((ids) => {
+        //     if (!ids) return;
+        //     getUsers(ids).then((data) => {
+        //         this.authors = data || [];
+        //     });
+        // });
 
         // 初始化tab
         if (this.$route.query.tab) {
