@@ -3,8 +3,8 @@
         <!-- 群号 -->
         <RightSideMsg>
             <em>作者交流群</em> :
-            <strong>
-                <a href="https://jq.qq.com/?_wv=1027&k=mEl1e2hL">297985102</a>
+            <strong @click="onQQClick" class="u-link" title="点击复制">
+                <a>{{ qq }}</a>
             </strong>
         </RightSideMsg>
         <!-- 门派天梯 -->
@@ -52,6 +52,7 @@ export default {
 
             activeDocGroup: [],
             data: [],
+            qq: "297985102",
         };
     },
     computed: {
@@ -68,6 +69,15 @@ export default {
                 this.data = res.data.data.data || {};
             });
         },
+        onQQClick() {
+            navigator.clipboard.writeText(this.qq).then(() => {
+                this.$notify({
+                    title: "复制成功",
+                    message: "内容：" + this.qq,
+                    type: "success",
+                });
+            })
+        }
     },
     filters: {
         xficon: function (val) {

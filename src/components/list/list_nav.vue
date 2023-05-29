@@ -40,15 +40,15 @@
                 <span>配装模拟器</span>
                 <em>Assembly Simulator</em>
             </a>
-            <a href="/app/database" target="_blank">
-                <img class="u-icon" :src="getAppIcon('database', true)" />
-                <span>剑三数据库</span>
-                <em>JX3 Database</em>
+            <a href="/battle" target="_blank">
+                <img class="u-icon" :src="getAppIcon('battle', true)" />
+                <span>统计分析</span>
+                <em>Statistic Analysis</em>
             </a>
             <a href="/jcl" target="_blank">
                 <img class="u-icon" :src="getAppIcon('jcl', true)" />
-                <span>战斗分析</span>
-                <em>JX3 Combat Log</em>
+                <span>日志分析</span>
+                <em>Log Analysis</em>
             </a>
         </div>
     </div>

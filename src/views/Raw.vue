@@ -284,15 +284,14 @@ export default {
                 this.loadSkills();
             },
         },
-        data: {
-            deep: true,
-            handler(val) {
-                const _skillIds = flattenDeep(val).map((item) => item.SkillID);
-                const skills = _skillIds.join(",");
-
-                this.loadWiki(skills);
-            },
-        },
+        // data: {
+        //     deep: true,
+        //     handler(val) {
+        //         const _skillIds = flattenDeep(val).map((item) => item.SkillID);
+        //         const skills = _skillIds.join(",");
+        //         this.loadWiki(skills);
+        //     },
+        // },
     },
     mounted: async function () {
         this.talents = await getTalents();

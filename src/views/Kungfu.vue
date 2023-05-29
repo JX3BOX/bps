@@ -1,6 +1,6 @@
 <template>
     <AppLayout>
-        <div class="v-collection">
+        <div class="v-collection" v-loading="loading">
             <el-tabs v-model="type" type="card" @tab-click="changeTab">
                 <el-tab-pane :label="item.label" :name="item.key" v-for="(item, i) in types" :key="i">
                     <router-link
@@ -27,10 +27,11 @@
                             </a>
                         </li>
                     </ul>
+                    <el-empty description="当前心法暂无此类技能" v-else :image-size="180"></el-empty>
                 </el-tab-pane>
             </el-tabs>
 
-            <div class="m-ladder-contributor">
+            <!-- <div class="m-ladder-contributor">
                 <div class="u-label">❤️ 感谢以下人员的贡献</div>
                 <div class="u-list" v-if="authors && authors.length">
                     <a
@@ -44,7 +45,7 @@
                         {{ item.display_name }}
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div></AppLayout
     >
 </template>
@@ -88,6 +89,7 @@ export default {
             relation: relation["mount_relation"],
 
             data: [],
+            loading: false,
         };
     },
     computed: {
@@ -95,7 +97,7 @@ export default {
             return this.$route.query.subtype;
         },
         school: function () {
-            return xfmap[this.subtype]?.school || 0;
+            return this.subtype === '通用' ? (this.subtype ? 0 : '') : xfmap[this.subtype]?.school;
         },
         mount: function () {
             return xfmap[this.subtype]?.id || 0;
@@ -118,7 +120,14 @@ export default {
     methods: {
         loadData: function () {
             this.loading = true;
-            getSpecialGroupSkill({ group: this.type, client: this.client, school: this.school }).then((res) => {
+            const params = {
+                group: this.type,
+                client: this.client,
+            }
+            if (this.school !== '') {
+                params.school = this.school;
+            }
+            getSpecialGroupSkill(params).then((res) => {
                 this.data = res.data.data.filter(item => item?.mount == this.mount || !item?.mount);
             }).finally(() => {
                 this.loading = false;
@@ -132,7 +141,7 @@ export default {
                         icon: this.icons[item.name],
                         key: item.name
                     }
-                });
+                }).filter(item => !['chuanci','chuantou','guanti'].includes(item.name));
             })
         },
         getItemLink: function (item) {
@@ -160,12 +169,12 @@ export default {
         this.loadData();
 
         // 加载贡献名单
-        getBread(this.contributors).then((ids) => {
-            if (!ids) return;
-            getUsers(ids).then((data) => {
-                this.authors = data || [];
-            });
-        });
+        // getBread(this.contributors).then((ids) => {
+        //     if (!ids) return;
+        //     getUsers(ids).then((data) => {
+        //         this.authors = data || [];
+        //     });
+        // });
 
         // 初始化tab
         if (this.$route.query.tab) {
