@@ -57,7 +57,7 @@
                                     backgroundColor: xfcolor(item.xf),
                                 }"
                             >
-                                <img :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
+                                <img :src="showMountIcon(xfmap[item.xf]['id'])" v-if="xfmap[item.xf] && xfmap[item.xf]['id']" class="u-pic" />
                                 <template v-if="!!item.link">
                                     <a class="u-text" :href="item.link" target="_blank">
                                         {{ item.xf }}
@@ -81,7 +81,7 @@
                                 backgroundColor: xfcolor(item.xf),
                             }"
                         >
-                            <img :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
+                            <img :src="showMountIcon(xfmap[item.xf]['id'])" v-if="xfmap[item.xf] && xfmap[item.xf]['id']" class="u-pic" />
                             <template v-if="!!item.link">
                                 <a class="u-text" :href="item.link" target="_blank">
                                     {{ item.xf }}
