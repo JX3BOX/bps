@@ -70,7 +70,7 @@
                                         <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
                                     </span>
                                 </template>
-                                <span class="u-dps">{{ item.dps }}</span>
+                                <span class="u-dps">{{ ~~item.dps }}</span>
                             </div>
                         </el-popover>
                         <div
@@ -94,7 +94,7 @@
                                     <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span>
                                 </span>
                             </template>
-                            <span class="u-dps">{{ item.dps }}</span>
+                        <span class="u-dps">{{ ~~item.dps }}</span>
                         </div>
                     </li>
                 </ul>
