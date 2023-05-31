@@ -27,7 +27,7 @@
                             {{ item.xf }}
                             <!-- <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span> -->
                         </span>
-                        <span class="u-dps">{{ item.dps }}</span>
+                        <span class="u-dps">{{ ~~item.dps }}</span>
                     </div>
                 </li>
             </ul>
