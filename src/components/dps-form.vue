@@ -60,7 +60,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="贡献者" prop="contributors">
-                <el-input v-model="form.contributors" placeholder="请输入贡献者魔盒UID，用半角逗号,隔开"></el-input>
+                <el-input v-model="form.contributors" placeholder="请输入除自己外的其余贡献者魔盒UID，用半角逗号,隔开"></el-input>
             </el-form-item>
             <el-form-item label="备注" prop="remark">
                 <el-input v-model="form.remark" placeholder="（非必填）"></el-input>
