@@ -65,8 +65,12 @@ export default {
             return this.xfmap[val]["color"];
         },
         loadData: function (client) {
-            getMenuGroups([`${client}_bps_newbie`, `${client}_bps_senior`, `${client}_bps_professor`]).then((res) => {
-                this.data = res.data.data.data || {};
+            const key = [`${client}_bps_newbie`, `${client}_bps_senior`, `${client}_bps_professor`].join(",");
+            getMenuGroups(key).then((res) => {
+                this.data = res.data.data.reduce((acc, cur) => {
+                    acc[cur.name] = cur;
+                    return acc;
+                }, {});
             });
         },
         onQQClick() {

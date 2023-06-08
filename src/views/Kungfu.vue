@@ -52,7 +52,6 @@
 
 <script>
 import AppLayout from "@/layout/AppLayout.vue";
-import { getUsers, getBread } from "@/service/ladder.js";
 import { getLink, iconLink, showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import relation from "@jx3box/jx3box-data/data/xf/relation.json";

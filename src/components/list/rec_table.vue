@@ -45,7 +45,7 @@ export default {
         init: function () {
             let suffix = this.client == "origin" ? "-origin" : "-std";
             getMenuGroup("bps-rec" + suffix).then((res) => {
-                this.data = res.data.data.menu_group.menus || [];
+                this.data = res.data.data.menus || [];
 
                 let _fix = this.data.length % 4;
                 if (_fix) {
@@ -55,7 +55,7 @@ export default {
                 }
             });
             getBread("bps-ac" + suffix).then((res) => {
-                this.ac = res.data.data.breadcrumb.html;
+                this.ac = res.data.data.html;
             });
         },
         highLight: function (val) {

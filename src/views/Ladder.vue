@@ -121,7 +121,8 @@
 <script>
 import AppLayout from "@/layout/AppLayout.vue";
 import { authorLink, showAvatar, showSchoolIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
-import { getUsers, getBread, getRank, getDpsGroup } from "@/service/ladder.js";
+import { getUsers, getRank, getDpsGroup } from "@/service/ladder.js";
+import { getBread } from "@/service/helper";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
 import schoolmap from "@jx3box/jx3box-data/data/xf/schoolid.json";

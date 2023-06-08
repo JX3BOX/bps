@@ -1,12 +1,4 @@
-import { $cms, $helper } from "@jx3box/jx3box-common/js/https";
-
-function getBread(key) {
-    return $helper()
-        .get(`/api/breadcrumb/${key}`)
-        .then((res) => {
-            return res.data.data.breadcrumb.html;
-        });
-}
+import { $cms } from "@jx3box/jx3box-common/js/https";
 
 function getUsers(ids) {
     return $cms()
@@ -30,4 +22,4 @@ function getRank(key) {
     return $cms().get(`/api/cms/bps/dps/group/${key}`);
 }
 
-export { getUsers, getBread, getRank, getDpsGroup };
+export { getUsers, getRank, getDpsGroup };
