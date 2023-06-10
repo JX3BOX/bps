@@ -32,22 +32,6 @@ function getCollection($collection_id, params = {}) {
     });
 }
 
-function getSkillGroups(keys, client) {
-    return $helper({
-        headers: {
-            "JX3-Client-Type": client,
-        },
-    }).get(`/api/skill_groups`, {
-        params: {
-            keys,
-        },
-    });
-}
-
-function getSkillGroup(key) {
-    return $helper().get(`/api/skill_group/${key}`);
-}
-
 // 获取技能百科
 function getSkillWiki(type, params) {
     return $helper().get(`/api/wiki/posts/${type}`, {
@@ -74,4 +58,4 @@ function getMenuGroup(name) {
     return $cms({ mute: true }).get(`/api/cms/menu-group/${name}`);
 }
 
-export { getCollection, getSkillGroups, getSkillGroup, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups, getMenuGroup, getBread };
+export { getCollection, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups, getMenuGroup, getBread };
