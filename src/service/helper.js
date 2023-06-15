@@ -2,9 +2,9 @@ import { $helper, $cms } from "@jx3box/jx3box-common/js/https";
 import qs from "qs";
 
 function getCollections(params) {
-    return $helper()({
+    return $cms()({
         method: "GET",
-        url: `/api/post/collections`,
+        url: `/api/cms/post/collection`,
         params: params,
     });
 }

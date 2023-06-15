@@ -62,7 +62,7 @@ export default {
         params: function () {
             return {
                 page: this.page,
-                limit: this.per,
+                per: this.per,
             };
         },
     },
@@ -78,8 +78,8 @@ export default {
             }
             getCollections(params)
                 .then((res) => {
-                    this.data = res?.data?.data?.data;
-                    this.total = res?.data?.data?.total;
+                    this.data = res?.data?.list;
+                    this.total = res?.data?.total;
                 })
                 .finally(() => {
                     this.loading = false;

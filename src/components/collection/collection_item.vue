@@ -8,10 +8,10 @@
                 <!-- <i class="el-icon-collection"></i> -->
                 {{ data.title }}
             </a>
-            <div class="u-info">
-                <a :href="data.user_id | authorLink" class="u-user" target="_blank">
-                    <img class="u-avatar" :src="data.user_avatar | showAvatar" />
-                    <span class="u-nickname" v-text="data.user_nickname"></span>
+            <div class="u-info" v-if="data.collection_user_info">
+                <a :href="data.collection_user_info.ID | authorLink" class="u-user" target="_blank">
+                    <img class="u-avatar" :src="data.collection_user_info.user_avatar | showAvatar" />
+                    <span class="u-nickname" v-text="data.collection_user_info.display_name"></span>
                 </a>
                 <!-- <ul class="u-tags" v-if="data.tags && data.tags.length">
                     <li v-for="(tag, key) in data.tags" :key="key" v-text="tag" class="u-tag"></li>
