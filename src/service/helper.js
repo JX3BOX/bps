@@ -9,13 +9,6 @@ function getCollections(params) {
     });
 }
 
-function getCollectionMenus() {
-    return $helper()({
-        method: "GET",
-        url: `/api/post/collection/menus`,
-    });
-}
-
 function removeCollection(collection_id) {
     return $helper()({
         method: "PUT",
@@ -58,4 +51,4 @@ function getMenuGroup(name) {
     return $cms({ mute: true }).get(`/api/cms/menu-group/${name}`);
 }
 
-export { getCollection, getSkillWiki, getCollections, getCollectionMenus, removeCollection, getMenuGroups, getMenuGroup, getBread };
+export { getCollection, getSkillWiki, getCollections, removeCollection, getMenuGroups, getMenuGroup, getBread };
