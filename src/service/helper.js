@@ -10,18 +10,16 @@ function getCollections(params) {
 }
 
 function removeCollection(collection_id) {
-    return $helper()({
-        method: "PUT",
-        url: `/api/post/collection/remove`,
-        data: qs.stringify({ id: collection_id }),
+    return $cms()({
+        method: "DELETE",
+        url: `/api/cms/post/collection/${collection_id}`,
     });
 }
 
-function getCollection($collection_id, params = {}) {
-    return $helper()({
+function getCollection($collection_id) {
+    return $cms()({
         method: "GET",
-        url: `/api/post/collection/${$collection_id}`,
-        params: params,
+        url: `/api/cms/post/collection/${$collection_id}`
     });
 }
 

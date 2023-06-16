@@ -230,18 +230,16 @@ export default {
                 type: "warning",
             }).then(() => {
                 removeCollection(collection_id).then((data) => {
-                    this.$message.success(data.message);
+                    this.$message.success("删除成功");
                     this.$router.push({ name: "collection" });
                 });
             });
         },
         loadData: function (id) {
             this.loading = true;
-            getCollection(id, {
-                post_extra: 1,
-            })
+            getCollection(id)
                 .then((res) => {
-                    this.collection = res?.data?.data?.collection || {};
+                    this.collection = res?.data?.data || {};
                     this.$store.state.user_id = this.collection.user_id;
                 })
                 .finally(() => {

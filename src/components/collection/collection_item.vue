@@ -9,7 +9,7 @@
                 {{ data.title }}
             </a>
             <div class="u-info" v-if="data.collection_user_info">
-                <a :href="data.collection_user_info.ID | authorLink" class="u-user" target="_blank">
+                <a :href="data.collection_user_info.user_id | authorLink" class="u-user" target="_blank">
                     <img class="u-avatar" :src="data.collection_user_info.user_avatar | showAvatar" />
                     <span class="u-nickname" v-text="data.collection_user_info.display_name"></span>
                 </a>
