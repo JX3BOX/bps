@@ -13,7 +13,7 @@
                     :key="type"
                     @click="changeType(type)"
                 >
-                    <img class="u-typeicon" :src="type | iconURL" /><span>{{ type == "item" ? "物品" : type }}</span>
+                    <img class="u-typeicon" :src="type | iconURL" /><span>{{ showTypeLabel(type) }}</span>
                 </div>
             </div>
             <!-- 搜索 -->
@@ -46,7 +46,7 @@
                         :class="{ isHidden: search && !hasResult(subitem) }"
                     >
                         <div class="u-wrapper">
-                            <div class="u-container" v-if="isDirectory(subitem,subgroup)">
+                            <div class="u-container" v-if="isDirectory(subitem, subgroup)">
                                 <div class="u-folder" @click="showSubtree($event, group + subgroup)">
                                     <i class="el-icon-folder"></i> {{ subgroup }}
                                 </div>
@@ -135,7 +135,7 @@ export default {
         },
     },
     methods: {
-        isDirectory: function (val,key) {
+        isDirectory: function (val, key) {
             return Array.isArray(val);
         },
         showSubtree: function (e, key) {
@@ -204,6 +204,13 @@ export default {
                 // });
                 this.data = "";
             }
+        },
+        showTypeLabel: function (type) {
+            const typeMap = {
+                item: "物品",
+                百战异闻录_玩家: "百战",
+            };
+            return typeMap[type] || type;
         },
     },
     filters: {
