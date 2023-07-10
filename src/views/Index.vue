@@ -42,7 +42,7 @@
             <!-- 列表 -->
             <div class="m-archive-list" v-if="data && data.length">
                 <ul class="u-list">
-                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order"  />
+                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" caller="bps_index" :reporter="{ aggregate, tag, subtype }" />
                 </ul>
             </div>
 
@@ -150,8 +150,14 @@ export default {
             }
             return [...new Set([...post_topics['bps_pve'], ...post_topics['bps_pvp']])]
         },
+        aggregate: function (){
+            return this.data.map(item => this.postLink(item.ID))
+        }
     },
     methods: {
+        postLink: function (val) {
+            return `/${appKey}/` + val;
+        },
         onSearch() {
             if (this.page !== 1) {
                 this.page = 1;

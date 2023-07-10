@@ -1,7 +1,18 @@
 <template>
     <li class="u-item">
         <!-- Banner -->
-        <a class="u-banner" :href="item.ID | postLink" :target="target">
+        <a
+            class="u-banner"
+            :href="postLink(item.ID)"
+            :target="target"
+            v-reporter="{
+                data: {
+                    href: reporterLink(item.ID),
+                    ...reporter,
+                },
+                caller: 'bps_index',
+            }"
+        >
             <img :src="getBanner(item.post_banner, item.post_subtype)" :key="item.ID" />
             <span class="u-subject" :class="subject || 'ALL'">{{ subject || "ALL" }}</span>
         </a>
@@ -16,9 +27,20 @@
             <span class="u-label u-zlp" v-if="item.zlp">{{ item.zlp }}</span>
 
             <!-- 标题文字 -->
-            <a class="u-title" :style="item.color | showHighlight" :href="item.ID | postLink" :target="target">{{
-                item.post_title || "无标题"
-            }}</a>
+            <a
+                class="u-title"
+                :style="item.color | showHighlight"
+                :href="postLink(item.ID)"
+                :target="target"
+                v-reporter="{
+                    data: {
+                        href: reporterLink(item.ID),
+                        ...reporter,
+                    },
+                    caller,
+                }"
+                >{{ item.post_title || "无标题" }}</a
+            >
 
             <!-- 角标 -->
             <span class="u-marks" v-if="item.mark && item.mark.length">
@@ -75,9 +97,10 @@ import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import { showDate } from "@jx3box/jx3box-common/js/moment.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
+import reporter from "@jx3box/jx3box-common/js/reporter";
 export default {
     name: "ListItem",
-    props: ["item", "order"],
+    props: ["item", "order", "reporter", "caller"],
     components: {},
     data: function () {
         return {
@@ -107,12 +130,15 @@ export default {
                 return __imgPath + "image/bps_thumbnail/" + img_name + ".png";
             }
         },
-    },
-    filters: {
-        authorLink,
         postLink: function (val) {
             return location.origin + `/${appKey}/` + val;
         },
+        reporterLink: function (val) {
+            return`/${appKey}/` + val;
+        },
+    },
+    filters: {
+        authorLink,
         showHighlight: function (val) {
             return val ? `color:${val};font-weight:600;` : "";
         },
