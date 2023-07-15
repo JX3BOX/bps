@@ -1,5 +1,5 @@
 <template>
-    <el-dialog custom-class="m-dps-form" :visible="modelValue" @close="close" append-to-body title="新增计算器申请">
+    <el-dialog custom-class="m-dps-form" :visible="modelValue" @close="close" append-to-body :title="title">
         <el-form :model="form" :rules="rules" label-position="left" label-width="80px" ref="form">
             <el-form-item label="心法" prop="mount">
                 <el-select
@@ -77,7 +77,7 @@
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { showMountIcon } from "@jx3box/jx3box-common/js/utils";
 import { getMyPost } from "@/service/post";
-import { addDpsRegistry } from "@/service/dps";
+import { addDpsRegistry, updateDpsRegistry } from "@/service/dps";
 import { debounce } from "lodash";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
@@ -88,6 +88,10 @@ export default {
             default: false,
         },
         options: {
+            type: Object,
+            default: () => ({}),
+        },
+        data: {
             type: Object,
             default: () => ({}),
         },
@@ -120,6 +124,9 @@ export default {
         client() {
             return this.$store.state.client;
         },
+        title() {
+            return this.data ? "编辑计算器申请" : "新增计算器申请";
+        }
     },
     mounted() {
         this.loadData();
@@ -131,6 +138,31 @@ export default {
             },
             immediate: true,
         },
+        modelValue(val) {
+            if (val && this.data) {
+                this.form = {
+                    mount: this.data.mount,
+                    name: this.data.name,
+                    url: this.data.url,
+                    client: this.data.client,
+                    type: this.data.type,
+                    contributors: this.data.contributors,
+                    remark: this.data.remark,
+                }
+            }
+            if (!val) {
+                this.$refs.form.resetFields();
+                this.form = {
+                    mount: "",
+                    name: "",
+                    url: "",
+                    client: this.client,
+                    type: "",
+                    contributors: "",
+                    remark: "",
+                }
+            }
+        }
     },
     methods: {
         showMountIcon,
@@ -144,8 +176,8 @@ export default {
             this.$refs.form.validate((valid) => {
                 if (valid) {
                     this.saveLoading = true;
-                    addDpsRegistry(this.form)
-                        .then((res) => {
+                    const fn = this.data ? updateDpsRegistry(this.data.id, this.form) : addDpsRegistry(this.form);
+                    fn.then((res) => {
                             this.$message.success("提交成功");
                             this.close();
                         })

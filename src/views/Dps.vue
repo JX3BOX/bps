@@ -4,7 +4,13 @@
             <!-- 搜索 -->
             <div class="m-dps-search">
                 <el-button type="primary" @click="onApply" :disabled="disabled">+ 提交计算器</el-button>
-                <el-input v-model.trim.lazy="search" placeholder="请输入关键词.." clearable @clear="onSearch" @keydown.native.enter="onSearch">
+                <el-input
+                    v-model.trim.lazy="search"
+                    placeholder="请输入关键词.."
+                    clearable
+                    @clear="onSearch"
+                    @keydown.native.enter="onSearch"
+                >
                     <template #prepend> <i class="el-icon-search"></i> 搜索 </template>
                     <template #append>
                         <el-button icon="el-icon-position" @click="onSearch"></el-button>
@@ -13,7 +19,12 @@
             </div>
             <!-- 表格 -->
             <div class="m-dps-list">
-                <el-table class="m-dps-table" :data="list" empty-text="没有找到对应的DPS计算器，请重新搜索" @cell-click="openLink">
+                <el-table
+                    class="m-dps-table"
+                    :data="list"
+                    empty-text="没有找到对应的DPS计算器，请重新搜索"
+                    @cell-click="openLink"
+                >
                     <el-table-column
                         label="心法"
                         :filters="options.mount_filters"
@@ -69,17 +80,32 @@
                         column-key="type"
                     >
                         <template slot-scope="scope">
-                            <span class="u-type">
-                                <img :src="getTypeIcon(scope.row.type)" :alt="scope.row.type" />
-                                {{ showTypeLabel(scope.row.type) }}
-                            </span>
+                            <div class="m-type-col">
+                                <span class="u-type">
+                                    <img :src="getTypeIcon(scope.row.type)" :alt="scope.row.type" />
+                                    {{ showTypeLabel(scope.row.type) }}
+                                </span>
+                                <el-button
+                                    v-if="uid == scope.row.user_id"
+                                    @click.stop="onEditRow(scope.row)"
+                                    size="mini"
+                                    icon="el-icon-edit"
+                                    type="primary"
+                                    >编辑</el-button
+                                >
+                            </div>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
         </div>
 
-        <dps-form :modelValue="showDpsForm" @update:modelValue="updateShowDps" :options="options"></dps-form>
+        <dps-form
+            :modelValue="showDpsForm"
+            :data="selectedRow"
+            @update:modelValue="updateShowDps"
+            :options="options"
+        ></dps-form>
     </AppLayout>
 </template>
 
@@ -124,18 +150,22 @@ export default {
             list: [],
 
             showDpsForm: false,
+            selectedRow: {},
         };
     },
     computed: {
         //提交查询参数
         params: function () {
             return {
-                client: this.$store.state.client
+                client: this.$store.state.client,
             };
         },
-        disabled : function (){
-            return !User.isLogin()
-        }
+        disabled: function () {
+            return !User.isLogin();
+        },
+        uid: function () {
+            return User.getInfo().uid;
+        },
     },
     methods: {
         // 数据模块
@@ -146,7 +176,7 @@ export default {
             const params = {
                 name: this.search,
                 ...this.params,
-            }
+            };
             getDpsList(params)
                 .then((res) => {
                     this.list = res?.data?.data || [];
@@ -160,6 +190,7 @@ export default {
         },
         // 提交申请
         onApply() {
+            this.selectedRow = null;
             this.showDpsForm = true;
         },
         updateShowDps(val) {
@@ -192,6 +223,11 @@ export default {
         },
         getTypeIcon: function (val) {
             return require(`@/assets/img/dps/${val}.svg`);
+        },
+        // 编辑
+        onEditRow(row) {
+            this.selectedRow = row;
+            this.showDpsForm = true;
         },
     },
     mounted: function () {
