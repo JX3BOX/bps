@@ -36,8 +36,21 @@
                         <el-form-item label="选择可以额外提供加速的奇穴">
                             <!-- <p>选择可以额外提供加速的奇穴</p> -->
                             <el-radio-group v-model="hasteInfo.extra">
-                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.name">{{
-                                item.name }}</el-radio>
+                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.name"
+                                    v-show="item.label != 2">{{
+                                        item.name }}</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-form>
+                </el-card>
+                <el-card header="额外加速奇穴" class="m-extra-box">
+                    <el-form label-position="top">
+                        <el-form-item label="选择可以额外提供突破上限的加速的奇穴">
+                            <!-- <p>选择可以额外提供突破上限的加速的奇穴</p> -->
+                            <el-radio-group v-model="hasteInfo.uExtra">
+                                <el-radio v-for="item in extraHasteList" :key="item.name" :label="item.name"
+                                    v-show="item.label != 1">{{
+                                        item.name }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-form>
@@ -70,6 +83,7 @@ export default {
                 skillTime: 1.5,
                 hitTimes: 1,
                 extra: '无',
+                uExtra: "无",
             },
             hasteCof: 11.695 * (450 * 120 - 45750) / 100,
             //等级改系数
@@ -80,10 +94,10 @@ export default {
                     label: "读条时间(秒)",
                     value: "duration",
                 },
-                {
-                    label: "破招伤害时间(秒)",
-                    value: "surplus",
-                },
+                //{
+                //    label: "破招伤害时间(秒)",
+                //    value: "surplus",
+                //},
                 //{
                 //label: "帧数（调试用）",
                 //value: "nowFrame",
@@ -91,6 +105,10 @@ export default {
                 {
                     label: "所需加速率",
                     value: "percentage",
+                },
+                {
+                    label: "最终加速率",
+                    value: "uPercentage",
                 },
                 {
                     label: "所需加速等级",
@@ -102,38 +120,48 @@ export default {
     },
     computed: {
         tableData: function () {
-            let { skillTime, hitTimes, extra: name } = this.hasteInfo;
+            let { skillTime, hitTimes, extra: name, uExtra: uname } = this.hasteInfo;
             let _extraHaste = this.extraHasteList.find(item => item.name === name);
+            let _uExtraHaste = this.extraHasteList.find(item => item.name === uname);
             let hasteCalcResult = [];
             const extra = _extraHaste.value;
+            const uExtra = _uExtraHaste.value;
             const skillFrame = Math.round(skillTime / 0.0625);
             //console.log(skillFrame)
             //当前读条帧数 上一条记得注释掉
             const surplusFrame = Math.ceil(2 / 0.0625);
-            //破招固定2秒/段的帧数
+            //破招固定2秒/段的帧数 120级废弃
             let hastePercent = 0;
             let hastePercentLimit = 0;
+            let uHastePercentLimit = 0;
 
             //TODO: 这个 for 会被计算 24120 次，在数值扩展后更多需要优化
             for (let i = 0; hastePercentLimit < 25; i++) {
                 const baseHaste = (i / this.hasteCof) * 10.24;
                 const totalHaste = Math.floor(baseHaste) + Math.floor(extra);
+                const uTotalHaste = totalHaste + Math.floor(uExtra);
                 //基础加速加奇穴加速
                 const nowFrame = Math.floor((skillFrame * 1024) / (totalHaste + 1024));
+                const uNowFrame = Math.floor((skillFrame * 1024) / (uTotalHaste + 1024));
                 const surplusNowFrame = Math.floor((surplusFrame * 1024) / (totalHaste + 1024));
-                //帧数
+                //技能受加速影响帧数
                 hastePercent = i / this.hasteCof;
                 hastePercentLimit = i / this.hasteCof + extra / 10.24;
+                uHastePercentLimit = hastePercentLimit + uExtra / 10.24;
 
                 let nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes));
                 //基础加速读条时间
+                let uNowTime = this.ToFixed(uNowFrame * 0.0625 * Number(hitTimes));
+                //加突破上限的读条时间
                 let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5);
                 //破招时间 2s/段总5段
 
                 const result = {
                     duration: "",
                     percentage: this.ToFixed(hastePercent),
+                    uPercentage: this.ToFixed(uHastePercentLimit),
                     nowFrame: nowFrame,
+                    uNowFrame: uNowFrame,
                     surplus: "",
                     surplusNowFrame: surplusNowFrame,
                     level: i,
@@ -141,11 +169,12 @@ export default {
 
                 // 这里决定在最终的表中是否显示重复的数据
                 // 乱动概率卡死浏览器
-                if (nowFrame > 0 && surplusNowFrame > 0) {
-                    if (!hasteCalcResult.some((r) => r.nowFrame == nowFrame)) // nowFrame无重复
-                        result.duration = nowTime;
-                    if (!hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)) // surplusNowFrame无重复
-                        result.surplus = nowSurplusTime;
+                if (uNowFrame > 0) {
+                    //if (nowFrame > 0 && surplusNowFrame > 0) {    --120级废弃
+                    if (!hasteCalcResult.some((r) => r.uNowFrame == uNowFrame)) // nowFrame无重复
+                        result.duration = uNowTime;
+                    //if (!hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)) // surplusNowFrame无重复
+                    //    result.surplus = nowSurplusTime;
                     if (result.duration || result.surplus)
                         hasteCalcResult.push(result);
                 }
