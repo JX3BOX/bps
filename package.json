@@ -11,13 +11,13 @@
     "kungfu": "node ./tools/kungfu.js"
   },
   "dependencies": {
-    "@jx3box/jx3box-comment-ui": "^1.7.13",
+    "@jx3box/jx3box-comment-ui": "^1.7.16",
     "@jx3box/jx3box-common": "^7.9.13",
     "@jx3box/jx3box-common-ui": "^7.5.5",
-    "@jx3box/jx3box-data": "^3.3.0",
+    "@jx3box/jx3box-data": "^3.3.4",
     "@jx3box/jx3box-editor": "^1.9.9",
-    "@jx3box/jx3box-talent": "^1.2.4",
-    "@jx3box/jx3box-talent2": "^1.4.10",
+    "@jx3box/jx3box-talent": "^1.2.5",
+    "@jx3box/jx3box-talent2": "^1.4.11",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",
