@@ -42,7 +42,7 @@
             <!-- 列表 -->
             <div class="m-archive-list" v-if="data && data.length">
                 <ul class="u-list">
-                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" caller="bps_index" :reporter="{ aggregate, tag, subtype }" />
+                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" caller="bps_index_click" />
                 </ul>
             </div>
 
@@ -83,6 +83,7 @@ import { appKey } from "@/../setting.json";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
+import { reportNow } from "@jx3box/jx3box-common/js/reporter";
 export default {
     name: "Index",
     props: [],
@@ -150,13 +151,11 @@ export default {
             }
             return [...new Set([...post_topics['bps_pve'], ...post_topics['bps_pvp']])]
         },
-        aggregate: function (){
-            return this.data.map(item => this.postLink(item.ID))
-        }
     },
     methods: {
-        postLink: function (val) {
-            return `/${appKey}/` + val;
+        reporterLink: function (val) {
+            const prefix = this.client === 'std' ? 'www' : 'origin'
+            return`${prefix}:/${appKey}/` + val;
         },
         onSearch() {
             if (this.page !== 1) {
@@ -210,6 +209,13 @@ export default {
                     }
                     this.total = res.data?.data?.total;
                     this.pages = res.data?.data?.pages;
+
+                    reportNow({
+                        caller: 'bps_index_load',
+                        data: {
+                            aggregate: res.data?.data?.list.map(item => this.reporterLink(item.ID)),
+                        }
+                    })
                 })
                 .finally(() => {
                     this.loading = false;

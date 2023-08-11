@@ -8,9 +8,8 @@
             v-reporter="{
                 data: {
                     href: reporterLink(item.ID),
-                    ...reporter,
                 },
-                caller: 'bps_index',
+                caller,
             }"
         >
             <img :src="getBanner(item.post_banner, item.post_subtype)" :key="item.ID" />
@@ -35,7 +34,6 @@
                 v-reporter="{
                     data: {
                         href: reporterLink(item.ID),
-                        ...reporter,
                     },
                     caller,
                 }"
@@ -97,10 +95,9 @@ import { __ossMirror, __imgPath } from "@jx3box/jx3box-common/data/jx3box";
 import { cms as mark_map } from "@jx3box/jx3box-common/data/mark.json";
 import { showDate } from "@jx3box/jx3box-common/js/moment.js";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import reporter from "@jx3box/jx3box-common/js/reporter";
 export default {
     name: "ListItem",
-    props: ["item", "order", "reporter", "caller"],
+    props: ["item", "order", "caller"],
     components: {},
     data: function () {
         return {
@@ -119,6 +116,9 @@ export default {
             }
             return subject;
         },
+        client() {
+            return this.item?.client;
+        },
     },
     watch: {},
     methods: {
@@ -134,7 +134,8 @@ export default {
             return location.origin + `/${appKey}/` + val;
         },
         reporterLink: function (val) {
-            return`/${appKey}/` + val;
+            const prefix = this.client === 'std' ? 'www' : 'origin'
+            return`${prefix}:/${appKey}/` + val;
         },
     },
     filters: {
