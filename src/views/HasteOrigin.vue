@@ -3,7 +3,9 @@
         <el-row :gutter="24">
             <el-col :lg="8" :md="12" :sm="24" class="m-haste-input">
                 <el-card header="skill_settings">
-                    <div slot="header">技能设定</div>
+                    <template #header>
+                        技能设<span @click="setCof">定</span>
+                    </template>
                     <el-form>
                         <div>
                             <span class="m-haste-card-text">技能时间</span>
@@ -72,6 +74,8 @@ export default {
                 skillTime: 1.5,
                 hitTimes: 1,
             },
+            hasteCof : (14.983 * 725).toFixed(6),
+            //基础加速系数
             tableHeader: [
                 {
                     label: "读条时间（s）",
@@ -138,6 +142,9 @@ export default {
             }
             return outputNumber;
         },
+        setCof: function () {
+            this.hasteCof = prompt("加速系数更新为？（看不懂请不要乱动）", this.hasteCof) ?? this.hasteCof;
+        },
         CaleHaste: function () {
             //计算模块
             let { skillTime, hitTimes } = this.hasteInfo;
@@ -145,15 +152,14 @@ export default {
             //技能帧数
             const hasteRate = 0;
             //预留额外加速，暂时用不到，写0
-            const hasteCof = 14.983 * 245;
-            //基础加速系数
+            
             //const currentCof = 0.325;
             //特殊加速百分比系数(可能误差),1.0.0.2531版本删除
             let hastePercent = 0;
             let hasteCaleResult = [];
             for (let i = 0; hastePercent < 25; i++) {
                 //加速值
-                const hasteBasePercent = i / hasteCof;
+                const hasteBasePercent = i / this.hasteCof;
                 //基础加速率（小数）=加速值/加速系数
                 //const hasteCurrentPercent = (Math.floor(i * currentCof) * 100) / 1024;
                 //特殊加速率（百分数）=加速值*特殊系数,1.0.0.2538版本删除
