@@ -19,9 +19,7 @@
                             <a :href="getItemLink(item)" target="_blank">
                                 <img class="u-icon" :src="iconLink(item.icon, client)" />
                                 <span class="u-name">{{ item.name }}</span>
-                                <span class="u-xf">
-                                    ({{ getBelongTo(item) }})
-                                </span>
+                                <span class="u-xf"> ({{ getBelongTo(item) }}) </span>
                                 <span class="u-desc">{{ item.desc }}</span>
                                 <span class="u-remark">{{ item.content }}</span>
                             </a>
@@ -56,7 +54,7 @@ import { getLink, iconLink, showAvatar, authorLink } from "@jx3box/jx3box-common
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import relation from "@jx3box/jx3box-data/data/xf/relation.json";
 
-import {getSpecialGroup, getSpecialGroupSkill} from "@/service/skill";
+import { getSpecialGroup, getSpecialGroupSkill } from "@/service/skill";
 import schoolMap from "@jx3box/jx3box-data/data/xf/schoolid.json";
 import xfid from "@jx3box/jx3box-data/data/xf/xfid.json";
 export default {
@@ -81,7 +79,7 @@ export default {
                 chaofeng: "el-icon-ice-cream-round",
                 huifu: "el-icon-ice-drink",
                 chuantou: "el-icon-knife-fork",
-                chuanci: "el-icon-scissors"
+                chuanci: "el-icon-scissors",
             },
             type: "jianshang",
             authors: [],
@@ -96,7 +94,7 @@ export default {
             return this.$route.query.subtype;
         },
         school: function () {
-            return this.subtype === '通用' ? (this.subtype ? 0 : '') : xfmap[this.subtype]?.school;
+            return this.subtype === "通用" ? (this.subtype ? 0 : "") : xfmap[this.subtype]?.school;
         },
         mount: function () {
             return xfmap[this.subtype]?.id || 0;
@@ -122,26 +120,32 @@ export default {
             const params = {
                 group: this.type,
                 client: this.client,
-            }
-            if (this.school !== '') {
+            };
+            if (this.school !== "") {
                 params.school = this.school;
             }
-            getSpecialGroupSkill(params).then((res) => {
-                this.data = res.data.data.filter(item => item?.mount == this.mount || !item?.mount);
-            }).finally(() => {
-                this.loading = false;
-            });
+            getSpecialGroupSkill(params)
+                .then((res) => {
+                    this.data = res.data.data.filter(
+                        (item) => !this.mount || item?.mount == this.mount || !item?.mount
+                    );
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         loadGroup() {
-            getSpecialGroup().then(res => {
-                this.types = res.data.data.map(item => {
-                    return {
-                        ...item,
-                        icon: this.icons[item.name],
-                        key: item.name
-                    }
-                }).filter(item => !['chuanci','chuantou','guanti'].includes(item.name));
-            })
+            getSpecialGroup().then((res) => {
+                this.types = res.data.data
+                    .map((item) => {
+                        return {
+                            ...item,
+                            icon: this.icons[item.name],
+                            key: item.name,
+                        };
+                    })
+                    .filter((item) => !["chuanci", "chuantou", "guanti"].includes(item.name));
+            });
         },
         getItemLink: function (item) {
             return getLink(item.type || "skill", item.id);
@@ -154,7 +158,7 @@ export default {
         iconLink,
         getBelongTo({ school, mount }) {
             return mount ? xfid[mount] : schoolMap[school];
-        }
+        },
     },
     filters: {
         showXfIcon: function (xf) {
