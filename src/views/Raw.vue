@@ -4,7 +4,7 @@
             <el-tabs v-model="kungfuid" type="card">
                 <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
                 <el-tab-pane
-                    :label="kungfu | showKungfuName"
+                    :label="showKungfuName(kungfu)"
                     :name="kungfu"
                     v-for="kungfu in kungfus"
                     :key="kungfu"
@@ -252,6 +252,10 @@ export default {
                 }
             });
         },
+        showKungfuName: function (val) {
+            const kungfuMap = this.client === "origin" ? kungfus_origin : kungfus;
+            return kungfuMap[val];
+        },
     },
     filters: {
         filterRaw: function (str) {
@@ -266,9 +270,7 @@ export default {
         skillLink: function (id) {
             return getLink("skill", id);
         },
-        showKungfuName: function (val) {
-            return kungfus[val];
-        },
+
     },
     watch: {
         subtype: {
