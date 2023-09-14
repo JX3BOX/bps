@@ -116,6 +116,7 @@ import kungfumap_origin from "@/assets/data/kungfu_origin.json";
 import pasvmap from "@/assets/data/pasv.json";
 import zhenfamap from "@/assets/data/zhenfa.json";
 import kungfus from "@/assets/data/kungfuid.json";
+import kungfus_origin from "@/assets/data/kungfuid_origin.json";
 import { getSkillWiki } from "@/service/helper";
 import { flattenDeep } from "lodash";
 
