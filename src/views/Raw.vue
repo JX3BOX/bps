@@ -41,7 +41,7 @@
                             <template v-for="(o, i) in item">
                                 <li v-if="o" class="u-item" :key="i">
                                     <span class="u-id">ID:{{ o.SkillID }}</span>
-                                    <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
+                                    <img class="u-pic" :title="'IconID:' + o.IconID" :src="getIconURL(o.IconID)" />
                                     <div class="u-primary">
                                         <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
                                             {{ o.Name }}
@@ -74,7 +74,7 @@
                 <template v-else>
                     <li v-for="(o, i) in data" class="u-item" :key="i">
                         <span class="u-id" v-if="o">ID:{{ o.SkillID }}</span>
-                        <img class="u-pic" :title="'IconID:' + o.IconID" :src="o.IconID | iconURL" />
+                        <img class="u-pic" :title="'IconID:' + o.IconID" :src="getIconURL(o.IconID)" />
                         <div class="u-primary">
                             <a class="u-name" :href="o.SkillID | skillLink" target="_blank">
                                 {{ o.Name }}
@@ -256,6 +256,11 @@ export default {
             const kungfuMap = this.client === "origin" ? kungfus_origin : kungfus;
             return kungfuMap[val];
         },
+        //区分包括不限于技能大全的icon所属client
+        getIconURL:function(iconID){
+            const iconURL = this.client ==="origin" ? __iconPath + "origin_icon/" + iconID + ".png" : __iconPath + "icon/" + iconID + ".png";
+            return iconURL;
+        }
     },
     filters: {
         filterRaw: function (str) {
@@ -264,9 +269,10 @@ export default {
             str = str && str.replace(/(\<EnchantID.*?\>)/g, "\n$1");
             return str;
         },
-        iconURL: function (id) {
-            return __iconPath + "icon/" + id + ".png";
-        },
+        //iconURL: function (id) {
+        //    return __iconPath + "icon/" + id + ".png";
+        //},
+
         skillLink: function (id) {
             return getLink("skill", id);
         },
