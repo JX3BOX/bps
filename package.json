@@ -13,11 +13,11 @@
   "dependencies": {
     "@jx3box/jx3box-comment-ui": "^1.7.16",
     "@jx3box/jx3box-common": "^7.9.15",
-    "@jx3box/jx3box-common-ui": "^7.6.3",
+    "@jx3box/jx3box-common-ui": "^7.6.9",
     "@jx3box/jx3box-data": "^3.4.8",
     "@jx3box/jx3box-editor": "^1.9.9",
     "@jx3box/jx3box-talent": "^1.2.6",
-    "@jx3box/jx3box-talent2": "^1.5.4",
+    "@jx3box/jx3box-talent2": "^1.5.7",
     "axios": "^0.21.1",
     "core-js": "^3.4.3",
     "element-ui": "^2.13.0",

@@ -14,6 +14,11 @@
             <template #op-prepend>
                 <AdminDirectMessage :user-id="user_id" :sourceId="post.ID" :sourceType="post.post_type"></AdminDirectMessage>
             </template>
+            <template #title>
+                <span>
+                    {{ title }}
+                </span>
+            </template>
         </Breadcrumb>
         <LeftSidebar :uid="user_id">
             <Nav :id="id" class="m-nav" />
@@ -52,6 +57,9 @@ export default {
         },
         post: function (){
             return this.$store.state.post;
+        },
+        title() {
+            return this.post.post_title || document.title;
         }
     },
     methods: {},
