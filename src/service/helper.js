@@ -1,5 +1,4 @@
 import { $helper, $cms } from "@jx3box/jx3box-common/js/https";
-import qs from "qs";
 
 function getCollections(params) {
     return $cms()({
@@ -21,6 +20,10 @@ function getCollection($collection_id) {
         method: "GET",
         url: `/api/cms/post/collection/${$collection_id}`
     });
+}
+
+function updateCollection(id, data){
+    return $cms().put(`/api/cms/post/collection/${id}`, data);
 }
 
 // 获取技能百科
@@ -49,4 +52,4 @@ function getMenuGroup(name) {
     return $cms({ mute: true }).get(`/api/cms/menu-group/${name}`);
 }
 
-export { getCollection, getSkillWiki, getCollections, removeCollection, getMenuGroups, getMenuGroup, getBread };
+export { getCollection, getSkillWiki, getCollections, removeCollection, updateCollection, getMenuGroups, getMenuGroup, getBread };

@@ -30,7 +30,7 @@
                                         <img svg-inline src="@/assets/img/author.svg" />
                                     </i>
                                     <a class="u-name" :href="collection.user_id | authorLink">{{
-                                        collection.user_nickname
+                                        collection.collection_user_info && collection.collection_user_info.display_name
                                     }}</a>
                                 </div>
 
@@ -156,6 +156,7 @@ import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import CollectionPublish from "@jx3box/jx3box-editor/service/enum/CollectionPublic";
 import { getCollection, removeCollection } from "@/service/helper";
 import dateFormat from "@/utils/dateFormat";
+import Bus from "@/store/bus";
 import {
     getThumbnail,
     getLink,
@@ -257,7 +258,11 @@ export default {
         authorLink,
     },
     created: function () {},
-    mounted: function () {},
+    mounted: function () {
+        Bus.$on("updateCollection", () => {
+            location.reload();
+        });
+    },
 };
 </script>
 

@@ -96,6 +96,12 @@
                             </div>
                         </template>
                     </el-table-column>
+
+                    <el-table-column label="更新时间" prop="updated_at">
+                        <template slot-scope="scope">
+                            <span>{{ showTime(scope.row.updated_at) }}</span>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
         </div>
@@ -116,6 +122,7 @@ import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { __imgPath, __Domain, __Origin } from "@jx3box/jx3box-common/data/jx3box";
 import { showAvatar, authorLink, showMountIcon, showClientLabel } from "@jx3box/jx3box-common/js/utils";
+import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { map as each } from "lodash";
 import types from "@/assets/data/dps_types.json";
 import User from "@jx3box/jx3box-common/js/user";
@@ -218,6 +225,7 @@ export default {
         showAvatar,
         authorLink,
         showClientLabel,
+        showTime,
         showTypeLabel: function (val) {
             return types[val];
         },

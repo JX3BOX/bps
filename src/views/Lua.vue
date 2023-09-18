@@ -93,7 +93,6 @@ import schoolmap from "../assets/data/lua.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import "../plugins/prism.js";
 import "../plugins/prism.css";
-import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Lua",
     components: { AppLayout },
