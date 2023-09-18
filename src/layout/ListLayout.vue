@@ -20,7 +20,7 @@
                 <tabs />
                 <slot></slot>
             </div>
-            <RightSidebar>
+            <RightSidebar class="m-bps-right-side">
                 <Side class="m-extend" />
             </RightSidebar>
             <Footer></Footer>
@@ -50,5 +50,10 @@ export default {
 </script>
 
 <style lang="less">
+.m-bps-right-side {
+    &.c-sidebar-right.is-close {
+        transform: translateX(0) !important;
+    }
+}
 @import "~@/assets/css/list.less";
 </style>
