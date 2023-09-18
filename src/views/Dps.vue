@@ -97,9 +97,9 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column label="更新时间" prop="updated_at">
+                    <el-table-column label="更新时间" prop="post_modified">
                         <template slot-scope="scope">
-                            <span>{{ showTime(scope.row.updated_at) }}</span>
+                            <span>{{ showTime(scope.row.post_modified) }}</span>
                         </template>
                     </el-table-column>
                 </el-table>
