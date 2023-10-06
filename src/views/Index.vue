@@ -17,7 +17,7 @@
                     <!-- <clientBy @filter="filterImperceptibly" :type="client"></clientBy> -->
 
                     <!-- 类型过滤 -->
-                    <el-radio-group class="u-type" v-model="tag" size="mini">
+                    <el-radio-group class="u-type" v-model="tag" size="mini" @input="onTagInput">
                         <el-radio-button label="">全部</el-radio-button>
                         <el-radio-button label="PVE">PVE</el-radio-button>
                         <el-radio-button label="PVP">PVP</el-radio-button>
@@ -246,6 +246,10 @@ export default {
         // 追加加载
         appendPage: function () {
             this.loadData(true);
+        },
+        onTagInput: function (val) {
+            this.tag = val;
+            this.replaceRoute({ tag: val, page: 1 });
         },
     },
     watch: {
