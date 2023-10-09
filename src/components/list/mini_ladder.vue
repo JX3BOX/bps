@@ -13,22 +13,23 @@
 
         <div class="m-ladder-rank" v-loading="loading">
             <ul>
-                <li v-for="(item, i) in rank" :key="i">
-                    <div
+                <li v-for="(item, i) in rank" :key="i" class="u-link">
+                    <!-- <div
                         class="u-item"
                         :style="{
                             width: getRate(item.dps),
                             backgroundColor: xfcolor(item.xf),
                         }"
                         :title="item.label"
-                    >
+                    > -->
+                        <span class="u-order" :class="highlight(i)">{{ i + 1 }}</span>
                         <img v-if="item.xf && xfmap[item.xf]" :src="showMountIcon(xfmap[item.xf]['id'])" class="u-pic" />
                         <span class="u-text">
                             {{ item.xf }}
                             <!-- <span class="u-desc" v-if="item.label">&lt;{{ item.label }}&gt;</span> -->
                         </span>
                         <span class="u-dps">{{ ~~item.dps }}</span>
-                    </div>
+                    <!-- </div> -->
                 </li>
             </ul>
         </div>
@@ -92,6 +93,9 @@ export default {
         showAvatar,
         showSchoolIcon,
         showMountIcon,
+        highlight(i) {
+            return `u-order-${i + 1}`;
+        },
     },
 };
 </script>
