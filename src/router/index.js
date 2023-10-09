@@ -25,8 +25,8 @@ const routes = [
     { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
     { name: "lua", path: "/lua", component: () => import("@/views/Lua.vue") },
 
-    { name: "collection", path: "/collection", component: () => import("@/views/Collection.vue") },
-    { name: "collection-single", path: "/collection/:id?", component: () => import('@/components/collection/collection_single.vue') },
+    // { name: "collection", path: "/collection", component: () => import("@/views/Collection.vue") },
+    // { name: "collection-single", path: "/collection/:id?", component: () => import('@/components/collection/collection_single.vue') },
 
     // { name: "group", path: "/group", component: () => import("@/views/Group.vue") },
     // { name: "story", path: "/story", component: () => import("@/views/Story.vue") },

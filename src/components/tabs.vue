@@ -66,12 +66,12 @@
             </span>
         </el-tab-pane>
 
-        <el-tab-pane label="作品小册" name="collection">
+        <!-- <el-tab-pane label="作品小册" name="collection">
             <span slot="label">
                 <i class="el-icon-paperclip"></i>
                 <b>作品小册</b>
             </span>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="源码解析" name="lua" v-if="isSuperAuthor">
             <span slot="label">
