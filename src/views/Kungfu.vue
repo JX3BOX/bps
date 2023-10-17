@@ -64,23 +64,6 @@ export default {
     data: function () {
         return {
             types: [],
-            icons: {
-                jianshang: "el-icon-sugar",
-                diyu: "el-icon-dessert",
-                wudi: "el-icon-ice-cream",
-                kongzhi: "el-icon-hot-water",
-                jiekong: "el-icon-cold-drink",
-                qusan: "el-icon-watermelon",
-                jianliao: "el-icon-grape",
-                daduan: "el-icon-cherry",
-                weiyi: "el-icon-apple",
-                jixing: "el-icon-milk-tea",
-                jiansu: "el-icon-lollipop",
-                chaofeng: "el-icon-ice-cream-round",
-                huifu: "el-icon-ice-drink",
-                chuantou: "el-icon-knife-fork",
-                chuanci: "el-icon-scissors",
-            },
             type: "jianshang",
             authors: [],
             relation: relation["mount_relation"],
@@ -140,7 +123,7 @@ export default {
                     .map((item) => {
                         return {
                             ...item,
-                            icon: this.icons[item.name],
+                            icon: item.icon,
                             key: item.name,
                         };
                     })
