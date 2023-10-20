@@ -39,12 +39,12 @@ function getAll(xf) {
 
 // 获取特殊技能分组
 function getSpecialGroup(){
-    return $cms().get('/api/cms/pvp/specialskill/group');
+    return $cms().get('/api/cms/pvp/collection/group');
 }
 
 // 获取特殊技能
 function getSpecialGroupSkill(params){
-    return $cms().get('/api/cms/pvp/specialskill', {
+    return $cms().get('/api/cms/pvp/collection', {
         params
     });
 }
