@@ -103,6 +103,7 @@ export default {
             const params = {
                 group: this.type,
                 client: this.client,
+                __no_page: 1,
             };
             if (this.school !== "") {
                 params.school = this.school;
@@ -118,7 +119,7 @@ export default {
                 });
         },
         loadGroup() {
-            getSpecialGroup().then((res) => {
+            getSpecialGroup({ __need_item: 0 }).then((res) => {
                 this.types = res.data.data
                     .map((item) => {
                         return {

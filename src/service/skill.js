@@ -38,8 +38,8 @@ function getAll(xf) {
 }
 
 // 获取特殊技能分组
-function getSpecialGroup(){
-    return $cms().get('/api/cms/pvp/collection/group');
+function getSpecialGroup(params){
+    return $cms().get('/api/cms/pvp/collection/group', { params });
 }
 
 // 获取特殊技能
