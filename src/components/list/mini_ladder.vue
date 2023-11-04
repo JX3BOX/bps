@@ -11,7 +11,7 @@
             </el-select> -->
         </h3>
 
-        <div class="m-ladder-rank" v-loading="loading">
+        <div class="m-ladder-rank m-mini-ladder-rank" v-loading="loading">
             <ul>
                 <li v-for="(item, i) in rank" :key="i" class="u-link">
                     <!-- <div
