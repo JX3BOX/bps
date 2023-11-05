@@ -1,6 +1,6 @@
 <template>
     <div class="m-single-side">
-        <PostTopic v-if="id" type="bps" :id="~~id"/>
+        <PostTopic v-if="id" type="bps" :id="~~id" :post-banner="post.post_banner" />
         <PostDirectory id="directory"/>
         <PostCollection v-if="showSideCollection" :store="collection_data"/>
     </div>
@@ -34,6 +34,9 @@ export default {
         },
         collection_data : function (){
             return this.$store.state.extend?.collection_data
+        },
+        post : function (){
+            return this.$store.state.post
         }
     }
 };
