@@ -41,12 +41,12 @@
                 <em>Assembly Simulator</em>
             </a>
             <a href="/battle" target="_blank">
-                <img class="u-icon" :src="getAppIcon('battle', true)" />
-                <span>统计分析</span>
+                <img class="u-icon" :src="getAppIcon('battle')" />
+                <span>战斗统计</span>
                 <em>Statistic Analysis</em>
             </a>
             <a href="/jcl" target="_blank">
-                <img class="u-icon" :src="getAppIcon('jcl', true)" />
+                <img class="u-icon" :src="getAppIcon('jcl')" />
                 <span>日志分析</span>
                 <em>Log Analysis</em>
             </a>
