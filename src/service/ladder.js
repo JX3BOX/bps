@@ -13,13 +13,13 @@ function getUsers(ids) {
 }
 
 function getDpsGroup(params){
-    return $cms().get(`/api/cms/bps/dps/group`,{
+    return $cms().get(`/api/cms/bps/dps/ladder`,{
         params
     })
 }
 
 function getRank(key) {
-    return $cms().get(`/api/cms/bps/dps/group/${key}`);
+    return $cms().get(`/api/cms/bps/dps/ladder/${key}`);
 }
 
 export { getUsers, getRank, getDpsGroup };
