@@ -35,20 +35,20 @@
 
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-group">
-            <a href="/pz" target="_blank">
+            <!-- <a href="/pz" target="_blank">
                 <img class="u-icon" :src="getAppIcon('pz', true)" />
                 <span>配装模拟器</span>
                 <em>Assembly Simulator</em>
+            </a> -->
+            <a href="/bps/haste" target="_blank">
+                <img class="u-icon" :src="getAppIcon('haste')" />
+                <span>加速阈值</span>
+                <em>Haste</em>
             </a>
-            <a href="/battle" target="_blank">
-                <img class="u-icon" :src="getAppIcon('battle')" />
-                <span>战斗统计</span>
-                <em>Statistic Analysis</em>
-            </a>
-            <a href="/jcl" target="_blank">
-                <img class="u-icon" :src="getAppIcon('jcl')" />
-                <span>日志分析</span>
-                <em>Log Analysis</em>
+            <a href="/bps/dps" target="_blank">
+                <img class="u-icon" :src="getAppIcon('dps')" />
+                <span>DPS计算器</span>
+                <em>DPS</em>
             </a>
         </div>
     </div>
