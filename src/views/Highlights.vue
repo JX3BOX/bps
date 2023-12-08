@@ -131,11 +131,12 @@ export default {
             return {
                 subtype: this.subtype,
                 order: this.order,
-                mark: this.mark || "recommended,geek",
+                mark: this.mark,
                 client: this.client,
                 zlp: this.zlp,
                 tag: this.tag,
                 topic: this.topic,
+                star: 1
             };
         },
         // 分页相关参数
