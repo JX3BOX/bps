@@ -44,7 +44,7 @@ export default {
 
 <style lang="less">
 .m-single-side {
-    padding: 20px;
+    padding: 15px;
 }
 .m-single-directory {
     .mb(20px);
