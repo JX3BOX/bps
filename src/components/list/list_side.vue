@@ -29,6 +29,9 @@
                 </el-collapse-item>
             </el-collapse>
         </div>
+
+        <!-- banner -->
+        <list-banner subtype="sidebar"></list-banner>
     </div>
 </template>
 
@@ -39,10 +42,12 @@ import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx
 import { getMenuGroups } from "@/service/helper.js";
 
 import miniLadder from "./mini_ladder.vue";
+import list_banner from "./list_banner.vue";
 export default {
     name: "list_side",
     components: {
         miniLadder,
+        "list-banner": list_banner,
     },
     props: [],
     data: function () {

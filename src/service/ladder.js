@@ -22,4 +22,10 @@ function getRank(key) {
     return $cms().get(`/api/cms/bps/dps/ladder/${key}`);
 }
 
-export { getUsers, getRank, getDpsGroup };
+const getConfigBanner = (params) => {
+    return $cms().get(`api/cms/config/banner`, {
+        params,
+    });
+}
+
+export { getUsers, getRank, getDpsGroup, getConfigBanner };
