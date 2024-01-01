@@ -3,7 +3,7 @@
         <div class="m-dps" v-loading="loading">
             <!-- 搜索 -->
             <div class="m-dps-search">
-                <el-button type="primary" @click="onApply" :disabled="disabled">+ 提交计算器</el-button>
+                <el-button class="u-publish" type="primary" @click="onApply" :disabled="disabled">+ 提交计算器</el-button>
                 <el-input
                     v-model.trim.lazy="search"
                     placeholder="请输入关键词.."
@@ -42,7 +42,7 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column label="名称" prop="name" sortable>
+                    <el-table-column label="名称" prop="name" sortable min-width="300">
                         <template slot-scope="scope">
                             <span class="u-client" :class="'i-client-' + scope.row.client">{{
                                 showClientLabel(scope.row.client)
@@ -52,7 +52,7 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column label="作者" prop="user" sortable>
+                    <el-table-column label="作者" prop="user" sortable min-width="180">
                         <template slot-scope="scope" v-if="scope.row.user">
                             <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop="">
                                 <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)" />
@@ -78,6 +78,7 @@
                         :filter-method="filterMatchValue"
                         :filter-multiple="true"
                         column-key="type"
+                        min-width="100"
                     >
                         <template slot-scope="scope">
                             <div class="m-type-col">
@@ -97,7 +98,7 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column label="更新时间" prop="post_modified">
+                    <el-table-column label="更新时间" prop="post_modified" min-width="160">
                         <template slot-scope="scope">
                             <span>{{ showTime(scope.row.post_modified) }}</span>
                         </template>
