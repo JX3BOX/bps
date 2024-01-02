@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         loadData() {
-            getConfigBanner({ client: this.client, status: 1, per: 10, type: "bps", subtype: this.subtype }).then(
+            getConfigBanner({ client: this.client, status: 1, per: 10, type: "bbs", subtype: this.subtype }).then(
                 (res) => {
                     this.list = res.data.data?.list || [];
                 }
@@ -48,37 +48,25 @@ export default {
 <style lang="less">
 .c-pvp-banner {
     .mb(10px);
-    overflow: hidden;
-    .m-carousel .el-carousel__container {
-        box-sizing: border-box;
-        .size(100%, 300px);
-    }
-    .u-cover {
-        overflow: hidden;
-        width: 100%;
-        text-align: center;
-    }
-    .el-image__inner {
-        width: auto;
-    }
-}
-
-.m-ladder-carousel {
     .r(5px);
     padding: 0 15px 15px 15px;
     overflow: hidden;
     .m-carousel .el-carousel__container {
         box-sizing: border-box;
-        .size(245px,150px);
+        .size(100%, 150px);
     }
     .u-cover {
-        // height: 160px;
-        border-radius: 5px;
         overflow: hidden;
-        img{
+        width: 100%;
+        text-align: center;
+        .r(5px);
+
+        img {
             .r(5px);
-            height: 150px;
         }
+    }
+    .el-image__inner {
+        width: auto;
     }
 }
 </style>
