@@ -14,7 +14,7 @@
             <div class="m-archive-filter">
                 <div class="m-filter--left">
                     <!-- 版本过滤 -->
-                    <!-- <clientBy @filter="filterImperceptibly" :type="client"></clientBy> -->
+                    <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
 
                     <!-- 类型过滤 -->
                     <el-radio-group class="u-type" v-model="tag" size="mini" @input="onTagInput">
