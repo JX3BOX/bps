@@ -14,7 +14,7 @@
             <div class="m-archive-filter">
                 <div class="m-filter--left">
                     <!-- 版本过滤 -->
-                    <clientBy @filter="filterImperceptibly" :type="client" :clients="clients"></clientBy>
+                    <clientBy @filter="filterImperceptibly" :type="client" :clients="clients" :showWujie="true"></clientBy>
 
                     <!-- 类型过滤 -->
                     <markBy @filter="filterMeta" :marks="pv_types" type="tag" placeholder="类型"></markBy>
