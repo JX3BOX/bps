@@ -17,6 +17,7 @@
                     <img class="u-icon" svg-inline src="@/assets/img/side/docs.svg" />
                     推荐小册
                 </div>
+                <a class="u-jbsci" href="/event/jbsci"><i class="el-icon-caret-right"></i>JBSCI期刊</a>
             </h3>
             <el-collapse class="u-groups" v-model="activeDocGroup">
                 <el-collapse-item :title="list.label" :name="list.name" v-for="list in data" :key="list.name">
@@ -31,7 +32,7 @@
         </div>
 
         <!-- banner -->
-        <list-banner subtype="sidebar"></list-banner>
+        <!-- <list-banner subtype="sidebar"></list-banner> -->
     </div>
 </template>
 
@@ -42,12 +43,12 @@ import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx
 import { getMenuGroups } from "@/service/helper.js";
 
 import miniLadder from "./mini_ladder.vue";
-import list_banner from "./list_banner.vue";
+// import list_banner from "./list_banner.vue";
 export default {
     name: "list_side",
     components: {
         miniLadder,
-        "list-banner": list_banner,
+        // "list-banner": list_banner,
     },
     props: [],
     data: function () {

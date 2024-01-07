@@ -14,7 +14,7 @@
             <div class="m-archive-filter">
                 <div class="m-filter--left">
                     <!-- 版本过滤 -->
-                    <clientBy @filter="filterImperceptibly" :type="client" :clients="clients" :showWujie="true"></clientBy>
+                    <clientBy @filter="filterImperceptibly" :type="client" :showWujie="true"></clientBy>
 
                     <!-- 类型过滤 -->
                     <markBy @filter="filterMeta" :marks="pv_types" type="tag" placeholder="类型"></markBy>
@@ -106,13 +106,6 @@ export default {
             pv_types: {
                 "PVE": "PVE",
                 "PVP": "PVP",
-            },
-
-            clients: {
-                all: "全端",
-                std: "重制",
-                origin: "缘起",
-                wujie: "无界"
             },
         };
     },
