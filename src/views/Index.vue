@@ -109,7 +109,7 @@ export default {
             },
 
             clients: {
-                all: "双端",
+                all: "全端",
                 std: "重制",
                 origin: "缘起",
                 wujie: "无界"
