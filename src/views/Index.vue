@@ -14,14 +14,10 @@
             <div class="m-archive-filter">
                 <div class="m-filter--left">
                     <!-- 版本过滤 -->
-                    <clientBy @filter="filterImperceptibly" :type="client"></clientBy>
+                    <clientBy @filter="filterImperceptibly" :type="client" :clients="clients"></clientBy>
 
                     <!-- 类型过滤 -->
-                    <el-radio-group class="u-type" v-model="tag" size="mini" @input="onTagInput">
-                        <el-radio-button label="">全部</el-radio-button>
-                        <el-radio-button label="PVE">PVE</el-radio-button>
-                        <el-radio-button label="PVP">PVP</el-radio-button>
-                    </el-radio-group>
+                    <markBy @filter="filterMeta" :marks="pv_types" type="tag" placeholder="类型"></markBy>
 
                     <!-- 角标过滤 -->
                     <markBy @filter="filterMeta"></markBy>
@@ -107,7 +103,17 @@ export default {
             tag: "", //标签
             topic: "", // 主题
 
-            pv_types: ["PVE", "PVP"],
+            pv_types: {
+                "PVE": "PVE",
+                "PVP": "PVP",
+            },
+
+            clients: {
+                all: "双端",
+                std: "重制",
+                origin: "缘起",
+                wujie: "无界"
+            },
         };
     },
     computed: {
