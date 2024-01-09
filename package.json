@@ -12,9 +12,9 @@
     "kungfu": "node ./tools/kungfu.js"
   },
   "dependencies": {
-    "@jx3box/jx3box-comment-ui": "^1.8.6",
-    "@jx3box/jx3box-common": "^8.2.1",
-    "@jx3box/jx3box-common-ui": "^8.1.1",
+    "@jx3box/jx3box-comment-ui": "^1.8.7",
+    "@jx3box/jx3box-common": "^8.2.2",
+    "@jx3box/jx3box-common-ui": "^8.1.4",
     "@jx3box/jx3box-data": "^3.5.6",
     "@jx3box/jx3box-editor": "^2.1.4",
     "@jx3box/jx3box-talent": "^1.2.7",
