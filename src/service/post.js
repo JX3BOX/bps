@@ -7,14 +7,8 @@ function getMyPost(params) {
 }
 
 function getPosts(params) {
-    let query = {
-        type: "bps",
-    };
-    if (params) {
-        query = Object.assign(query, params);
-    }
-    return $cms().get("/api/cms/posts", {
-        params: query,
+    return $cms().get("/api/cms/posts/bps", {
+        params,
     });
 }
 function getPost(id) {
