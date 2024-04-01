@@ -47,7 +47,16 @@
                                             {{ o.Name }}
                                             <em v-if="o.SkillName">({{ o.SkillName }})</em>
                                         </a>
-                                        <span class="u-content">{{ o.Desc | filterRaw }}</span>
+                                        <span class="u-content">
+                                            <template v-if="o?.parse?.desc">
+                                                <span>{{ o?.parse?.desc | filterRaw }}</span
+                                                ><br />
+                                                <span>{{ o?.parse?.talent_desc | filterRaw }}</span>
+                                            </template>
+                                            <template v-else>
+                                                <span>{{ o.Desc | filterRaw }}</span>
+                                            </template>
+                                        </span>
                                         <div class="u-remarks">
                                             <span class="u-remark">Level : {{ o.Level }}</span>
                                             <span class="u-remark">Remark : {{ o.Remark }}</span>
@@ -80,7 +89,16 @@
                                 {{ o.Name }}
                                 <em v-if="o.SkillName">({{ o.SkillName }})</em>
                             </a>
-                            <span class="u-content">{{ o.Desc | filterRaw }}</span>
+                            <span class="u-content">
+                                <template v-if="o?.parse?.desc">
+                                    <span>{{ o?.parse?.desc | filterRaw }}</span
+                                    ><br />
+                                    <span>{{ o?.parse?.talent_desc | filterRaw }}</span>
+                                </template>
+                                <template v-else>
+                                    <span>{{ o.Desc | filterRaw }}</span>
+                                </template>
+                            </span>
                             <div class="u-remarks">
                                 <span class="u-remark">Level : {{ o.Level }}</span>
                                 <span class="u-remark">Remark : {{ o.Remark }}</span>
@@ -257,10 +275,13 @@ export default {
             return kungfuMap[val];
         },
         //区分包括不限于技能大全的icon所属client
-        getIconURL:function(iconID){
-            const iconURL = this.client ==="origin" ? __iconPath + "origin_icon/" + iconID + ".png" : __iconPath + "icon/" + iconID + ".png";
+        getIconURL: function (iconID) {
+            const iconURL =
+                this.client === "origin"
+                    ? __iconPath + "origin_icon/" + iconID + ".png"
+                    : __iconPath + "icon/" + iconID + ".png";
             return iconURL;
-        }
+        },
     },
     filters: {
         filterRaw: function (str) {
@@ -276,7 +297,6 @@ export default {
         skillLink: function (id) {
             return getLink("skill", id);
         },
-
     },
     watch: {
         subtype: {
