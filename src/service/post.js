@@ -19,4 +19,18 @@ function getMyPostCount() {
     return $cms().get("/api/cms/posts/user/my/count");
 }
 
-export { getPosts, getPost, getMyPostCount, getMyPost };
+// 获取技改
+function getChangelog(params) {
+    return $cms().get(`/api/cms/pve/skill/changelog`, {
+        params,
+    });
+}
+
+// 获取关联文章
+function getPostMeta(params) {
+    return $cms().get(`/api/cms/post/meta`, {
+        params,
+    });
+}
+
+export { getPosts, getPost, getMyPostCount, getMyPost, getChangelog, getPostMeta};

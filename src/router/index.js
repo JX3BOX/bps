@@ -24,6 +24,7 @@ const routes = [
 
     { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
     { name: "lua", path: "/lua", component: () => import("@/views/Lua.vue") },
+    { name: "changelog", path: "/changelog", component: () => import("@/views/ChangeLog.vue") },
 
     // { name: "collection", path: "/collection", component: () => import("@/views/Collection.vue") },
     // { name: "collection-single", path: "/collection/:id?", component: () => import('@/components/collection/collection_single.vue') },

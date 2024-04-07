@@ -45,6 +45,13 @@
             </span>
         </el-tab-pane>
 
+        <el-tab-pane label="技改历史" name="changelog">
+            <span slot="label">
+                <i class="el-icon-news"></i>
+                <b>技改历史</b>
+            </span>
+        </el-tab-pane>
+
         <el-tab-pane label="急速阈值" name="haste">
             <span slot="label">
                 <i class="el-icon-stopwatch"></i>
