@@ -156,7 +156,7 @@ module.exports = {
             .rule("images")
             .use("url-loader")
             .loader("url-loader")
-            .tap((options) => Object.assign(options, { limit: 10240 }));
+            .tap((options) => Object.assign(options, { limit: 10240, esModule: false }));
 
         //💝 in-line svg imgs ~
         config.module
