@@ -132,11 +132,11 @@ export default {
             return User.isEditor();
         },
         pushDate({item}) {
-            const date = item?.log?.push_at || item?.banner?.created_at
+            const date = item?.log?.push_at
             return showDate(new Date(date));
         },
         showPushDate() {
-            return Boolean(this.item?.log || this.item?.banner);
+            return Boolean(this.item?.log);
         },
     },
     methods: {
@@ -158,7 +158,7 @@ export default {
         showDate,
         // 是否为30天内
         isRecent: function () {
-            const date = this.item?.log?.push_at || this.item?.banner?.created_at
+            const date = this.item?.log?.push_at
             return dayjs().diff(dayjs(date), "day") < 30;
         },
         onPush() {
