@@ -46,8 +46,8 @@
             </span>
 
             <span class="u-push" v-if="isEditor">
-                <time v-if="showPushDate" class="u-push__time" :class="{'is-recent': isRecent()}">{{ pushDate }}已推送</time>
-                <el-button class="u-push__btn" size="mini" type="primary" @click="onPush">推送</el-button>
+                <time v-if="showPushDate" class="u-push__time" :class="{'is-recent': isRecent()}">{{ pushDate }} 已推送</time>
+                <el-button class="u-push__btn" size="mini" type="warning" @click="onPush" icon="el-icon-s-promotion">推送</el-button>
             </span>
         </h2>
 
