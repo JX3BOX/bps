@@ -84,7 +84,7 @@ import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
 import { reportNow } from "@jx3box/jx3box-common/js/reporter";
-import {getDesignLog,getBannerList} from "@/service/design";
+import {getDesignLog} from "@/service/design";
 import DesignTask from "@jx3box/jx3box-common-ui/src/bread/DesignTask.vue";
 export default {
     name: "Index",
@@ -234,13 +234,10 @@ export default {
                     if (this.isEditor && !this.isPhone) {
                         const ids = this.data.map(item => item.ID);
                         const logs = await getDesignLog({ source_type: 'bps', ids: ids.join(',') }).then(res => res.data.data);
-                        const banners = await getBannerList({ source_type: 'bps', source_ids: ids.join(','), limit: ids.length, page: 1 }).then(res => res.data.data.list || []);
 
                         this.data = this.data.map(item => {
                             const log = logs.find(log => log.source_id == item.ID) || null;
-                            const banner = banners.find(banner => banner.source_id == item.ID) || null;
                             this.$set(item, 'log', log);
-                            this.$set(item, 'banner', banner);
                             return item;
                         });
                     }
