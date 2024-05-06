@@ -218,6 +218,26 @@
         font-weight: normal;
         .lh(2);
         font-weight: 400;
+        .pr;
+
+        .u-push {
+            .pa;
+            .rt(0);
+            .flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .u-push__time {
+            .fz(12px);
+            color: #999;
+
+            &.is-recent {
+                color: #00d24b;
+            }
+        }
+        .u-push__btn {
+            // padding: 8px 14px;
+        }
     }
 
     // 角标
@@ -406,6 +426,12 @@
     .m-archive-list {
         .u-desc {
             .none;
+        }
+
+        .u-post {
+            .u-push {
+                .none;
+            }
         }
     }
 }

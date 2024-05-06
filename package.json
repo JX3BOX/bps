@@ -14,7 +14,7 @@
   "dependencies": {
     "@jx3box/jx3box-comment-ui": "^1.8.7",
     "@jx3box/jx3box-common": "^8.2.11",
-    "@jx3box/jx3box-common-ui": "^8.3.2",
+    "@jx3box/jx3box-common-ui": "^8.3.4",
     "@jx3box/jx3box-data": "^3.5.8",
     "@jx3box/jx3box-editor": "^2.1.9",
     "@jx3box/jx3box-talent": "^1.2.7",
@@ -24,6 +24,7 @@
     "element-ui": "^2.13.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
+    "mitt": "^3.0.1",
     "qs": "^6.11.0",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.3",

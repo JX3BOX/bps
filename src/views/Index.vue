@@ -38,7 +38,7 @@
             <!-- 列表 -->
             <div class="m-archive-list" v-if="data && data.length">
                 <ul class="u-list">
-                    <list-item v-for="(item, i) in data" :key="i + item" :item="item" :order="order" caller="bps_index_click" />
+                    <list-item v-for="(item) in data" :key="item.ID" :item="item" :order="order" caller="bps_index_click" />
                 </ul>
             </div>
 
@@ -68,18 +68,24 @@
                 @current-change="changePage"
             ></el-pagination>
         </div>
+
+        <design-task v-model="showDesignTask" :post="currentPost"></design-task>
     </ListLayout>
 </template>
 <script>
 import ListLayout from "@/layout/ListLayout.vue";
 import listItem from "@/components/list/list_item.vue";
 // import recTable from "@/components/list/rec_table.vue";
+import User from "@jx3box/jx3box-common/js/user";
+import bus from "@/utils/bus";
 
 import { appKey } from "@/../setting.json";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
 import { getPosts } from "@/service/post";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
 import { reportNow } from "@jx3box/jx3box-common/js/reporter";
+import {getDesignLog,getBannerList} from "@/service/design";
+import DesignTask from "@jx3box/jx3box-common-ui/src/bread/DesignTask.vue";
 export default {
     name: "Index",
     props: [],
@@ -107,6 +113,9 @@ export default {
                 "PVE": "PVE",
                 "PVP": "PVP",
             },
+
+            currentPost: null,
+            showDesignTask: false,
         };
     },
     computed: {
@@ -149,6 +158,12 @@ export default {
                 return post_topics['bps_pvp']
             }
             return [...new Set([...post_topics['bps_pve'], ...post_topics['bps_pvp']])]
+        },
+        isEditor: function () {
+            return User.isEditor();
+        },
+        isPhone: function () {
+            return window.innerWidth < 768;
         },
     },
     methods: {
@@ -200,7 +215,7 @@ export default {
 
             this.loading = true;
             return getPosts(query)
-                .then((res) => {
+                .then(async (res) => {
                     if (appendMode) {
                         this.data = this.data.concat(res.data?.data?.list);
                     } else {
@@ -214,7 +229,21 @@ export default {
                         data: {
                             aggregate: res.data?.data?.list.map(item => this.reporterLink(item.ID)),
                         }
-                    })
+                    });
+
+                    if (this.isEditor && !this.isPhone) {
+                        const ids = this.data.map(item => item.ID);
+                        const logs = await getDesignLog({ source_type: 'bps', ids: ids.join(',') }).then(res => res.data.data);
+                        const banners = await getBannerList({ source_type: 'bps', source_ids: ids.join(','), limit: ids.length, page: 1 }).then(res => res.data.data.list || []);
+
+                        this.data = this.data.map(item => {
+                            const log = logs.find(log => log.source_id == item.ID) || null;
+                            const banner = banners.find(banner => banner.source_id == item.ID) || null;
+                            this.$set(item, 'log', log);
+                            this.$set(item, 'banner', banner);
+                            return item;
+                        });
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
@@ -288,11 +317,17 @@ export default {
             },
         },
     },
-    mounted: function () {},
+    mounted: function () {
+        bus.on("design-task", (post) => {
+            this.currentPost = post;
+            this.showDesignTask = true;
+        });
+    },
     components: {
         listItem,
         ListLayout,
-        // recTable
+        // recTable,
+        DesignTask,
     },
 };
 </script>
