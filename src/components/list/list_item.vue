@@ -45,7 +45,7 @@
                 <i v-for="mark in item.mark" class="u-mark" :key="mark">{{ mark | showMark }}</i>
             </span>
 
-            <span class="u-push" v-if="isEditor">
+            <span class="u-push" v-if="hasPermission">
                 <time v-if="showPushDate" class="u-push__time" :class="{'is-recent': isRecent()}">{{ pushDate }} 已推送</time>
                 <el-button class="u-push__btn" size="mini" type="warning" @click="onPush" icon="el-icon-s-promotion">推送</el-button>
             </span>
@@ -128,8 +128,8 @@ export default {
         client() {
             return this.item?.client;
         },
-        isEditor() {
-            return User.isEditor();
+        hasPermission() {
+            return User.hasPermission('push_banner');
         },
         pushDate({item}) {
             const date = item?.log?.push_at

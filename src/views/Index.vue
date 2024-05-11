@@ -159,9 +159,6 @@ export default {
             }
             return [...new Set([...post_topics['bps_pve'], ...post_topics['bps_pvp']])]
         },
-        isEditor: function () {
-            return User.isEditor();
-        },
         isPhone: function () {
             return window.innerWidth < 768;
         },
@@ -231,7 +228,7 @@ export default {
                         }
                     });
 
-                    if (this.isEditor && !this.isPhone) {
+                    if (User.hasPermission('push_banner') && !this.isPhone) {
                         const ids = this.data.map(item => item.ID);
                         const logs = await getDesignLog({ source_type: 'bps', ids: ids.join(',') }).then(res => res.data.data);
 
