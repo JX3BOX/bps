@@ -13,7 +13,7 @@
         >
             <template #op-prepend>
                 <!-- <AdminDirectMessage :user-id="user_id" :sourceId="String(post.ID)" :sourceType="post.post_type"></AdminDirectMessage> -->
-                <AdminDrop v-if="isEditor" :post="post" :user-id="user_id" />
+                <AdminDrop v-if="isTeammate" :post="post" :user-id="user_id" />
             </template>
             <template #title>
                 <span>
@@ -63,8 +63,8 @@ export default {
         title() {
             return this.post.post_title || document.title;
         },
-        isEditor() {
-            return User.isEditor();
+        isTeammate() {
+            return User.isTeammate();
         },
     },
     methods: {},
