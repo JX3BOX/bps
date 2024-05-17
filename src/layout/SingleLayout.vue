@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="m-bps-single">
         <Header></Header>
         <Breadcrumb
             name="职业专栏"
@@ -78,4 +78,9 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/list.less";
+.m-bps-single {
+    .c-admin-drop {
+        margin-right: 0;
+    }
+}
 </style>
