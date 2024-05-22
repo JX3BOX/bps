@@ -13,7 +13,7 @@
         >
             <template #op-prepend>
                 <!-- <AdminDirectMessage :user-id="user_id" :sourceId="String(post.ID)" :sourceType="post.post_type"></AdminDirectMessage> -->
-                <AdminDrop v-if="isTeammate" :post="post" :user-id="user_id" />
+                <AdminDrop v-if="isTeammate" :post="post" :user-id="user_id" :showMove="true"/>
             </template>
             <template #title>
                 <span>
@@ -78,9 +78,4 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/list.less";
-.m-bps-single {
-    .c-admin-drop {
-        margin-right: 0;
-    }
-}
 </style>
