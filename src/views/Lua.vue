@@ -5,6 +5,9 @@
                 <div class="u-title">
                     <i class="el-icon-collection-tag"></i>
                     <span class="u-title-list" @click="showList">文件夹</span>
+                    <el-checkbox class="u-wujie" v-model="isWujie">
+                        无界
+                    </el-checkbox>
                 </div>
                 <div
                     class="u-type"
@@ -106,6 +109,8 @@ export default {
             data: "",
             file: "",
             search: "",
+            isWujie: false,
+            client: this.$store.state.client || "std",
         };
     },
     computed: {
@@ -125,9 +130,6 @@ export default {
             } else {
                 return "";
             }
-        },
-        client: function () {
-            return this.$store.state.client || "std";
         },
         isSuperAuthor: function () {
             return this.$store.state.isSuperAuthor || false;
@@ -227,6 +229,12 @@ export default {
                 }
             },
         },
+        isWujie: {
+            handler: function (val) {
+                this.client = val ? "wujie" : "std";
+                this.loadMap();
+            }
+        }
     },
 };
 </script>
