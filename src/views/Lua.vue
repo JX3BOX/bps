@@ -134,6 +134,9 @@ export default {
         isSuperAuthor: function () {
             return this.$store.state.isSuperAuthor || false;
         },
+        webClient: function () {
+            return this.$store.state.client || "std";
+        },
     },
     methods: {
         isDirectory: function (val, key) {
@@ -231,7 +234,7 @@ export default {
         },
         isWujie: {
             handler: function (val) {
-                this.client = val ? "wujie" : "std";
+                this.client = val ? "wujie" : this.webClient;
                 this.loadMap();
             }
         }
