@@ -280,6 +280,10 @@ export default {
         margin:10px auto 20px auto;
     }
     overflow: hidden;
+
+    .e-skill-combo {
+        padding: 0 5px !important;
+    }
 }
 
 
