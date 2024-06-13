@@ -328,6 +328,8 @@ export default {
             this.currentPost = post;
             this.showDesignTask = true;
         });
+
+        this.stdClient = this.isPhone ? 'wujie' : 'std';
     },
     components: {
         listItem,
