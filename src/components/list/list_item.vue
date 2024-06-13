@@ -24,6 +24,7 @@
 
             <!-- 资料片 -->
             <span class="u-label u-zlp" v-if="item.zlp">{{ item.zlp }}</span>
+            <span class="u-label u-zlp" v-if="item.client == 'wujie'">无界</span>
 
             <!-- 标题文字 -->
             <a

@@ -5,7 +5,17 @@
             <div class="m-archive-search" slot="search-before">
                 <a :href="publish_link" class="u-publish el-button el-button--primary">+ 发布作品</a>
                 <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
-                    <span slot="prepend"><i class="el-icon-search"></i> <span class="u-search">关键词</span></span>
+                    <span slot="prepend">
+                        <template v-if="client=='std' && isPhone">
+                            <el-select v-model="stdClient">
+                                <el-option label="电脑" value="std"></el-option>
+                                <el-option label="手机" value="wujie"></el-option>
+                            </el-select>
+                        </template>
+                        <template v-else>
+                            <i class="el-icon-search"></i> <span class="u-search">关键词</span>
+                        </template>
+                    </span>
                     <el-button slot="append" icon="el-icon-position" class="u-btn" @click="onSearch"></el-button>
                 </el-input>
             </div>
@@ -116,6 +126,8 @@ export default {
 
             currentPost: null,
             showDesignTask: false,
+
+            stdClient: "std",
         };
     },
     computed: {
@@ -133,7 +145,7 @@ export default {
                 subtype: this.subtype,
                 order: this.order,
                 mark: this.mark,
-                client: this.client,
+                client: this.client == 'std' ? this.stdClient : this.client,
                 zlp: this.zlp,
                 tag: this.tag,
                 topic: this.topic,
