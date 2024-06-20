@@ -24,7 +24,7 @@
             <div class="m-archive-filter">
                 <div class="m-filter--left">
                     <!-- 版本过滤 -->
-                    <clientBy @filter="filterImperceptibly" :type="client" :showWujie="true"></clientBy>
+                    <clientBy @filter="filterImperceptibly" :type="client" :showWujie="false"></clientBy>
 
                     <!-- 类型过滤 -->
                     <markBy @filter="filterMeta" :marks="pv_types" type="tag" placeholder="类型"></markBy>
@@ -35,6 +35,8 @@
                     <zlpBy @filter="filterMeta" type="zlp" :client="client"></zlpBy>
                     <!-- 主题过滤 -->
                     <topicBy v-model="topic" :topics="topics" />
+                    <!-- 无界筛选 -->
+                    <el-checkbox v-model="is_wujie" class="u-wujie-filter" :true-label="1" :false-label="0">只看无界</el-checkbox>
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->
@@ -118,6 +120,7 @@ export default {
             zlp: "", //资料片
             tag: "", //标签
             topic: "", // 主题
+            is_wujie: 0,
 
             pv_types: {
                 "PVE": "PVE",
@@ -149,6 +152,7 @@ export default {
                 zlp: this.zlp,
                 tag: this.tag,
                 topic: this.topic,
+                is_wujie: this.is_wujie,
             };
         },
         // 分页相关参数
