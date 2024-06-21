@@ -7,9 +7,9 @@
                 <el-input placeholder="请输入搜索内容" v-model.trim.lazy="search" clearable @clear="onSearch" @keydown.native.enter="onSearch">
                     <span slot="prepend">
                         <template v-if="client=='std' && isPhone">
-                            <el-select v-model="stdClient">
-                                <el-option label="电脑" value="std"></el-option>
-                                <el-option label="手机" value="wujie"></el-option>
+                            <el-select v-model="is_wujie">
+                                <el-option label="电脑" :value="0"></el-option>
+                                <el-option label="手机" :value="1"></el-option>
                             </el-select>
                         </template>
                         <template v-else>
@@ -144,16 +144,18 @@ export default {
         },
         // 请求关联参数
         query: function () {
-            return {
+            const obj = {
                 subtype: this.subtype,
                 order: this.order,
                 mark: this.mark,
-                client: this.client == 'std' ? this.stdClient : this.client,
+                client: this.client,
                 zlp: this.zlp,
                 tag: this.tag,
                 topic: this.topic,
                 is_wujie: this.is_wujie,
             };
+
+            return obj
         },
         // 分页相关参数
         pg_queries: function () {
@@ -333,7 +335,7 @@ export default {
             this.showDesignTask = true;
         });
 
-        this.stdClient = this.isPhone ? 'wujie' : 'std';
+        this.is_wujie = this.isPhone ? 1 : 0;
     },
     components: {
         listItem,
