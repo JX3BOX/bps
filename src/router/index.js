@@ -22,7 +22,7 @@ const routes = [
     { name: "dps", path: "/dps", component: () => import("@/views/Dps.vue") },
     { name: "ladder", path: "/ladder", component: () => import("@/views/Ladder.vue") },
 
-    { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
+    // { name: "raw", path: "/raw", component: () => import("@/views/Raw.vue") },
     { name: "lua", path: "/lua", component: () => import("@/views/Lua.vue") },
     { name: "changelog", path: "/changelog", component: () => import("@/views/ChangeLog.vue") },
 
