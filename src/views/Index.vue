@@ -335,7 +335,10 @@ export default {
             this.showDesignTask = true;
         });
 
-        this.is_wujie = this.isPhone ? 1 : 0;
+        if (this.client !== "origin") {
+            this.is_wujie = this.isPhone ? 1 : 0;
+        }
+
     },
     components: {
         listItem,
