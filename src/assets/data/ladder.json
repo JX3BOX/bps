@@ -1,6 +1,10 @@
 {
     "std":[
         {
+            "label": "丝路风语（130级）",
+            "value": "silufengyu"
+        },
+        {
             "label": "横刀断浪（120级）",
             "value": "hengdaoduanlang"
         },
