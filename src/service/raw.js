@@ -15,8 +15,8 @@ function getSkill(id) {
     return $node().get(`/skill/id/${id}`);
 }
 
-async function getTalents() {
-    let res = await $oss.get("/data/qixue/talents.json");
+async function getTalents(client = 'std') {
+    let res = await $oss.get(`/data/qixue/${client}/talents.json`);
     return res.data;
 }
 
