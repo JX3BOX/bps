@@ -15,14 +15,19 @@ function getSkill(id) {
     return $node().get(`/skill/id/${id}`);
 }
 
-async function getTalents(client = 'std') {
+async function getTalents(client = "std") {
     let res = await $oss.get(`/data/qixue/${client}/talents.json`);
     return res.data;
 }
 
-async function getTalents2() {
-    let res = await $oss.get("/data/talent2/talent2.json");
-    return res.data;
+async function getTalent2List(params) {
+    return $node().get("/api/node/talent-origin/list", {
+        params: params,
+    });
 }
 
-export { getSkills, getSkill, getTalents, getTalents2 };
+async function getTalents2(version) {
+    return $node().get(`/api/node/talent-origin/${version}`);
+}
+
+export { getSkills, getSkill, getTalents, getTalents2, getTalent2List };

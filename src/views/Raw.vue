@@ -16,19 +16,6 @@
                 </template>
             </el-tabs>
 
-            <!-- 搜索 -->
-            <!-- <div class="m-raw-search m-archive-search">
-            <el-input
-                placeholder="搜索关键词"
-                v-model="search"
-                class="input-with-select"
-                @change="loadSkills"
-            >
-                <template slot="prepend">技能名</template>
-                <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-        </div>-->
-
             <ul class="m-resource-list" v-if="data && data.length">
                 <template v-if="kungfuid === 'talent'">
                     <el-collapse v-model="collapses">
@@ -107,13 +94,6 @@
                                 <span v-if="o.SpecialDesc" class="u-remark">SpecialDesc : {{ o.SpecialDesc }}</span>
                             </div>
                         </div>
-
-                        <!-- <skill-wiki
-                            v-if="o"
-                            :wiki="wikis[o.SkillID]"
-                            :key="kungfuid + o.SkillID + o.Level"
-                            :sourceId="o.SkillID"
-                        /> -->
                     </li>
                 </template>
             </ul>
@@ -125,7 +105,7 @@
 <script>
 import AppLayout from "@/layout/AppLayout.vue";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
-import { getSkills, getTalents, getTalents2 } from "../service/raw";
+import { getSkills, getTalents, getTalents2, getTalent2List } from "../service/raw";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import cloneDeep from "lodash/cloneDeep";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
@@ -247,7 +227,6 @@ export default {
         handleTalentData: function (data) {
             const skills = {
                 talent: this.talent_skills,
-                // talent2: this.talent2_skills
             };
             const talentSkills = cloneDeep(skills[this.kungfuid]);
             return talentSkills.map((item) => {
@@ -282,6 +261,24 @@ export default {
                     : __iconPath + "icon/" + iconID + ".png";
             return iconURL;
         },
+        async loadTalent2() {
+            const versionsRes = await getTalent2List({ per: 1 });
+            const version = versionsRes.data.data.list?.[0]?.talent_version;
+            if (!version) return;
+            const talents2Res = await getTalents2(version);
+            const { detail, mount } = talents2Res.data.data;
+            const result = {};
+            for (const m of mount) {
+                const { mount_id: mountId, first } = m;
+                if (!first || !detail[first]) continue;
+                const skillIds = detail[first]
+                    .flat()
+                    .filter(Boolean)
+                    .map((item) => item.id);
+                result[mountId] = skillIds;
+            }
+            return result;
+        },
     },
     filters: {
         filterRaw: function (str) {
@@ -290,10 +287,6 @@ export default {
             str = str && str.replace(/(\<EnchantID.*?\>)/g, "\n$1");
             return str;
         },
-        //iconURL: function (id) {
-        //    return __iconPath + "icon/" + id + ".png";
-        //},
-
         skillLink: function (id) {
             return getLink("skill", id);
         },
@@ -313,18 +306,10 @@ export default {
                 this.loadSkills();
             },
         },
-        // data: {
-        //     deep: true,
-        //     handler(val) {
-        //         const _skillIds = flattenDeep(val).map((item) => item.SkillID);
-        //         const skills = _skillIds.join(",");
-        //         this.loadWiki(skills);
-        //     },
-        // },
     },
     mounted: async function () {
         this.talents = await getTalents();
-        this.talents2 = await getTalents2();
+        this.talents2 = await this.loadTalent2();
     },
 };
 </script>
