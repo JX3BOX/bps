@@ -1,23 +1,29 @@
 <template>
     <AppLayout>
         <div class="v-raw" v-loading="loading">
-            <el-tabs v-model="kungfuid" type="card">
-                <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
-                <el-tab-pane
-                    :label="showKungfuName(kungfu)"
-                    :name="kungfu"
-                    v-for="kungfu in kungfus"
-                    :key="kungfu"
-                ></el-tab-pane>
-                <template v-if="~~mountid">
-                    <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
-                    <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
-                    <el-tab-pane label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
-                </template>
-            </el-tabs>
+            <div class="m-header">
+                <el-radio-group v-model="platform" v-if="client == 'std'">
+                    <el-radio-button label="std">旗舰</el-radio-button>
+                    <el-radio-button label="wujie">无界</el-radio-button>
+                </el-radio-group>
+                <el-tabs v-model="kungfuid" type="card">
+                    <el-tab-pane v-if="~~mountid" label="心法被动" name="pasv" key="pasv"></el-tab-pane>
+                    <el-tab-pane
+                        v-for="(kungfu, index) in kungfus"
+                        :label="kungfu"
+                        :name="kungfu"
+                        :key="index"
+                    ></el-tab-pane>
+                    <template v-if="~~mountid">
+                        <el-tab-pane label="奇穴" name="talent" key="talent" v-if="client === 'std'"></el-tab-pane>
+                        <el-tab-pane label="镇派" name="talent2" key="talent2" v-if="client === 'origin'"></el-tab-pane>
+                        <el-tab-pane v-if="panel.zhenfa?.length" label="阵法" name="zhenfa" key="zhenfa"></el-tab-pane>
+                    </template>
+                </el-tabs>
+            </div>
 
-            <ul class="m-resource-list" v-if="data && data.length">
-                <template v-if="kungfuid === 'talent'">
+            <ul class="m-resource-list" v-if="skills && skills.length">
+                <template v-if="['talent', 'talent2'].includes(kungfuid)">
                     <el-collapse v-model="collapses">
                         <el-collapse-item
                             v-for="(item, index) in data"
@@ -68,7 +74,7 @@
                     </el-collapse>
                 </template>
                 <template v-else>
-                    <li v-for="(o, i) in data" class="u-item" :key="i">
+                    <li v-for="(o, i) in skills" class="u-item" :key="i">
                         <span class="u-id" v-if="o">ID:{{ o.SkillID }}</span>
                         <img class="u-pic" :title="'IconID:' + o.IconID" :src="getIconURL(o.IconID)" />
                         <div class="u-primary">
@@ -107,28 +113,25 @@ import AppLayout from "@/layout/AppLayout.vue";
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { getSkills, getTalents, getTalents2, getTalent2List } from "../service/raw";
 import { __iconPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
-import cloneDeep from "lodash/cloneDeep";
 import { getLink } from "@jx3box/jx3box-common/js/utils";
-import kungfumap_std from "@/assets/data/kungfu_std.json";
-import kungfumap_origin from "@/assets/data/kungfu_origin.json";
-import pasvmap from "@/assets/data/pasv.json";
-import zhenfamap from "@/assets/data/zhenfa.json";
-import kungfus from "@/assets/data/kungfuid.json";
-import kungfus_origin from "@/assets/data/kungfuid_origin.json";
-import { getSkillWiki } from "@/service/helper";
-import { flattenDeep } from "lodash";
+import { getKungfuPanel } from "@/service/node";
 
-// components
-// import skillWiki from "@/components/skill/skill_wiki.vue";
 export default {
     name: "Raw",
     components: {
-        // skillWiki,
         AppLayout,
     },
     props: [],
     data: function () {
         return {
+            panel: {
+                pasv: [],
+                zhenfa: [],
+                kungfus: {},
+            },
+
+            platform: "std",
+            // 奇穴使用旧逻辑
             data: [],
             loading: false,
             // 默认展开全部
@@ -139,119 +142,140 @@ export default {
 
             wikis: {},
             talents: null,
+            talent_wujie: null,
             talents2: null,
         };
     },
     computed: {
+        skills() {
+            if (["talent", "talent2"].includes(this.kungfuid)) {
+                return this.data;
+            } else if (["pasv", "zhenfa"].includes(this.kungfuid)) {
+                return this.panel[this.kungfuid];
+            } else {
+                const kungfu_name = this.kungfuid || this.kungfus[0];
+                return this.panel.kungfus[kungfu_name];
+            }
+        },
         subtype: function () {
             return this.$route.query.subtype || "通用";
         },
         mountid: function () {
-            return xfmap[this.subtype]?.["id"] || "0";
+            return xfmap[this.subtype]?.["id"] || 0;
         },
         kungfus: function () {
-            return this.kungfumap[this.mountid]["kungfus"];
-        },
-        skill_ids: function () {
-            return this.kungfumap[this.mountid]["skills"][this.kungfuid];
-        },
-        pasv_skills: function () {
-            return pasvmap[this.subtype][this.client];
-        },
-        zhenfa_skills: function () {
-            return (this.mountid && zhenfamap[this.mountid]) || [];
-        },
-        talent_skills: function () {
-            return (this.mountid && this.talents?.[this.mountid]) || [];
-        },
-        talent2_skills: function () {
-            return (this.mountid && this.talents2?.[this.mountid]) || [];
-        },
-        ids: function () {
-            let skills = {
-                pasv: this.pasv_skills,
-                zhenfa: this.zhenfa_skills,
-                talent: this.talent_skills.flat(),
-                talent2: this.talent2_skills.flat(),
-            };
-            return skills[this.kungfuid] ? skills[this.kungfuid]?.join(",") : this.skill_ids?.join(",");
+            return Object.keys(this.panel.kungfus || {});
         },
         client: function () {
             return this.$store.state.client || "std";
         },
-        params: function () {
-            return {
-                ids: this.ids,
-                client: this.client,
-            };
-        },
-        kungfumap: function () {
-            return this.client == "origin" ? kungfumap_origin : kungfumap_std;
-        },
     },
     methods: {
-        loadSkills: function () {
+        loadTalentSkills() {
+            const talent_map = {
+                std: this.talents,
+                origin: this.talent2,
+                wujie: this.talent_wujie,
+            };
+            if (!this.mountid || !this.talents || !this.talents2) return;
+            const mountid = this.mountid;
+
+            const talent_ids = this.platform == "wujie" ? talent_map.wujie[mountid] : talent_map[this.client][mountid];
+            const talents_struct = talent_ids;
+            const ids = talents_struct.flat(3);
+
             this.loading = true;
-            getSkills(this.params)
+            getSkills({ ids: ids.join(","), client: this.client })
                 .then((res) => {
-                    let data = res.data || [];
-                    if (this.kungfuid == "zhenfa") {
-                        this.data = data;
-                    } else if (this.kungfuid === "talent") {
-                        this.data = this.handleTalentData(data);
-                    } else {
-                        this.data = this.removeLowLevelSkills(data);
-                    }
+                    const data = res.data;
+                    this.data = talents_struct.map((group) =>
+                        group
+                            .map((skill_id) => {
+                                const skills = data.filter((item) => item.SkillID == skill_id);
+                                return skills.length > 1 ? skills.filter((skill) => skill.Level != 0) : skills;
+                            })
+                            .flat()
+                    );
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
-        removeLowLevelSkills: function (data) {
-            let arr = [];
-            let _data = [];
-            // 只保留最高等级
-            data.forEach((item) => {
-                if (!arr.includes(item.SkillID)) {
-                    arr.push(item.SkillID);
-                    _data.push(item);
-                } else {
-                    let i = arr.indexOf(item.SkillID);
-                    if (~~item.Level > ~~_data[i].Level) {
-                        _data[i] = item;
+        loadPanel() {
+            // 预留无界、但是还没写
+            const client = this.platform == "wujie" ? "wujie" : this.$store.state.client;
+            getKungfuPanel({ mount_id: this.mountid, client }).then((res) => {
+                const data = res.data.data;
+                if (client == "wujie") {
+                    if (this.mountid) {
+                        let pasv_item = data.find(
+                            (item) => item.kungfu_id == -1 && Object.keys(item.ui_tab?.tbExtraDescText || {}).length
+                        );
+                        // 有的没有描述 奇怪
+                        if (!pasv_item) {
+                            pasv_item = data.find((item) => item.kungfu_id == -1);
+                        }
+                        const desc = Object.values(pasv_item.ui_tab?.tbExtraDescText || {}).pop() || '';
+                        const pasv_skill = {
+                            ...pasv_item.skill,
+                        };
+                        if (pasv_skill.parse) {
+                            pasv_skill.parse.desc += "\n" + desc;
+                        }
+                        this.panel.pasv = [pasv_skill];
+                        this.panel.zhenfa = [];
                     }
-                }
-            });
-            return _data;
-        },
-        handleTalentData: function (data) {
-            const skills = {
-                talent: this.talent_skills,
-            };
-            const talentSkills = cloneDeep(skills[this.kungfuid]);
-            return talentSkills.map((item) => {
-                return item.map((SkillID) => {
-                    const currentTalent = data.find((d) => d.SkillID == SkillID);
 
-                    return currentTalent;
-                });
+                    const kungfus = data
+                        .filter((item) => item.kungfu_id >= 0 && item.skill.IconID)
+                        .reduce((acc, cur) => {
+                            const kungfu_name = cur.kungfu_name;
+                            if (!acc[kungfu_name]) acc[kungfu_name] = [];
+                            if (!Array.isArray(cur.skill)) {
+                                acc[kungfu_name].push(cur.skill);
+                            } else {
+                                acc[kungfu_name].push(...cur.skill);
+                            }
+                            return acc;
+                        }, {});
+                    this.panel.kungfus = kungfus;
+                } else {
+                    if (this.mountid) {
+                        const pasv_skill = data
+                            .find((item) => item.column == -1)
+                            ?.skill?.reduce((acc, cur) => {
+                                if (!acc) return cur;
+                                if (acc.Level < cur.Level) return cur;
+                                return acc;
+                            });
+                        this.panel.pasv = [pasv_skill];
+                        const zhenfa_skill = data.find((item) => item.column == -2)?.skill;
+                        this.panel.zhenfa = zhenfa_skill;
+                    } else {
+                        this.panel.pasv = [];
+                        this.panel.zhenfa = [];
+                    }
+
+                    const kungfus = data
+                        .filter((item) => item.kungfu_id)
+                        .reduce((acc, cur) => {
+                            const kungfu_name = cur.kungfu_name;
+                            if (!acc[kungfu_name]) acc[kungfu_name] = [];
+                            if (!Array.isArray(cur.skill)) {
+                                acc[kungfu_name].push(cur.skill);
+                            } else {
+                                acc[kungfu_name].push(...cur.skill);
+                            }
+                            return acc;
+                        }, {});
+                    this.panel.kungfus = kungfus;
+                }
+                this.kungfuid = this.mountid ? "pasv" : this.kungfus[0];
             });
         },
         num2zh: function (num) {
             const zh = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
             return `第${zh[num]}重`;
-        },
-        loadWiki: function (skills) {
-            getSkillWiki("skill", { source_id: skills, client: this.client }).then((res) => {
-                if (!Array.isArray(res.data.data)) {
-                    // 后端为空返回空数组，右值返回对象
-                    this.wikis = res.data.data;
-                }
-            });
-        },
-        showKungfuName: function (val) {
-            const kungfuMap = this.client === "origin" ? kungfus_origin : kungfus;
-            return kungfuMap[val];
         },
         //区分包括不限于技能大全的icon所属client
         getIconURL: function (iconID) {
@@ -271,10 +295,7 @@ export default {
             for (const m of mount) {
                 const { mount_id: mountId, first } = m;
                 if (!first || !detail[first]) continue;
-                const skillIds = detail[first]
-                    .flat()
-                    .filter(Boolean)
-                    .map((item) => item.id);
+                const skillIds = detail[first].map((group) => group.filter(Boolean).map((item) => item.id));
                 result[mountId] = skillIds;
             }
             return result;
@@ -292,28 +313,42 @@ export default {
         },
     },
     watch: {
-        subtype: {
-            // immediate: true,
+        platform: {
             handler: function () {
-                // this.kungfuid = this.kungfus[0];
-                this.kungfuid = "pasv";
-                this.loadSkills();
+                this.loadPanel();
+                this.loadTalentSkills();
             },
         },
-        kungfuid: {
+        subtype: {
             immediate: true,
-            handler: function (val) {
-                this.loadSkills();
+            handler: function () {
+                this.kungfuid = "pasv";
+                this.loadPanel();
+                this.loadTalentSkills();
             },
         },
     },
     mounted: async function () {
         this.talents = await getTalents();
         this.talents2 = await this.loadTalent2();
+        this.talent_wujie = await getTalents("wujie");
+        this.loadTalentSkills();
     },
 };
 </script>
 
 <style lang="less">
 @import "../assets/css/raw.less";
+
+.v-raw {
+    .m-header {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+
+        .el-radio-group {
+            margin-bottom: 15px;
+        }
+    }
+}
 </style>

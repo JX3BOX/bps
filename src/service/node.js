@@ -1,5 +1,5 @@
 import { $node } from "@jx3box/jx3box-common/js/https";
-const $ = $node()
+const $ = $node();
 
 /* import axios from 'axios'
 const $ = axios.create({
@@ -12,4 +12,10 @@ function getRecipe(params) {
     });
 }
 
-export { getRecipe };
+function getKungfuPanel(params) {
+    return $.get("/api/node/v2/kungfu/panel", {
+        params
+    });
+}
+
+export { getRecipe, getKungfuPanel };

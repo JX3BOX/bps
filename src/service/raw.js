@@ -1,8 +1,11 @@
 import { $node, axios } from "@jx3box/jx3box-common/js/https";
-import { __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __ossRoot, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 
 const $oss = axios.create({
     baseURL: __ossRoot,
+});
+const $cdn = axios.create({
+    baseURL: __cdn,
 });
 
 function getSkills(params) {
@@ -16,7 +19,7 @@ function getSkill(id) {
 }
 
 async function getTalents(client = "std") {
-    let res = await $oss.get(`/data/qixue/${client}/talents.json`);
+    let res = await $cdn.get(`/data/qixue/${client}/talents.json`);
     return res.data;
 }
 
