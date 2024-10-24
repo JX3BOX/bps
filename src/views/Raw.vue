@@ -174,13 +174,16 @@ export default {
         loadTalentSkills() {
             const talent_map = {
                 std: this.talents,
-                origin: this.talent2,
+                origin: this.talents2,
                 wujie: this.talent_wujie,
             };
             if (!this.mountid || !this.talents || !this.talents2) return;
             const mountid = this.mountid;
 
-            const talent_ids = this.platform == "wujie" ? talent_map.wujie[mountid] : talent_map[this.client][mountid];
+            const talent_ids =
+                this.client == "std" && this.platform == "wujie"
+                    ? talent_map.wujie[mountid]
+                    : talent_map[this.client][mountid];
             const talents_struct = talent_ids;
             const ids = talents_struct.flat(3);
 
@@ -215,7 +218,7 @@ export default {
                         if (!pasv_item) {
                             pasv_item = data.find((item) => item.kungfu_id == -1);
                         }
-                        const desc = Object.values(pasv_item.ui_tab?.tbExtraDescText || {}).pop() || '';
+                        const desc = Object.values(pasv_item.ui_tab?.tbExtraDescText || {}).pop() || "";
                         const pasv_skill = {
                             ...pasv_item.skill,
                         };
