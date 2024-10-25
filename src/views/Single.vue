@@ -78,7 +78,7 @@ export default {
 
                     User.isLogin() && postHistory({
                         source_type: appKey,
-                        source_id: this.id,
+                        source_id: ~~this.id,
                         link: location.href,
                         title: this.post.post_title,
                     });
