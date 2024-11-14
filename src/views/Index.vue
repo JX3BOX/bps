@@ -36,7 +36,6 @@
                     <!-- 主题过滤 -->
                     <topicBy v-model="topic" :topics="topics" />
                     <!-- 无界筛选 -->
-                    <!-- <el-checkbox v-model="is_wujie" class="u-wujie-filter" :true-label="1" :false-label="0">只看无界</el-checkbox> -->
                     <versionBy style="margin-left: 10px;" :value="is_wujie" @filter="filterIsWujie"></versionBy>
                 </div>
                 <div class="m-filter--right">
