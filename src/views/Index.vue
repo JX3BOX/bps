@@ -36,7 +36,8 @@
                     <!-- 主题过滤 -->
                     <topicBy v-model="topic" :topics="topics" />
                     <!-- 无界筛选 -->
-                    <el-checkbox v-model="is_wujie" class="u-wujie-filter" :true-label="1" :false-label="0">只看无界</el-checkbox>
+                    <!-- <el-checkbox v-model="is_wujie" class="u-wujie-filter" :true-label="1" :false-label="0">只看无界</el-checkbox> -->
+                    <versionBy style="margin-left: 10px;" :value="is_wujie" @filter="filterIsWujie"></versionBy>
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->
@@ -98,6 +99,7 @@ import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
 import { reportNow } from "@jx3box/jx3box-common/js/reporter";
 import {getDesignLog} from "@/service/design";
 import DesignTask from "@jx3box/jx3box-common-ui/src/bread/DesignTask.vue";
+import versionBy from "@jx3box/jx3box-common-ui/src/filters/versionBy.vue"
 export default {
     name: "Index",
     props: [],
@@ -275,6 +277,11 @@ export default {
         filterMeta: function (o) {
             this.replaceRoute({ [o["type"]]: o["val"], page: 1 });
         },
+        filterIsWujie: function (o) {
+            const val = o["val"];
+
+            this.is_wujie = val;
+        },
         // 条件过滤（不附加路由）
         filterImperceptibly: function (o) {
             this[o["type"]] = o["val"];
@@ -350,6 +357,7 @@ export default {
         ListLayout,
         // recTable,
         DesignTask,
+        versionBy
     },
 };
 </script>
