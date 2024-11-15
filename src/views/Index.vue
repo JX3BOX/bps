@@ -36,7 +36,7 @@
                     <!-- 主题过滤 -->
                     <topicBy v-model="topic" :topics="topics" />
                     <!-- 无界筛选 -->
-                    <versionBy style="margin-left: 10px;" :value="is_wujie" @filter="filterIsWujie"></versionBy>
+                    <versionBy v-if="client == 'std'" style="margin-left: 10px;" :value="is_wujie" @filter="filterIsWujie"></versionBy>
                 </div>
                 <div class="m-filter--right">
                     <!-- 排序过滤 -->
@@ -121,7 +121,7 @@ export default {
             zlp: "", //资料片
             tag: "", //标签
             topic: "", // 主题
-            is_wujie: 0,
+            is_wujie: "",
 
             pv_types: {
                 "PVE": "PVE",
@@ -347,7 +347,9 @@ export default {
         });
 
         if (this.client !== "origin") {
-            this.is_wujie = this.isPhone ? 1 : 0;
+            this.is_wujie = this.isPhone ? 1 : '';
+        } else {
+            this.is_wujie = "";
         }
 
     },
