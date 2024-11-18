@@ -151,10 +151,10 @@ export default {
             if (["talent", "talent2"].includes(this.kungfuid)) {
                 return this.data;
             } else if (["pasv", "zhenfa"].includes(this.kungfuid)) {
-                return this.panel[this.kungfuid];
+                return this.panel[this.kungfuid].filter(Boolean);
             } else {
                 const kungfu_name = this.kungfuid || this.kungfus[0];
-                return this.panel.kungfus[kungfu_name];
+                return this.panel.kungfus[kungfu_name].filter(Boolean);
             }
         },
         subtype: function () {
