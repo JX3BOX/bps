@@ -91,6 +91,7 @@ export default {
             hasteInfo: {
                 skillTime: 1.5,
                 hitTimes: 1,
+                hasteLevel: 130,
                 extra: "无",
                 uExtra: "无",
             },
@@ -132,10 +133,10 @@ export default {
                 //    label: "破招伤害时间(秒)",
                 //    value: "surplus",
                 //},
-                {
-                    label: "帧数（调试用）",
-                    value: "nowFrame",
-                },
+                // {
+                //     label: "帧数（调试用）",
+                //     value: "nowFrame",
+                // },
                 {
                     label: "所需加速率",
                     value: "percentage",
