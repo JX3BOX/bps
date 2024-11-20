@@ -9,8 +9,17 @@
                     <el-form label-position="top">
                         <el-form-item>
                             <div slot="label">
+                                <span>加速阈值</span>
+                            </div>
+                            <el-select v-model="hasteInfo.hasteLevel" controls-position="right" style="width: 100%">
+                                <el-option v-for="item in hasteCofs" :key="item.level" :label="item.level + '级'"
+                                    :value="item.level"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <div slot="label">
                                 <span>技能时间(秒)</span>
-                                <el-tooltip content="表示技能正读条时间，或持续性伤害技能的每跳时间，或引导读条的每跳时间" placement="top">
+                                <el-tooltip content="表示技能正读条时间，130级后为技能总时间，120级及之前为持续性伤害技能或引导读条的每跳时间" placement="top">
                                     <i class="el-icon-info m-info-icon"></i>
                                 </el-tooltip>
                             </div>
@@ -21,7 +30,7 @@
                         <el-form-item>
                             <div slot="label">
                                 <span>跳数</span>
-                                <el-tooltip content="表示相应技能跳数，正读条为 1 跳，引导读条为造成伤害的次数" placement="top">
+                                <el-tooltip content="表示相应技能跳数，正读条为 1 跳，130级后无实际作用，120级及之前引导读条为造成伤害的次数" placement="top">
                                     <i class="el-icon-info m-info-icon"></i>
                                 </el-tooltip>
                             </div>
@@ -82,11 +91,36 @@ export default {
             hasteInfo: {
                 skillTime: 1.5,
                 hitTimes: 1,
-                extra: '无',
+                extra: "无",
                 uExtra: "无",
             },
-            hasteCof: 11.695 * (450 * 120 - 45750) / 100,
-            //等级改系数
+            // 等级改系数
+            hasteCofs: [
+                {
+                    level: 130,
+                    cof: 10.610 * (1155 * 130 - 130350) / 100,
+                },
+                {
+                    level: 120,
+                    cof: 11.695 * (450 * 120 - 45750) / 100,
+                },
+                {
+                    level: 110,
+                    cof: 11.695 * (205 * 110 - 18800) / 100,
+                },
+                {
+                    level: 100,
+                    cof: 11.077 * (185 * 100 - 16800) / 100,
+                },
+                {
+                    level: 95,
+                    cof: 6.087 * (85 * 95 - 7300) / 100,
+                },
+                {
+                    level: 90,
+                    cof: 15.652 * (4 * 90 - 10) / 100,
+                },
+            ],
             extraHasteList,
             // result
             tableHeader: [
@@ -98,10 +132,10 @@ export default {
                 //    label: "破招伤害时间(秒)",
                 //    value: "surplus",
                 //},
-                //{
-                //label: "帧数（调试用）",
-                //value: "nowFrame",
-                //},
+                {
+                    label: "帧数（调试用）",
+                    value: "nowFrame",
+                },
                 {
                     label: "所需加速率",
                     value: "percentage",
@@ -120,42 +154,54 @@ export default {
     },
     computed: {
         tableData: function () {
-            let { skillTime, hitTimes, extra: name, uExtra: uname } = this.hasteInfo;
+            let { skillTime, hitTimes, hasteLevel, extra: name, uExtra: uname } = this.hasteInfo;
             let _extraHaste = this.extraHasteList.find(item => item.name === name);
             let _uExtraHaste = this.extraHasteList.find(item => item.name === uname);
             let hasteCalcResult = [];
             const extra = _extraHaste.value;
             const uExtra = _uExtraHaste.value;
             const skillFrame = Math.round(skillTime / 0.0625);
-            //console.log(skillFrame)
-            //当前读条帧数 上一条记得注释掉
-            const surplusFrame = Math.ceil(2 / 0.0625);
-            //破招固定2秒/段的帧数 120级废弃
+            // console.log(skillFrame)
+            // 当前读条帧数 上一条记得注释掉
+            // const surplusFrame = Math.ceil(2 / 0.0625);
+            // 破招固定2秒/段的帧数 120级废弃
+
+            let hasteCof = this.hasteCofs.find(item => item.level == hasteLevel)?.cof ?? null;
             let hastePercent = 0;
             let hastePercentLimit = 0;
             let uHastePercentLimit = 0;
 
-            //TODO: 这个 for 会被计算 24120 次，在数值扩展后更多需要优化
+            // TODO: 这个 for 会被计算 24120 次，在数值扩展后更多需要优化
             for (let i = 0; hastePercentLimit < 25; i++) {
-                const baseHaste = (i / this.hasteCof) * 10.24;
+                const baseHaste = (i / hasteCof) * 10.24;
                 const totalHaste = Math.floor(baseHaste) + Math.floor(extra);
                 const uTotalHaste = totalHaste + Math.floor(uExtra);
                 //基础加速加奇穴加速
                 const nowFrame = Math.floor((skillFrame * 1024) / (totalHaste + 1024));
                 const uNowFrame = Math.floor((skillFrame * 1024) / (uTotalHaste + 1024));
-                const surplusNowFrame = Math.floor((surplusFrame * 1024) / (totalHaste + 1024));
-                //技能受加速影响帧数
-                hastePercent = i / this.hasteCof;
-                hastePercentLimit = i / this.hasteCof + extra / 10.24;
+                // const surplusNowFrame = Math.floor((surplusFrame * 1024) / (totalHaste + 1024));
+
+                // 技能受加速影响帧数
+                hastePercent = i / hasteCof;
+                hastePercentLimit = i / hasteCof + extra / 10.24;
                 uHastePercentLimit = hastePercentLimit + uExtra / 10.24;
-
-                let nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes));
-                //基础加速读条时间
-                let uNowTime = this.ToFixed(uNowFrame * 0.0625 * Number(hitTimes));
-                //加突破上限的读条时间
-                let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5);
-                //破招时间 2s/段总5段
-
+                let nowTime, uNowTime
+                if (hasteLevel >= 130) {
+                    nowTime = this.ToFixed(nowFrame * 0.0625);
+                    // 基础加速读条时间
+                    uNowTime = this.ToFixed(uNowFrame * 0.0625);
+                    // 加突破上限的读条时间
+                    // let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5);
+                    // 破招时间 2s/段总5段
+                }
+                else {
+                    nowTime = this.ToFixed(nowFrame * 0.0625 * Number(hitTimes));
+                    // 基础加速读条时间
+                    uNowTime = this.ToFixed(uNowFrame * 0.0625 * Number(hitTimes));
+                    // 加突破上限的读条时间
+                    // let nowSurplusTime = this.ToFixed(surplusNowFrame * 0.0625 * 5);
+                    // 破招时间 2s/段总5段
+                }
                 const result = {
                     duration: "",
                     percentage: this.ToFixed(hastePercent),
@@ -163,17 +209,17 @@ export default {
                     nowFrame: nowFrame,
                     uNowFrame: uNowFrame,
                     surplus: "",
-                    surplusNowFrame: surplusNowFrame,
+                    surplusNowFrame: 1 || surplusNowFrame,
                     level: i,
                 };
 
                 // 这里决定在最终的表中是否显示重复的数据
                 // 乱动概率卡死浏览器
                 if (uNowFrame > 0) {
-                    //if (nowFrame > 0 && surplusNowFrame > 0) {    --120级废弃
+                    // if (nowFrame > 0 && surplusNowFrame > 0) {    --120级废弃
                     if (!hasteCalcResult.some((r) => r.uNowFrame == uNowFrame)) // nowFrame无重复
                         result.duration = uNowTime;
-                    //if (!hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)) // surplusNowFrame无重复
+                    // if (!hasteCalcResult.some((r) => r.surplusNowFrame == surplusNowFrame)) // surplusNowFrame无重复
                     //    result.surplus = nowSurplusTime;
                     if (result.duration || result.surplus)
                         hasteCalcResult.push(result);
