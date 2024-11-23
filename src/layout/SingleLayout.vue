@@ -11,6 +11,9 @@
             :crumbEnable="true"
             :adminMarks="{}"
         >
+            <template #logo>
+                <img class="u-breadcrumb-logo" :src="logo" alt="">
+            </template>
             <template #op-prepend>
                 <!-- <AdminDirectMessage :user-id="user_id" :sourceId="String(post.ID)" :sourceType="post.post_type"></AdminDirectMessage> -->
                 <AdminDrop v-if="isTeammate" :post="post" :user-id="user_id" :showMove="true"/>
@@ -40,6 +43,7 @@ import Side from "@/components/single/single_side.vue";
 import { getAppIcon, getAppID } from "@jx3box/jx3box-common/js/utils";
 import AdminDrop from "@jx3box/jx3box-common-ui/src/bread/AdminDrop.vue";
 import User from "@jx3box/jx3box-common/js/user";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "SingleLayout",
     props: {
@@ -51,6 +55,7 @@ export default {
     data: function () {
         return {
             id: getAppID(),
+            logo: __cdn + "logo/logo-light/bps.svg",
         };
     },
     computed: {

@@ -10,6 +10,9 @@
             :feedbackEnable="true"
             :crumbEnable="true"
         >
+            <template #logo>
+                <img class="u-breadcrumb-logo" svg-inline :src="logo" alt="">
+            </template>
             <Info />
         </Breadcrumb>
         <LeftSidebar>
@@ -29,11 +32,14 @@
 import Info from "@/components/list/Info.vue";
 import Nav from "@/components/list/list_nav.vue";
 import tabs from "@/components/tabs.vue";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "App",
     props: [],
     data: function () {
-        return {};
+        return {
+            logo: __cdn + "logo/logo-light/bps.svg",
+        };
     },
     methods: {},
     components: {
