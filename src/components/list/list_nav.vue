@@ -58,6 +58,7 @@
 import xfmap from "@jx3box/jx3box-data/data/xf/xf.json";
 import { __ossMirror, __imgPath, __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getAppIcon, showMountIcon } from "@jx3box/jx3box-common/js/utils";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "list_nav",
     props: [],
@@ -77,7 +78,9 @@ export default {
         isActive: function (item) {
             return item.name == this.$route.query.subtype;
         },
-        getAppIcon,
+        getAppIcon(key) {
+            return __cdn + `logo/logo-light/${key}.svg`
+        },
         showMountIcon,
     },
 };
