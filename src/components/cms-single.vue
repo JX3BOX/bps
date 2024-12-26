@@ -308,5 +308,6 @@ export default {
 
 .m-single-thx{
     .mt(40px);
+    zoom: 0.8;
 }
 </style>
