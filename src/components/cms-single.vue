@@ -308,6 +308,11 @@ export default {
 
 .m-single-thx{
     .mt(40px);
-    zoom: 0.8;
+}
+
+@media screen and (max-width:@phone){
+    .m-single-thx{
+        zoom: 0.8;
+    }
 }
 </style>
