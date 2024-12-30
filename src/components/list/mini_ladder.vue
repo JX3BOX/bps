@@ -64,7 +64,6 @@ export default {
     },
     mounted() {
         getBreadcrumb('bps-active-rank').then(res => {
-            console.log(res)
             this.loadRank(res)
         })
     },
