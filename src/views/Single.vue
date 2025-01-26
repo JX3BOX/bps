@@ -48,22 +48,22 @@ export default {
             return this.$route.params.id;
         },
         xf: function () {
-			return this.post?.post_subtype;
-		},
+            return this.post?.post_subtype;
+        },
         xficon_id: function () {
-			return this.xf && xfmap[this.xf]?.id;
-		},
+            return this.xf && xfmap[this.xf]?.id;
+        },
         zlp: function () {
-			return this.post?.zlp || "未知";
-		},
+            return this.post?.zlp || "未知";
+        },
     },
     methods: {
         updateExtend: function (val) {
             this.$store.state.extend = val;
         },
         xficon: function (val) {
-			return __imgPath + "image/xf/" + val + ".png";
-		},
+            return __imgPath + "image/xf/" + val + ".png";
+        },
     },
     mounted: function () {
         if (this.id) {
@@ -77,16 +77,26 @@ export default {
                     document.title = this.post.post_title;
 
                     if (User.isLogin()) {
-                        User.isLogin() && postHistory({
-                            source_type: appKey,
-                            source_id: ~~this.id,
-                            link: location.href,
-                            title: this.post.post_title,
-                        });
+                        User.isLogin() &&
+                            postHistory({
+                                source_type: appKey,
+                                source_id: ~~this.id,
+                                link: location.href,
+                                title: this.post.post_title,
+                                author_id: this.post.post_author,
+                                banner: this.post.post_banner,
+                            });
 
-                        this.post.visible > 1 && postReadHistory({ id: this.id, category: "posts", subcategory: "default", visible_type: this.post.visible });
+                        this.post.visible > 1 &&
+                            postReadHistory({
+                                id: this.id,
+                                category: "posts",
+                                subcategory: "default",
+                                visible_type: this.post.visible,
+                                author_id: this.post.post_author,
+                                banner: this.post.post_banner,
+                            });
                     }
-
                 })
                 .finally(() => {
                     this.loading = false;
@@ -106,5 +116,5 @@ export default {
 </script>
 
 <style lang="less">
-    @import '~@/assets/css/single.less';
+@import "~@/assets/css/single.less";
 </style>
