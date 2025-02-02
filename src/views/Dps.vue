@@ -48,13 +48,13 @@
                                 showClientLabel(scope.row.client)
                             }}</span>
                             <i class="u-star" v-if="scope.row.star">★ 编辑推荐</i>
-                            <a class="u-name" :href="scope.row.url" target="_blank">{{ scope.row.name }}</a>
+                            <a class="u-name" :href="scope.row.url" target="_blank" @click.stop>{{ scope.row.name }}</a>
                         </template>
                     </el-table-column>
 
                     <el-table-column label="作者" prop="user" sortable min-width="180">
                         <template slot-scope="scope" v-if="scope.row.user">
-                            <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop="">
+                            <a class="u-user" :href="authorLink(scope.row.user.ID)" target="_blank" @click.stop>
                                 <img class="u-img" :src="showAvatar(scope.row.user.user_avatar)" />
                                 <span class="u-author">{{ scope.row.user.display_name }}</span>
                             </a>
@@ -62,7 +62,7 @@
                                 class="u-user"
                                 :href="authorLink(contributor.ID)"
                                 target="_blank"
-                                @click.stop=""
+                                @click.stop
                                 v-for="contributor in scope.row.contributor_users"
                                 :key="contributor.ID"
                             >
